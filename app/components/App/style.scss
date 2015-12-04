@@ -1,0 +1,13 @@
+.App {
+  padding: 2rem;
+
+  &:after {
+    content: url('assets/images/img.png');
+  }
+}
+
+.App .App {
+  &-btnAdd {
+    color: $color-links;
+  }
+}

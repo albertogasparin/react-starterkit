@@ -1,0 +1,19 @@
+/* Base SCSS
+   =============================================== */
+
+@import 'scss/utils';
+@import 'scss/variables';
+@import 'scss/animations';
+@import 'scss/fonts';
+
+@import 'scss/reset';
+
+/* Node modules import
+   =============================================== */
+
+// @import "~module/style"
+
+/* Components
+   =============================================== */
+
+@import 'components/App/style';
