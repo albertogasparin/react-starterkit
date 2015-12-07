@@ -118,7 +118,7 @@ module.exports = extendConfig({
           'url-loader?'
             + ['limit=8192', 'name=[name].[hash:6].[ext]'].join('&'),
           'image-webpack-loader?'
-            + ['progressive=true'].join('&'),
+            + ['bypassOnDebug', 'progressive=true'].join('&'),
         ],
       },
     ],
