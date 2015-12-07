@@ -1,3 +1,5 @@
+console.log('# Node server starting...'); // eslint-disable-line
+
 /**
  * Load Babel
  * and enhance require with ES6
