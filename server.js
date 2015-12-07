@@ -1,4 +1,4 @@
-console.log('# Node server starting...'); // eslint-disable-line
+console.log('\x1b[33mNode server starting...'); // eslint-disable-line
 
 
 /**

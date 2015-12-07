@@ -58,6 +58,9 @@ Koa node server listening port (default: `3000`)
 **WDS_PORT** `int`
 Webpack dev server listening port (default: `8080`)
 
+**ISOMORPHIC** `bool`
+Toggle on/off React server side rendering (default: `true`)
+
 
 ## Troubleshooting
 
