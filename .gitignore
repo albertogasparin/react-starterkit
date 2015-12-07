@@ -1,2 +1,8 @@
+# ignore node modules folder
 node_modules
-public
+
+# ignore build app
+public/assets
+
+# environment vars
+.env

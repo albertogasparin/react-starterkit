@@ -1,8 +1,21 @@
+/**
+ * Load .env file (if any)
+ * Providing custom props in process.env
+ */
+require('dotenv').load({ silent: true });
+
+/**
+ * Load dependencies
+ */
 var webpack = require('webpack');
 var path = require('path');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var isProduction = process.env.NODE_ENV === 'production';
 
+/**
+ * Private vars and fn
+ * to customise config based on env
+ */
+var isProduction = process.env.NODE_ENV === 'production';
 var WEBPACK_SERVER_PORT = process.env.WDS_PORT || 8080;
 var NODE_SERVER_PORT = process.env.PORT || 3000;
 
@@ -24,8 +37,6 @@ function extendCSSLoaders (loaders) {
 }
 
 function extendPlugins(plugins) {
-  plugins.push(new webpack.optimize.OccurenceOrderPlugin());
-
   if (!isProduction) {
     plugins.unshift(new webpack.HotModuleReplacementPlugin());
   } else {
@@ -70,7 +81,9 @@ function extendConfig(config) {
   return config;
 }
 
-
+/**
+ * Main config
+ */
 module.exports = extendConfig({
   entry: {
     // vendor: ['react'],
@@ -126,6 +139,7 @@ module.exports = extendConfig({
     ],
   },
   plugins: extendPlugins([
+    new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.DefinePlugin({
       __CLIENT__: true,
     }),
