@@ -8,7 +8,7 @@ html(lang="en")
     title App
     link(rel="shortcut icon" href="favicon.ico")
 
-    if env == 'production'
+    if env != 'development'
       link(rel="stylesheet" href="/assets/app.css")
 
     //- link(rel="icon" sizes="256x256" href="app-icon.png")

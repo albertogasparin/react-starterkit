@@ -3,11 +3,12 @@ var path = require('path');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var isProduction = process.env.NODE_ENV === 'production';
 
+var WEBPACK_SERVER_PORT = process.env.WDS_PORT || 8080;
 var NODE_SERVER_PORT = process.env.PORT || 3000;
 
 function extendEntrySources(sources) {
   if (!isProduction) {
-    sources.unshift('webpack-dev-server/client?http://localhost:8080');
+    sources.unshift('webpack-dev-server/client?http://localhost:' + WEBPACK_SERVER_PORT);
     sources.unshift('webpack/hot/only-dev-server');
   }
   return sources;
@@ -60,6 +61,7 @@ function extendConfig(config) {
       headers: { 'Access-Control-Allow-Origin': '*' },
       stats: { colors: true },
       host: '0.0.0.0',
+      port: WEBPACK_SERVER_PORT,
       proxy: {
         '*': 'http://0.0.0.0:' + NODE_SERVER_PORT,
       },
@@ -83,7 +85,7 @@ module.exports = extendConfig({
   },
   output: {
     path: path.join(__dirname, 'public', 'assets'),
-    publicPath: 'http://0.0.0.0:8080/assets/',
+    publicPath: 'http://0.0.0.0:' + WEBPACK_SERVER_PORT + '/assets/',
     filename: '[name].js',
     chunkFilename: '[id].[hash].js',
   },
