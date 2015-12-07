@@ -83,7 +83,7 @@ module.exports = extendConfig({
   },
   output: {
     path: path.join(__dirname, 'public', 'assets'),
-    publicPath: '/assets/',
+    publicPath: 'http://0.0.0.0:8080/assets/',
     filename: '[name].js',
     chunkFilename: '[id].[hash].js',
   },
