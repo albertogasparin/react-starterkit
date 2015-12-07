@@ -1,6 +1,9 @@
 var webpack = require('webpack');
+var path = require('path');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var isProduction = process.env.NODE_ENV === 'production';
+
+var NODE_SERVER_PORT = process.env.PORT || 3000;
 
 function extendEntrySources(sources) {
   if (!isProduction) {
@@ -20,9 +23,12 @@ function extendCSSLoaders (loaders) {
 }
 
 function extendPlugins(plugins) {
+  plugins.push(new webpack.optimize.OccurenceOrderPlugin());
+
   if (!isProduction) {
     plugins.unshift(new webpack.HotModuleReplacementPlugin());
   } else {
+    plugins.push(new webpack.optimize.DedupePlugin());
     // plugins.push(new webpack.optimize.CommonsChunkPlugin({
     //   name: 'vendor',
     //   minChunks: Infinity,
@@ -44,8 +50,8 @@ function extendConfig(config) {
     config.debug = true;
     config.devtool = 'eval-source-map';
     config.devServer = {
-      publicPath: 'http://localhost:8080/',
-      contentBase: './public',
+      publicPath: config.output.publicPath, // 'http://0.0.0.0:8080/',
+      contentBase: config.output.path, // './public',
       hot: true,
       inline: true,
       lazy: false,
@@ -53,7 +59,10 @@ function extendConfig(config) {
       noInfo: false,
       headers: { 'Access-Control-Allow-Origin': '*' },
       stats: { colors: true },
-      host: 'localhost',
+      host: '0.0.0.0',
+      proxy: {
+        '*': 'http://0.0.0.0:' + NODE_SERVER_PORT,
+      },
     };
   }
   return config;
@@ -73,8 +82,8 @@ module.exports = extendConfig({
     reasons: true,
   },
   output: {
-    path: __dirname + '/public',
-    publicPath: '/',
+    path: path.join(__dirname, 'public', 'assets'),
+    publicPath: '/assets/',
     filename: '[name].js',
     chunkFilename: '[id].[hash].js',
   },
@@ -107,7 +116,7 @@ module.exports = extendConfig({
         test: /\.(jpe?g|png|gif|svg)$/i,
         loaders: [
           'url-loader?'
-            + ['limit=8192', 'name=assets/[name].[hash:6].[ext]'].join('&'),
+            + ['limit=8192', 'name=[name].[hash:6].[ext]'].join('&'),
           'image-webpack-loader?'
             + ['progressive=true'].join('&'),
         ],

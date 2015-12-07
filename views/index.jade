@@ -9,16 +9,16 @@ html(lang="en")
     link(rel="shortcut icon" href="favicon.ico")
 
     if env == 'production'
-      link(rel="stylesheet" href="app.css")
+      link(rel="stylesheet" href="/assets/app.css")
 
-    //- link(rel="icon" sizes="256x256" href="assets/app-icon.png")
-    //- link(rel="apple-touch-icon" sizes="256x256" href="assets/app-icon.png")
+    //- link(rel="icon" sizes="256x256" href="app-icon.png")
+    //- link(rel="apple-touch-icon" sizes="256x256" href="app-icon.png")
 
   body
     #app
       != renderedApp
 
-    script(async defer src="app.js")
+    script(async defer src="/assets/app.js")
 
     //- Google Analytics
     if env == 'production'
