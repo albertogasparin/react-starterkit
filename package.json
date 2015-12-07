@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "start": "node --harmony ./server.js",
-    "start:watch": "nodemon --ignore public/ --delay 1 --ext js,jsx --harmony ./server.js",
+    "start:watch": "supervisor -q -t -i public,node_modules -e js,jsx --harmony ./server.js",
     "build": "NODE_ENV=production webpack -p --progress --colors --display-error-details --display-modules --sort-modules-by name",
     "build:watch": "webpack --colors --display-error-details && webpack-dev-server --config webpack.config.js",
     "watch": "concurrent \"npm run build:watch -s\" \"npm run start:watch -s\"",
@@ -60,12 +60,12 @@
     "eslint-plugin-babel": "^3.0.0",
     "eslint-plugin-react": "^3.6.0",
     "mocha": "^2.3.4",
-    "nodemon": "^1.8.0",
     "react-addons-test-utils": "^0.14.0",
     "react-hot-loader": "^1.2.0",
     "react-shallow-testutils": "^0.6.0",
     "sinon": "^1.17.0",
     "source-map-loader": "^0.1.0",
+    "supervisor": "^0.9.1",
     "webpack-dev-server": "^1.14.0"
   },
   "engines": {
