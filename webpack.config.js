@@ -128,11 +128,9 @@ module.exports = extendConfig({
       __CLIENT__: true,
     }),
     new webpack.ProvidePlugin({
-      'Promise': 'exports?global.Promise!es6-promise',
-      'window.fetch': 'exports?self.fetch!whatwg-fetch',
+      'Promise': 'exports-loader?global.Promise!es6-promises',
+      'window.fetch': 'exports-loader?self.fetch!whatwg-fetch',
     }),
-    // Protects against multiple React installs when npm linking
-    new webpack.NormalModuleReplacementPlugin(/^react?$/, require.resolve('react')),
   ]),
 
 });
