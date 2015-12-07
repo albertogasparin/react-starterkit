@@ -20,16 +20,21 @@ class App extends Component {
   }
 
   handleAdd() {
-    this.setState({ count: this.state.count + 1 });
+    window.fetch('/api/example/0')
+      .then((response) => response.json())
+      .then((json) => {
+        this.setState({ count: this.state.count + json.id });
+      })
+      .catch((err) => console.error(err));
   }
 
   render() {
     return (
       <div className="App">
-        <p>{this.state.count}</p>
         <button className="App-btnAdd" onClick={this.handleAdd.bind(this)}>
-          Add +1
+          Get something from API
         </button>
+        <p>{this.state.count}</p>
 
         {this.props.children}
       </div>
