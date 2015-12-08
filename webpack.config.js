@@ -109,7 +109,7 @@ module.exports = extendConfig({
       loader: 'source-map',
     }],
     loaders: [
-      {
+      { // CSS/SASS loader + autoprefixer
         test: /\.s?css$/,
         exclude: /(node_modules|bower_components)/,
         loader: extendCSSLoaders([
@@ -120,20 +120,32 @@ module.exports = extendConfig({
           'sass-loader?'
             + ['sourceMap', 'outputStyle=expanded'].join('&'),
         ]),
-      }, {
+      }, { // JS/JSX loader + hot reload
         test: /\.jsx?$/,
         exclude: /(node_modules|bower_components)/,
         loaders: [
           'react-hot-loader',
           'babel-loader',
         ],
-      }, {
+      }, { // Image/SVG loader + base64 encode + optimisation
         test: /\.(jpe?g|png|gif|svg)$/i,
         loaders: [
           'url-loader?'
             + ['limit=8192', 'name=[name].[hash:6].[ext]'].join('&'),
           'image-webpack-loader?'
             + ['bypassOnDebug', 'progressive=true'].join('&'),
+        ],
+      }, { // WOFF loader + base64 encode
+        test: /\.(woff)$/i,
+        loaders: [
+          'url-loader?'
+            + ['limit=8192', 'name=[name].[hash:6].[ext]'].join('&'),
+        ],
+      }, { // Generic file loader
+        test: /\.(eot|ttf|woff2|swf|mp[34]|wav)$/i,
+        loaders: [
+          'file-loader?'
+            + ['name=[name].[hash:6].[ext]'].join('&'),
         ],
       },
     ],
