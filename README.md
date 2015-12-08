@@ -44,6 +44,13 @@ NODE_ENV=production npm run start
 ```
 Now `127.0.0.1:3000` will serve your entire app.
 
+##### No need of a node server?
+
+``` sh
+npm run build:template
+```
+Will build `index.jade` to `public/index.html`, ready to be served. 
+
 
 ## ENV variables
 

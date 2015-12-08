@@ -3,13 +3,18 @@
   "version": "1.0.0",
   "description": "React starterkit with Koa",
   "author": "Alberto Gasparin",
+  "keywords": [],
   "private": true,
+  "config": {
+    "jade": "./node_modules/koa-jade/node_modules/.bin/jade"
+  },
   "scripts": {
     "start": "node --harmony ./server.js",
     "start:watch": "supervisor -q -t -i public,node_modules -e js,jsx --harmony ./server.js",
     "prebuild": "npm run clean -s",
     "build": "NODE_ENV=production webpack -p --progress --colors --display-error-details --display-modules --sort-modules-by name",
     "build:watch": "webpack --colors --display-error-details && webpack-dev-server --config webpack.config.js",
+    "build:template": "$npm_package_config_jade views/index.jade -o ./public -O '{env:\"production\"}'",
     "pretest": "npm run lint -s",
     "test": "mocha $(find . -name '*.spec.js' ! -path '*/node_modules/*') --compilers js:babel-register",
     "test:watch": "mocha $(find . -name '*.spec.js' ! -path '*/node_modules/*') --compilers js:babel-register --watch --watch-extensions jsx --reporter min",
@@ -18,7 +23,6 @@
     "prewatch": "npm run clean -s",
     "watch": "concurrent \"npm run build:watch -s\" \"npm run start:watch -s\""
   },
-  "keywords": [],
   "dependencies": {
     "autoprefixer-loader": "^3.0.0",
     "babel-core": "^6.3.15",

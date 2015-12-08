@@ -3,6 +3,8 @@ node_modules
 
 # ignore build app
 public/assets
+public/index.html
 
-# environment vars
+# ignore environment vars
 .env
+
