@@ -6,7 +6,8 @@
   "keywords": [],
   "private": true,
   "config": {
-    "jade": "./node_modules/koa-jade/node_modules/.bin/jade"
+    "jade": "./node_modules/koa-jade/node_modules/.bin/jade",
+    "mochaargs": "--compilers js:babel-polyfill,js:babel-register"
   },
   "scripts": {
     "start": "node --harmony ./server.js",
@@ -16,8 +17,8 @@
     "build:watch": "webpack --colors --display-error-details && webpack-dev-server --config webpack.config.js",
     "build:template": "$npm_package_config_jade views/index.jade -o ./public -O '{env:\"production\"}'",
     "pretest": "npm run lint -s",
-    "test": "mocha $(find . -name '*.spec.js' ! -path '*/node_modules/*') --compilers js:babel-register",
-    "test:watch": "mocha $(find . -name '*.spec.js' ! -path '*/node_modules/*') --compilers js:babel-register --watch --watch-extensions jsx --reporter min",
+    "test": "mocha $(find . -name '*.spec.js' ! -path '*/node_modules/*') $npm_package_config_mochaargs",
+    "test:watch": "mocha $(find . -name '*.spec.js' ! -path '*/node_modules/*') $npm_package_config_mochaargs --watch --watch-extensions jsx --reporter min",
     "lint": "eslint --ext .js,.jsx --ignore-path .gitignore .",
     "clean": "rm -rf ./public/assets",
     "prewatch": "npm run clean -s",
@@ -38,7 +39,7 @@
     "exports-loader": "^0.6.2",
     "extract-text-webpack-plugin": "^0.9.0",
     "file-loader": "^0.8.0",
-    "history": "^1.14.0",
+    "history": "^1.15.0",
     "image-webpack-loader": "^1.6.2",
     "imports-loader": "^0.6.5",
     "koa": "^1.1.0",
@@ -65,13 +66,13 @@
   "devDependencies": {
     "chai": "^3.4.0",
     "concurrently": "^1.0.0",
+    "enzyme": "^1.1.0",
     "eslint": "^1.10.3",
     "eslint-plugin-babel": "^3.0.0",
     "eslint-plugin-react": "^3.11.3",
     "mocha": "^2.3.4",
     "react-addons-test-utils": "^0.14.0",
     "react-hot-loader": "^1.2.0",
-    "react-shallow-testutils": "^0.6.0",
     "sinon": "^1.17.0",
     "source-map-loader": "^0.1.0",
     "supervisor": "^0.9.1",

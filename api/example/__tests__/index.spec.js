@@ -3,13 +3,16 @@
 import { expect } from 'chai';
 import { spy, stub } from 'sinon';
 
-describe('API/example', () => {
+import routes from '..';
 
-  describe('GET', () => {
+describe('GET /example', () => {
+  let route = routes['GET /example'];
 
-    it('should pass', () => {
-      expect(0).to.equal(0);
-    });
-
+  it('should return all examples', () => {
+    let context = {};
+    let generator = route.call(context);
+    generator.next();
+    expect(context.body).to.have.length.gt(0);
   });
+
 });

@@ -25,7 +25,7 @@ class App extends Component {
       .then((json) => {
         this.setState({ count: this.state.count + json.id });
       })
-      .catch((err) => console.error(err));
+      .catch((err) => console.error(err)); // eslint-disable-line no-console
   }
 
   render() {

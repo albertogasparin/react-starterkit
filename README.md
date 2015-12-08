@@ -29,6 +29,7 @@ npm run test
 # or
 npm run test:watch # for TDD
 ```
+React components testing is done with [Enzyme](https://github.com/airbnb/enzyme/), a library that allows you to use a jQuery-like API to query the virtual dom.
 
 
 ## Production
