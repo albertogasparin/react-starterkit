@@ -61,6 +61,9 @@ Webpack dev server listening port (default: `8080`)
 **ISOMORPHIC** `bool`
 Toggle on/off React server side rendering (default: `true`)
 
+**GA_PROPERTY** `string`
+Set the Google Analitics property and renders the dedicated script tag (default: `''`)
+
 
 ## Troubleshooting
 
