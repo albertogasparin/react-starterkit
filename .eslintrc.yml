@@ -1,5 +1,5 @@
 rules:
-  #
+
   # Code checks
   #
   eqeqeq:
@@ -42,7 +42,7 @@ rules:
     - 1
   no-loop-func:
     - 1
-  #
+
   # Punctation rules
   #
   semi:
@@ -61,7 +61,7 @@ rules:
   quotes:
     - 1
     - single
-  #
+
   # Spacing rules
   #
   no-spaced-func:
@@ -113,7 +113,7 @@ rules:
     - never
   eol-last:
     - 1
-  #
+
   # Coding helpers rules
   #
   strict:
@@ -134,7 +134,7 @@ rules:
     - 4
     -
       ignoreComments: true
-  #
+
   # ES6 rules
   #
   generator-star-spacing:
@@ -144,7 +144,7 @@ rules:
     - always
   prefer-template:
     - 0
-  #
+
   # React custom rules
   #
   react/jsx-uses-react:
@@ -154,19 +154,35 @@ rules:
   react/react-in-jsx-scope:
     - 2
 
+#
+# Custom parser to handle ES7
+#
+parser: babel-eslint
 
+#
+# Environments
+#
 env:
   es6: true
   node: true
   browser: true
 
+#
+# ECMA features
+#
 ecmaFeatures:
   jsx: true
   modules: true
 
+#
+# Plugins for additional rules
+#
 plugins:
   - react
   - babel
 
+#
+# Project wise globals
+#
 globals:
   __CLIENT__: true
