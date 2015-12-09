@@ -69,7 +69,10 @@ function extendConfig(config) {
       lazy: false,
       quiet: true,
       noInfo: false,
-      headers: { 'Access-Control-Allow-Origin': '*' },
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': 'true',
+      },
       stats: { colors: true },
       host: '0.0.0.0',
       port: WEBPACK_SERVER_PORT,
@@ -160,7 +163,7 @@ module.exports = extendConfig({
       __CLIENT__: true,
     }),
     new webpack.ProvidePlugin({
-      'Promise': 'exports-loader?global.Promise!es6-promises',
+      'Promise': 'exports-loader?global.Promise!es6-promise',
       'window.fetch': 'exports-loader?self.fetch!whatwg-fetch',
     }),
   ]),
