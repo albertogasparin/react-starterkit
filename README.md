@@ -1,6 +1,6 @@
 # React starterkit
 
-Server: Koa, React + router isomorphic rendering, Jade
+Server: Koa, React + router isomorphic rendering, Jade  
 Client: React + router, Sass
 
 

@@ -1,3 +1,5 @@
+@import '~scss/core';
+
 .App {
   padding: 2rem;
 
@@ -6,7 +8,7 @@
     display: block;
     width: 5rem;
     height: 5rem;
-    background: #EEE url('./assets/images/img.png') 0 0 no-repeat;
+    background: #EEE url('~assets/images/img.png') 0 0 no-repeat;
     background-size: contain;
   }
 }

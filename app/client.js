@@ -4,7 +4,7 @@ import { createHistory } from 'history';
 
 import createRoutes from './routes';
 
-import './all.scss';
+import './client.scss';
 
 /**
  * Fire-up React Router.

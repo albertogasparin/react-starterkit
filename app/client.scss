@@ -1,8 +1,7 @@
 /* Base SCSS
    =============================================== */
 
-@import 'scss/utils';
-@import 'scss/variables';
+@import 'scss/core';
 @import 'scss/animations';
 @import 'scss/fonts';
 
@@ -12,8 +11,3 @@
    =============================================== */
 
 // @import "~module/style"
-
-/* Components
-   =============================================== */
-
-@import 'components/App/style';

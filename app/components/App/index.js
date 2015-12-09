@@ -1,5 +1,7 @@
 import React, { PropTypes, Component } from 'react';
 
+import './style.scss';
+
 /**
  * App component
  */

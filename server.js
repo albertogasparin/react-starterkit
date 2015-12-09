@@ -1,4 +1,4 @@
-console.log('\x1b[33mNode server starting...'); // eslint-disable-line
+console.log('\x1b[33mNode server starting...\x1b[0m'); // eslint-disable-line
 
 
 /**
@@ -13,6 +13,13 @@ require('dotenv').load({ silent: true });
  */
 require('babel-polyfill');
 require('babel-register');
+
+/**
+ * Ignore non js extensions
+ * (sadly .babelrc "ignore" does not work)
+ */
+require.extensions['.css'] = function() { return; };
+require.extensions['.scss'] = function() { return; };
 
 // Init the server app
 require('./lib/index');

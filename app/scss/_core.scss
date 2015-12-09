@@ -1,0 +1,8 @@
+/* STUFF IMPORTED BY EVERY COMPONENT STYLE
+   =============================================== */
+
+// Avoid CSS output in these files
+// or it will added multiple times
+
+@import './utils';
+@import './variables';
