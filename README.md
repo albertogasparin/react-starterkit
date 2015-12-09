@@ -1,6 +1,6 @@
 # React starterkit
 
-Server: Koa, React + router rendering, Jade templates
+Server: Koa, React + router isomorphic rendering, Jade
 Client: React + router, Sass
 
 
@@ -23,7 +23,7 @@ Webpack dev server is configured to proxy requests to node, so it will handle al
 
 ## Testing
 
-Tests are runned with Mocha + Expect for both client and server:
+Tests are run with Mocha + Expect for both client and server:
 ``` sh
 npm run test 
 # or
@@ -55,28 +55,45 @@ Will build `index.jade` to `public/index.html`, ready to be served.
 
 ## ENV variables
 
-You can either prepend these props to the shell command or you can add them to `.env` file.
+You can dynamically change some behaviors of the app by either prepending these props to the shell command or by adding them to a `.env` file.
 
-**NODE_ENV** `string` 
+**NODE_ENV** `string`  
 Set node environment: `development`, `test`, `production` (default: `development`)
 
-**PORT** `int` 
+**PORT** `int`  
 Koa node server listening port (default: `3000`)
 
-**WDS_PORT** `int`
+**WDS_PORT** `int`  
 Webpack dev server listening port (default: `8080`)
 
-**ISOMORPHIC** `bool`
-Toggle on/off React server side rendering (default: `true`)
+**COOKIE_SECRET** `string`  
+Set the string used to encrypt  (default: `cookie-secret`)
 
-**GA_PROPERTY** `string`
-Set the Google Analitics property and renders the dedicated script tag (default: `''`)
+**GA_PROPERTY** `string`  
+Set the Google Analytics property and renders the dedicated script tag (default: `''`)
 
 
-## Troubleshooting
+## Config variables
 
-**Missing CSS after building and serving from node**  
+You can persistently change some behaviors of the app by tweaking `lib/config.js`.
+
+**react.isomorphic**  
+Toggle on/off React server side rendering (default: `true`)  
+NOTE: this will make node no longer return 404s. You'll have to handle them client side. 
+
+
+## Info & Troubleshooting
+
+**No need of React-router?**  
+You can easily get rid of it on the client side by removing `./routes` and `history` imports from `client.js` and by rendering `<App />` directly (it will reduce the minified bundle size by 95kB). The router will still be used by the server to provide 404s.
+
+**Missing CSS while serving from node the built bundle?**  
 The external CSS file is loaded by `index.jade` only if the node env is not `development`. 
 Try: `NODE_ENV=test npm run start`
 
+
+## Todo
+
+- Use [babel-eslint](https://github.com/babel/babel-eslint) parser (v5.0.0+ needed)
+- Use [react-transform](https://github.com/gaearon/react-transform-boilerplate) for hot reloading (v3.0.0+ needed)
 
