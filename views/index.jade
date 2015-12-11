@@ -18,6 +18,9 @@ html(lang="en")
     #app
       != renderedApp
 
+    script.
+      var __INITIAL_STATE__ = !{JSON.stringify(storeState || {})};
+
     script(async defer src="/assets/app.js")
 
     //- Google Analytics
