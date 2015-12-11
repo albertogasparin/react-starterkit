@@ -27,7 +27,7 @@ export function loadTodos() {
   // redux-thunk magic: it allow actions to return functions
   // w/ dispatch as argument, so we can call it as many times as needed
   return (dispatch) => {
-    fetch('/api/todos')
+    window.fetch('/api/todos')
     .then((response) => response.json())
     .then((json) => {
       // add todos fetched from the server
@@ -42,7 +42,7 @@ export function addTodo(text) {
     let tmpTodo = { id: 0, text: `${text} (Saving...)` };
     dispatch(addTodoImmediate(tmpTodo));
 
-    fetch('/api/todos', {
+    window.fetch('/api/todos', {
       method: 'post',
       body: JSON.stringify({ text }),
     })
