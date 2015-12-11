@@ -80,6 +80,6 @@
     "webpack-dev-server": "^1.14.0"
   },
   "engines": {
-    "node": ">=0.10.32"
+    "node": ">= 0.12.0"
   }
 }
