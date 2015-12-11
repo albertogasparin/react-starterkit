@@ -1,7 +1,7 @@
 # React starterkit
 
-Server: Koa, React + router isomorphic rendering, Jade  
-Client: React + router, Sass
+Server: Koa, React + router + Redux isomorphic rendering, Jade  
+Client: React + router + Redux, Sass
 
 
 ## Setup
@@ -90,6 +90,9 @@ You can easily get rid of it on the client side by removing `./routes` and `hist
 **Missing CSS while serving from node the built bundle?**  
 The external CSS file is loaded by `index.jade` only if the node env is not `development`. 
 Try: `NODE_ENV=test npm run start`
+
+**Getting blank page on reload? Or error 502?**
+No worries, that means that the node server was restarting while you refreshed the browser. We restart node on every change so the server-side rendering is always up-to-date. Unfortunately, Babel slows down the process so it might take 2-3 seconds to reboot.
 
 
 ## Todo
