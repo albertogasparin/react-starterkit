@@ -1,4 +1,5 @@
-import React, { PropTypes, Component } from 'react';
+import React, { PropTypes } from 'react';
+import { Link } from 'react-router';
 
 import './style.scss';
 
@@ -6,46 +7,19 @@ import './style.scss';
  * App component
  */
 
-const propTypes = {
-  children: PropTypes.object, // nested routes
-};
+const propTypes = {};
 
-const defaultProps = {};
-
-class App extends Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      count: 0,
-    };
-  }
-
-  handleAdd() {
-    window.fetch('/api/example/0')
-      .then((response) => response.json())
-      .then((json) => {
-        this.setState({ count: this.state.count + json.id });
-      })
-      .catch((err) => console.error(err)); // eslint-disable-line no-console
-  }
-
-  render() {
-    return (
-      <div className="App">
-        <button className="App-btnAdd" onClick={this.handleAdd.bind(this)}>
-          Get something from API
-        </button>
-        <p>{this.state.count}</p>
-
-        {this.props.children}
-      </div>
-    );
-  }
-
-}
+const App = ({ children }) => (
+  <div className="App">
+    <header>
+      <Link to="/todos">Show Todos</Link>
+    </header>
+    <section>
+      {children}
+    </section>
+  </div>
+);
 
 App.propTypes = propTypes;
-App.defaultProps = defaultProps;
 
 export default App;
