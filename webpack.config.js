@@ -95,8 +95,11 @@ module.exports = extendConfig({
   resolve: {
     extensions: ['', '.js', '.jsx', '.scss'],
     alias: {
+      // SASS paths aliases (use with ~alias/file)
       assets: path.join(__dirname, 'app', 'assets'),
       scss: path.join(__dirname, 'app', 'scss'),
+      // JS paths aliases
+      actions: path.join(__dirname, 'app', 'actions'),
     },
   },
   stats: {
