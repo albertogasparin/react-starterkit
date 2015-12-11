@@ -5,10 +5,10 @@ import { spy, stub } from 'sinon';
 
 import routes from '..';
 
-describe('GET /example', () => {
-  let route = routes['GET /example'];
+describe('GET /todos', () => {
+  let route = routes['GET /todos'];
 
-  it('should return all examples', () => {
+  it('should return all todos', () => {
     let context = {};
     let generator = route.call(context);
     generator.next();
