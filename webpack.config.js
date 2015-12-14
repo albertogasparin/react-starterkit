@@ -87,11 +87,6 @@ module.exports = {
     chunkFilename: '[id].[hash].js',
   },
   module: {
-    preLoaders: [{
-      test: /\.jsx?$/,
-      exclude: /(node_modules|bower_components)/,
-      loader: 'source-map',
-    }],
     loaders: [
       { // CSS/SASS loader + autoprefixer
         test: /\.s?css$/,
@@ -109,7 +104,7 @@ module.exports = {
         exclude: /(node_modules|bower_components)/,
         loader: 'babel-loader',
         query: {
-          'plugins': [
+          'plugins': isProduction ? [] : [
             ['react-transform', {
               'transforms': [{
                 'transform': 'react-transform-hmr',
@@ -154,6 +149,7 @@ module.exports = {
       'Promise': 'exports-loader?global.Promise!es6-promise',
       'window.fetch': 'exports-loader?self.fetch!whatwg-fetch',
     }),
+    // add any additional provide/define plugin here
   ]),
 
 };

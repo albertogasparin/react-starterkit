@@ -48,9 +48,9 @@ Now `127.0.0.1:3000` will serve your entire app.
 ##### No need of a node server?
 
 ``` sh
-npm run build:template
+npm run build:static
 ```
-Will build `index.jade` to `public/index.html`, ready to be served. 
+Will build the assets and render `index.jade` to `public/index.html`, ready to be served. 
 
 
 ## ENV variables
@@ -79,24 +79,26 @@ You can persistently change some behaviors of the app by tweaking `lib/config.js
 
 **react.isomorphic**  
 Toggle on/off React server side rendering (default: `true`)  
-NOTE: this will make node no longer return 404s. You'll have to handle them client side. 
+NOTE: this will make node no longer return 404s. You'll have to handle them with react-router. 
 
 
 ## Info & Troubleshooting
 
-**No need of React-router?**  
+**No need of React-router**  
 You can easily get rid of it on the client side by removing `./routes` and `history` imports from `client.js` and by rendering `<App />` directly (it will reduce the minified bundle size by 95kB). The router will still be used by the server to provide 404s.
 
-**Missing CSS while serving from node the built bundle?**  
-The external CSS file is loaded by `index.jade` only if the node env is not `development`. 
+**Missing CSS while serving the built bundle**  
+The external CSS file is loaded by `index.jade` only if the node env is not `development`.  
 Try: `NODE_ENV=test npm run start`
 
-**Getting blank page on reload? Or error 502?**
-No worries, that means that the node server was restarting while you refreshed the browser. We restart node on every change so the server-side rendering is always up-to-date. Unfortunately, Babel slows down the process so it might take 2-3 seconds to reboot.
+**Missing CSS-defined assets when testing on a VM or network-connected device**  
+This is a known limitation of [style-loader](https://github.com/webpack/style-loader/issues/55). The assets URL produced by that loader are absolute, so you need to explictly set a host IP address.  
+Example: `HOST=192.168.1.2 npm run watch`
 
-
-## Todo
-
-- Use [babel-eslint](https://github.com/babel/babel-eslint) parser (v5.0.0+ needed)
-- Use [react-transform](https://github.com/gaearon/react-transform-boilerplate) for hot reloading (v3.0.0+ needed)
+**Similar projects**  
+[react-redux-starter-kit](https://github.com/davezuko/react-redux-starter-kit), 
+[isomorphic-redux](https://github.com/bananaoomarang/isomorphic-redux), 
+[react-redux-isomorphic-hot-boilerplate](https://github.com/inxilpro/react-redux-isomorphic-hot-boilerplate), 
+[react-redux-isomorphic-example](https://github.com/coodoo/react-redux-isomorphic-example), 
+[redux-universal-app](https://github.com/eriknyk/redux-universal-app)
 

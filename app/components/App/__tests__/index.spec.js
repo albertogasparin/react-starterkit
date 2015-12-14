@@ -14,8 +14,7 @@ describe('<App />', () => {
     it('should render', () => {
       let wrapper = shallow(<App />);
       expect(wrapper.is('div')).to.be.true;
-      expect(wrapper.find('.App-btnAdd')).to.have.length(1);
-      expect(wrapper.state('count')).to.equal(0);
+      expect(wrapper.find('header')).to.have.length(1);
     });
 
   });
