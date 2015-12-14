@@ -16,8 +16,8 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
  * to customise config based on env
  */
 var isProduction = process.env.NODE_ENV === 'production';
-var WEBPACK_SERVER_PORT = process.env.WDS_PORT || 8080;
-var NODE_SERVER_PORT = process.env.PORT || 3000;
+var NODE_HOST = process.env.HOST || '127.0.0.1';
+var NODE_PORT = process.env.PORT || 3000;
 
 function extendEntrySources(sources) {
   if (!isProduction) {
@@ -31,7 +31,7 @@ function extendCSSLoaders (loaders) {
     loaders.unshift('style-loader');
     return loaders.join('!');
   }
-  // if production
+  // move css to separate file
   return ExtractTextPlugin.extract('style-loader', loaders.join('!'));
 }
 
@@ -82,7 +82,7 @@ module.exports = {
   },
   output: {
     path: path.join(__dirname, 'public', 'assets'),
-    publicPath: 'http://0.0.0.0:' + WEBPACK_SERVER_PORT + '/assets/',
+    publicPath: (isProduction ? '' : 'http://' + NODE_HOST + ':' + NODE_PORT) + '/assets/',
     filename: '[name].js',
     chunkFilename: '[id].[hash].js',
   },
