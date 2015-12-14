@@ -21,8 +21,7 @@ var NODE_SERVER_PORT = process.env.PORT || 3000;
 
 function extendEntrySources(sources) {
   if (!isProduction) {
-    sources.unshift('webpack-dev-server/client?http://localhost:' + WEBPACK_SERVER_PORT);
-    sources.unshift('webpack/hot/only-dev-server');
+    sources.unshift('webpack-hot-middleware/client');
   }
   return sources;
 }
@@ -57,37 +56,12 @@ function extendPlugins(plugins) {
   return plugins;
 }
 
-function extendConfig(config) {
-  if (!isProduction) {
-    config.debug = true;
-    config.devtool = 'eval-source-map';
-    config.devServer = {
-      publicPath: config.output.publicPath, // 'http://0.0.0.0:8080/',
-      contentBase: config.output.path, // './public',
-      hot: true,
-      inline: true,
-      lazy: false,
-      quiet: true,
-      noInfo: false,
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Credentials': 'true',
-      },
-      stats: { colors: true },
-      host: '0.0.0.0',
-      port: WEBPACK_SERVER_PORT,
-      proxy: {
-        '*': 'http://0.0.0.0:' + NODE_SERVER_PORT,
-      },
-    };
-  }
-  return config;
-}
-
 /**
  * Main config
  */
-module.exports = extendConfig({
+module.exports = {
+  debug: !isProduction,
+  devtool: !isProduction ? 'eval-source-map' : '',
   entry: {
     // vendor: ['react'],
     app: extendEntrySources(['./app/client']),
@@ -133,10 +107,21 @@ module.exports = extendConfig({
       }, { // JS/JSX loader + hot reload
         test: /\.jsx?$/,
         exclude: /(node_modules|bower_components)/,
-        loaders: [
-          'react-hot-loader',
-          'babel-loader',
-        ],
+        loader: 'babel-loader',
+        query: {
+          'plugins': [
+            ['react-transform', {
+              'transforms': [{
+                'transform': 'react-transform-hmr',
+                'imports': ['react'],
+                'locals': ['module'],
+              }, {
+                'transform': 'react-transform-catch-errors',
+                'imports': ['react', 'redbox-react'],
+              }],
+            }],
+          ],
+        },
       }, { // Image/SVG loader + base64 encode + optimisation
         test: /\.(jpe?g|png|gif|svg)$/i,
         loaders: [
@@ -171,4 +156,4 @@ module.exports = extendConfig({
     }),
   ]),
 
-});
+};

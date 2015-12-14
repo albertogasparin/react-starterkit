@@ -13,12 +13,12 @@ npm install
 
 ## Development
 
-To start both Node server and Webpack dev server (watching) run:
+To start the node server (watching) run:
 ``` sh
 npm run watch
 ```
-The browser entry point while developing is `127.0.0.1:8080`. 
-Webpack dev server is configured to proxy requests to node, so it will handle all `/assets` requests itself while all other requests will be handled by Koa
+The browser entry point while developing is `127.0.0.1:3000`. 
+Webpack middleware will handle all `/assets` requests, while all other requests will be handled by Koa
 
 
 ## Testing
