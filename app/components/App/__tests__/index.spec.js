@@ -13,7 +13,7 @@ describe('<App />', () => {
 
     it('should render', () => {
       let wrapper = shallow(<App />);
-      expect(wrapper.is('div')).to.be.true;
+      expect(wrapper.type()).to.equal('div');
       expect(wrapper.find('header')).to.have.length(1);
     });
 

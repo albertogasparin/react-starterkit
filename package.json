@@ -69,6 +69,7 @@
     "babel-eslint": "^5.0.0-beta6",
     "babel-plugin-react-transform": "^2.0.0-beta1",
     "chai": "^3.4.0",
+    "deep-freeze": "0.0.1",
     "enzyme": "^1.2.0",
     "eslint": "^1.10.3",
     "eslint-plugin-babel": "^3.0.0",
