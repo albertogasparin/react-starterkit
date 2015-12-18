@@ -4,7 +4,6 @@ import ReactDom from 'react-dom';
 import { createHistory } from 'history';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
-import { syncReduxAndRouter } from 'redux-simple-router';
 
 import createMainStore from './store';
 import routes from './routes';
@@ -15,8 +14,7 @@ import './client.scss';
  */
 
 const history = createHistory();
-const store = createMainStore(window.__INITIAL_STATE__);
-syncReduxAndRouter(history, store);
+const store = createMainStore(history, window.__INITIAL_STATE__);
 
 /**
  * Fire-up React Redux + Router.
