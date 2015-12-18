@@ -1,0 +1,46 @@
+/* GRID
+   =============================================== */
+
+.sm-w50 { width: 50%; }
+.sm-w100 { width: 100%; }
+
+@include mq($md) {
+  .md-w25 { width: 25%; }
+  .md-w50 { width: 50%; }
+  .md-w75 { width: 75%; }
+  .md-w100 { width: 100%; }
+}
+
+@include mq($lg) {
+  .lg-w25 { width: 25%; }
+  .lg-w50 { width: 50%; }
+  .lg-w75 { width: 75%; }
+  .lg-w100 { width: 100%; }
+}
+
+
+/* POSITION
+   =============================================== */
+
+.left { float: left; }
+.right { float: right; }
+
+.clear { clear: both; }
+.clerfix {
+  &:before, &:after {
+    content: " ";
+    display: table;
+  }
+
+  &:after { clear: both; }
+}
+
+
+/* TYPOGRAPHY
+   =============================================== */
+
+.t-center { text-align: center; }
+.t-right { text-align: right; }
+
+
+
