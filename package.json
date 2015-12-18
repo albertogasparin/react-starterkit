@@ -20,7 +20,7 @@
     "lint": "eslint --ext .js,.jsx --ignore-path .gitignore .",
     "clean": "rm -rf ./public/assets",
     "prewatch": "npm run clean -s",
-    "watch": "supervisor -q -t -w lib,api,webpack.config.js -i __tests__ --harmony ./server.js"
+    "watch": "supervisor -q -w lib,api,webpack.config.js -i __tests__ --harmony ./server.js"
   },
   "dependencies": {
     "autoprefixer-loader": "^3.0.0",
