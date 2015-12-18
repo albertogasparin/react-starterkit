@@ -2,28 +2,28 @@
  * Redux Actions
  */
 
-export function loadTodosImmediate(todos = []) {
+function loadTodos(todos = []) {
   return {
     todos,
     type: 'LOAD_TODOS',
   };
 }
 
-export function addTodoImmediate(todo = {}) {
+function addTodo(todo = {}) {
   return {
     todo,
     type: 'ADD_TODO',
   };
 }
 
-export function removeTodoImmediate(id) {
+function removeTodo(id) {
   return {
     id,
     type: 'REMOVE_TODO',
   };
 }
 
-export function loadTodos() {
+function loadTodosAsync() {
   // redux-thunk magic: it allow actions to return functions
   // w/ dispatch as argument, so we can call it as many times as needed
   return (dispatch) => {
@@ -31,16 +31,16 @@ export function loadTodos() {
     .then((response) => response.json())
     .then((json) => {
       // add todos fetched from the server
-      dispatch(loadTodosImmediate(json));
+      dispatch(loadTodos(json));
     });
   };
 }
 
-export function addTodo(text) {
+function addTodoAsync(text) {
   return (dispatch) => {
     // optimisticly add todo
     let tmpTodo = { id: 0, text: `${text} (Saving...)` };
-    dispatch(addTodoImmediate(tmpTodo));
+    dispatch(addTodo(tmpTodo));
 
     window.fetch('/api/todos', {
       method: 'post',
@@ -49,12 +49,20 @@ export function addTodo(text) {
     .then((response) => response.json())
     .then((json) => {
       // remove optimistic todo and add server saved one
-      dispatch(removeTodoImmediate(tmpTodo.id));
-      dispatch(addTodoImmediate(json));
+      dispatch(removeTodo(tmpTodo.id));
+      dispatch(addTodo(json));
     })
     .catch((err) => {
-      removeTodoImmediate(tmpTodo.id);
+      removeTodo(tmpTodo.id);
       alert(err.message); // eslint-disable-line
     });
   };
 }
+
+export default {
+  loadTodos,
+  addTodo,
+  removeTodo,
+  loadTodosAsync,
+  addTodoAsync,
+};

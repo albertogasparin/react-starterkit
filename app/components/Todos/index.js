@@ -2,7 +2,7 @@ import React, { PropTypes, Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import * as TodosActions from 'actions/todos';
+import TodosActions from 'actions/todos';
 import TodoList from './list';
 // import './style.scss';
 
@@ -14,12 +14,12 @@ class Todos extends Component {
 
   componentWillMount() {
     if (!this.props.todos.length) {
-      this.props.actions.loadTodos();
+      this.props.actions.loadTodosAsync();
     }
   }
 
   hadleTodoAdd() {
-    this.props.actions.addTodo('New todo');
+    this.props.actions.addTodoAsync('New todo');
   }
 
   render () {
