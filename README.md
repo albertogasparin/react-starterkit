@@ -113,7 +113,7 @@ export default {
 ## Info & Troubleshooting
 
 **No need of React-router**  
-You can easily get rid of it on the client side by removing `./routes` and `history` imports from `client.js` and by rendering `<App />` directly (it will reduce the minified bundle size by 95kB). The router will still be used by the server to provide 404s.
+You can easily get rid of it on the client side by removing `./routes`, `history` and `redux-simple-router` code from `app/client.js`, `app/store.js` and `app/reducers/index.js`. The minified bundle size will be reduced by ~100kB, however the router will still be used by the server to provide 404s.
 
 **Missing CSS while serving the built bundle**  
 The external CSS file is loaded by `index.jade` only if the node env is not `development`.  
