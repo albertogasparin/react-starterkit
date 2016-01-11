@@ -1,6 +1,12 @@
 # ignore node modules folder
 node_modules
 
+# ignore bower folder
+bower_components
+
+# ignore code coverage
+coverage
+
 # ignore build app
 public/assets
 public/index.html

@@ -34,6 +34,10 @@ npm run test:watch # for TDD
 ```
 React components testing is done with [Enzyme](https://github.com/airbnb/enzyme/), a library that allows you to use a jQuery-like API to query the virtual dom.
 
+Code coverage (istanbul) reports are also available thanks to [Isparta](https://github.com/douglasduteil/isparta):
+``` sh
+npm run coverage
+```
 
 
 ## Production
