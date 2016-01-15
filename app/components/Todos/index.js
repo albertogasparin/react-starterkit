@@ -12,6 +12,11 @@ import TodoList from './list';
 
 class Todos extends Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
   componentWillMount() {
     if (!this.props.todos.length) {
       this.props.actions.loadTodosAsync();

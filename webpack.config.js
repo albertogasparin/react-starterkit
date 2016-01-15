@@ -142,14 +142,20 @@ module.exports = {
   },
   plugins: extendPlugins([
     new webpack.optimize.OccurenceOrderPlugin(),
+
+    // Provide global variable to detect if clientside
     new webpack.DefinePlugin({
       __CLIENT__: true,
     }),
+
+    // Fixes for commonly used libraries (triggered only if lib is actually used)
     new webpack.ProvidePlugin({
-      'Promise': 'exports-loader?global.Promise!es6-promise',
-      'window.fetch': 'exports-loader?self.fetch!whatwg-fetch',
+      'Promise': 'exports-loader?global.Promise!es6-promise', // Promise polyfill
+      'window.fetch': 'exports-loader?self.fetch!whatwg-fetch', // Fetch polyfill
     }),
-    // add any additional provide/define plugin here
+    new webpack.IgnorePlugin(/^\.\/locale$/, [/moment$/]), // Disable Moment langs auto-required
+
+    // Add any additional provide/define plugin here
   ]),
 
 };

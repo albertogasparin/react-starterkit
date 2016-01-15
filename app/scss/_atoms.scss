@@ -26,7 +26,7 @@
 .right { float: right; }
 
 .clear { clear: both; }
-.clerfix {
+.clearfix {
   &:before, &:after {
     content: " ";
     display: table;

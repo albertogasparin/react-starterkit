@@ -1,5 +1,9 @@
 # React starterkit
 
+
+[![Dependency Status](https://david-dm.org/albertogasparin/react-starterkit.svg?style=flat-square)](https://david-dm.org/albertogasparin/react-starterkit)
+[![devDependency Status](https://david-dm.org/albertogasparin/react-starterkit/dev-status.svg?style=flat-square)](https://david-dm.org/albertogasparin/react-starterkit#info=devDependencies)
+
 Server: Koa, React + router + Redux isomorphic rendering, Jade  
 Client: React + router + Redux, Sass
 
@@ -122,6 +126,11 @@ Try: `NODE_ENV=test npm run start`
 **Missing CSS-defined assets when testing on a VM or network-connected device**  
 This is a known limitation of [style-loader](https://github.com/webpack/style-loader/issues/55). The assets URL produced by that loader are absolute, so you need to explictly set your host LAN IP address.  
 Example: `HOST=192.168.1.2 npm run watch`
+
+**Startup / build time incredibly slow**
+Make sure you are using npm@3, as it [makes compilation 2x to 5x faster](https://phabricator.babeljs.io/T3067). If you are on npm@2, delete `node_modules` folder, update npm globally with `npm install -g npm` and then reinstall your deps.
+
+
 
 **Similar projects**  
 [react-redux-starter-kit](https://github.com/davezuko/react-redux-starter-kit), 
