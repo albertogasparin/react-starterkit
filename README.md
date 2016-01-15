@@ -89,11 +89,17 @@ Set the Google Analytics property and renders the dedicated script tag (default:
 
 ## Config variables
 
-You can persistently change some behaviors of the app by tweaking `lib/config.js`.
+You can persistently change some behaviors of the app by tweaking `lib/config.js`. Most interesting options are:
 
-**react.isomorphic**  
+**isomorphic** `bool`  
 Toggle on/off React server side rendering (default: `true`)  
-NOTE: this will make node no longer return 404s. You'll have to handle them with react-router. 
+NOTE: this will make node no longer return 404s. You'll have to handle them clientside or by tweaking `router.react.path` 
+
+**router.api** `{ prefix, folder }`  
+Defines API files location and the common URL prefix 
+
+**router.react** `{ path, template, routes, store }`  
+Defines which paths render the React template, plus where to find React routes and Redux store
 
 
 
