@@ -1,4 +1,5 @@
-console.log('\x1b[33mNode server starting...\x1b[0m'); // eslint-disable-line
+/* eslint-disable no-console */
+console.log('\x1b[33mNode server starting...\x1b[0m');
 
 
 /**
@@ -16,6 +17,13 @@ require('babel-polyfill');
 require('babel-register');
 
 
+/**
+ * Start the app
+ */
+var config = require('./lib/config').default;
+var app = require('./lib/index').default;
+app.listen(config.port);
 
-// Init the server app
-require('./lib/index');
+
+console.log(`# Server [${config.env}] started on http://${config.host}:${config.port}/`); // eslint-disable-line
+

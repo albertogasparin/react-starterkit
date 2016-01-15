@@ -6,7 +6,6 @@
   "keywords": [],
   "private": true,
   "config": {
-    "jade": "./node_modules/koa-jade/node_modules/.bin/jade",
     "testfiles": "find . -name *.spec.js ! -path */node_modules/*",
     "mochaargs": "--compilers js:babel-polyfill,js:babel-register --require ./lib/react-compat"
   },
@@ -14,7 +13,7 @@
     "start": "node --harmony ./server.js",
     "prebuild": "npm run clean -s && npm run lint -s",
     "build": "NODE_ENV=production webpack -p --progress --colors --display-error-details --display-modules --sort-modules-by name",
-    "build:static": "npm run build -s && $npm_package_config_jade views/index.jade -o ./public -O '{env:\"production\"}'",
+    "build:template": "NODE_ENV=production babel-node --harmony ./lib/static-builder '/' 'index.html' ",
     "pretest": "npm run lint -s",
     "test": "mocha $($npm_package_config_testfiles) $npm_package_config_mochaargs",
     "test:watch": "mocha $($npm_package_config_testfiles) $npm_package_config_mochaargs --watch --watch-extensions jsx,json --reporter min",
@@ -84,6 +83,7 @@
     "react-transform-hmr": "^1.0.1",
     "redbox-react": "^1.2.0",
     "sinon": "^1.17.0",
+    "supertest": "^1.1.0",
     "supervisor": "^0.9.1",
     "webpack-dev-middleware": "^1.4.0",
     "webpack-hot-middleware": "^2.6.0"
