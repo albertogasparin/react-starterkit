@@ -4,7 +4,7 @@ instrumentation:
     - .js
     - .jsx
   default-excludes: true
-  excludes: ['public', 'server.js', 'webpack.config.js', '**/*.spec.js']
+  excludes: ['public/**', 'server.js', 'webpack.config.js', 'lib/webpack.js', 'lib/static-builder.js', '**/*.spec.js']
   include-all-sources: true
 extensions:
   - .js

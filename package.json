@@ -1,23 +1,23 @@
 {
   "name": "react-starterkit",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "React starterkit with Koa",
   "author": "Alberto Gasparin",
-  "keywords": [],
+  "keywords": ["react", "koa", "starter kit", "redux", "router"],
   "private": true,
   "config": {
     "testfiles": "find . -name *.spec.js ! -path */node_modules/*",
-    "mochaargs": "--compilers js:babel-polyfill,js:babel-register --require ./lib/react-compat"
+    "mochaargs": "--harmony --compilers js:babel-polyfill,js:babel-register --require ./lib/react-compat"
   },
   "scripts": {
     "start": "node --harmony ./server.js",
     "prebuild": "npm run clean -s && npm run lint -s",
     "build": "NODE_ENV=production webpack -p --progress --colors --display-error-details --display-modules --sort-modules-by name",
-    "build:template": "NODE_ENV=production babel-node --harmony ./lib/static-builder '/' 'index.html' ",
+    "build:template": "NODE_ENV=production babel-node --harmony ./lib/static-builder",
     "pretest": "npm run lint -s",
-    "test": "mocha $($npm_package_config_testfiles) $npm_package_config_mochaargs",
-    "test:watch": "mocha $($npm_package_config_testfiles) $npm_package_config_mochaargs --watch --watch-extensions jsx,json --reporter min",
-    "coverage": "babel-node $(npm bin)/isparta cover _mocha -- $npm_package_config_mochaargs $($npm_package_config_testfiles)",
+    "test": "NODE_ENV=test mocha $($npm_package_config_testfiles) $npm_package_config_mochaargs",
+    "test:watch": "NODE_ENV=test mocha $($npm_package_config_testfiles) $npm_package_config_mochaargs --watch --watch-extensions jsx,json --reporter min",
+    "coverage": "NODE_ENV=test babel-node --harmony $(npm bin)/isparta cover _mocha -- $npm_package_config_mochaargs $($npm_package_config_testfiles)",
     "lint": "eslint --ext .js,.jsx --ignore-path .gitignore .",
     "clean": "rm -rf ./public/assets",
     "prewatch": "npm run clean -s",

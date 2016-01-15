@@ -3,6 +3,7 @@
 
 [![Dependency Status](https://david-dm.org/albertogasparin/react-starterkit.svg?style=flat-square)](https://david-dm.org/albertogasparin/react-starterkit)
 [![devDependency Status](https://david-dm.org/albertogasparin/react-starterkit/dev-status.svg?style=flat-square)](https://david-dm.org/albertogasparin/react-starterkit#info=devDependencies)
+[![License](http://img.shields.io/:license-mit-blue.svg)](http://albertogasparin.mit-license.org)
 
 Server: Koa, React + router + Redux isomorphic rendering, Jade  
 Client: React + router + Redux, Sass
@@ -123,7 +124,7 @@ export default {
 ## Info & Troubleshooting
 
 **No need of React-router**  
-You can easily get rid of it on the client side by removing `./routes`, `history` and `redux-simple-router` code from `app/client.js`, `app/store.js` and `app/reducers/index.js`. The minified bundle size will be reduced by ~100kB, however the router will still be used by the server to provide 404s.
+You can easily get rid of it on the client side by removing `./routes`, `history` and `redux-simple-router` code from `app/client.js`, `app/store.js` and `app/reducers/index.js`. The minified bundle size will be reduced by ~100kB. The router can still be used serverside to provide 404s and redirects.
 
 **Missing CSS while serving the built bundle**  
 The external CSS file is loaded by `index.jade` only if the node env is not `development`.  
@@ -133,7 +134,7 @@ Try: `NODE_ENV=test npm run start`
 This is a known limitation of [style-loader](https://github.com/webpack/style-loader/issues/55). The assets URL produced by that loader are absolute, so you need to explictly set your host LAN IP address.  
 Example: `HOST=192.168.1.2 npm run watch`
 
-**Startup / build time incredibly slow**
+**Startup / build time incredibly slow**  
 Make sure you are using npm@3, as it [makes compilation 2x to 5x faster](https://phabricator.babeljs.io/T3067). If you are on npm@2, delete `node_modules` folder, update npm globally with `npm install -g npm` and then reinstall your deps.
 
 

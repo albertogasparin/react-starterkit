@@ -25,5 +25,7 @@ var app = require('./lib/index').default;
 app.listen(config.port);
 
 
-console.log(`# Server [${config.env}] started on http://${config.host}:${config.port}/`); // eslint-disable-line
+console.log('\x1b[33mServer [%s] started on http://%s:%s/\x1b[0m',
+  config.env, config.host, config.port);
+
 

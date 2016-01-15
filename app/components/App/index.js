@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import { Link } from 'react-router';
 
 import './style.scss';
@@ -6,8 +6,6 @@ import './style.scss';
 /**
  * App component
  */
-
-const propTypes = {};
 
 const App = ({ children }) => (
   <div className="App">
@@ -19,7 +17,5 @@ const App = ({ children }) => (
     </section>
   </div>
 );
-
-App.propTypes = propTypes;
 
 export default App;
