@@ -1,4 +1,4 @@
-import _reject from 'lodash/collection/reject';
+import _reject from 'lodash/reject';
 
 /**
  * Todos Reducers
