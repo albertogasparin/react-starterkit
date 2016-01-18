@@ -1,15 +1,17 @@
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
-import { syncReduxAndRouter } from 'redux-simple-router';
+import { syncHistory } from 'redux-simple-router';
 
 import reducers from './reducers';
 
 export default function (history, initialState) {
-  // Enhance createStore with async middleware
-  const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
-  const store = createStoreWithMiddleware(reducers, initialState);
+  // Enhance createStore with middlewares
+  const createStoreWithMiddleware = applyMiddleware(
+    thunk, // async mw
+    syncHistory(history), // router mw
+  )(createStore);
 
-  syncReduxAndRouter(history, store);
+  const store = createStoreWithMiddleware(reducers, initialState);
 
   return store;
 }
