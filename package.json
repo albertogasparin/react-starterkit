@@ -30,7 +30,7 @@
     "watch": "supervisor -q -w lib,api,webpack.config.js -i __tests__ --harmony ./server.js"
   },
   "dependencies": {
-    "autoprefixer-loader": "^3.0.0",
+    "autoprefixer": "^6.3.0",
     "babel-core": "^6.4.0",
     "babel-loader": "^6.2.1",
     "babel-polyfill": "^6.3.14",
@@ -58,6 +58,7 @@
     "koa-static-cache": "^3.1.4",
     "lodash": "^4.0.0",
     "node-sass": "^3.4.0",
+    "postcss-loader": "^0.8.0",
     "react": "~0.14.6",
     "react-dom": "~0.14.6",
     "react-redux": "~4.0.6",

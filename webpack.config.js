@@ -10,6 +10,7 @@ require('dotenv').load({ silent: true });
 var webpack = require('webpack');
 var path = require('path');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var autoprefixer = require('autoprefixer');
 
 /**
  * Private vars and fn
@@ -94,8 +95,7 @@ module.exports = {
         loader: extendCSSLoaders([
           'css-loader?'
             + ['sourceMap', (isProduction ? '' : '-') + 'minimize', '-autoprefixer'].join('&'),
-          'autoprefixer-loader?'
-            + ['browsers=last 3 version'].join('&'),
+          'postcss-loader',
           'sass-loader?'
             + ['sourceMap', 'outputStyle=expanded'].join('&'),
         ]),
@@ -140,6 +140,9 @@ module.exports = {
       },
     ],
   },
+  postcss: function () {
+    return [autoprefixer({ browsers: ['last 3 versions', 'IE >= 9', 'Android >= 4'] })];
+  },
   plugins: extendPlugins([
     new webpack.optimize.OccurenceOrderPlugin(),
 
@@ -157,5 +160,4 @@ module.exports = {
 
     // Add any additional provide/define plugin here
   ]),
-
 };
