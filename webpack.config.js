@@ -87,6 +87,15 @@ module.exports = {
     filename: '[name].js',
     chunkFilename: '[id].[hash].js',
   },
+  devMiddleware: {
+    publicPath: 'http://' + NODE_HOST + ':' + NODE_PORT + '/assets/', // same as output.publicPath
+    contentBase: path.join(__dirname, 'public', 'assets'), // same as output.path
+    hot: true,
+    inline: true,
+    lazy: false,
+    quiet: true,
+    noInfo: false,
+  },
   module: {
     loaders: [
       { // CSS/SASS loader + autoprefixer
