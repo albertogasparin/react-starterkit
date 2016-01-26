@@ -13,19 +13,37 @@
   "private": true,
   "config": {
     "testfiles": "find . -name *.spec.js ! -path */node_modules/*",
-    "mochaargs": "--harmony --compilers js:babel-polyfill,js:babel-register --require ./lib/react-compat"
+    "mochaargs": "--harmony --compilers js:babel-polyfill,js:babel-register --require ./lib/react-compat",
+    "nyc": {
+      "require": [
+        "babel-polyfill",
+        "babel-register",
+        "./lib/react-compat"
+      ],
+      "exclude": [
+        "app/client.js",
+        "lib/webpack.js",
+        "lib/static-builder.js",
+        "**/__tests__/**"
+      ],
+      "include": [
+        "api",
+        "app",
+        "lib"
+      ]
+    }
   },
   "scripts": {
     "start": "node --harmony ./server.js",
     "prebuild": "npm run clean -s && npm run lint -s",
     "build": "NODE_ENV=production webpack -p --progress --colors --display-error-details --display-modules --sort-modules-by name",
-    "build:template": "NODE_ENV=production babel-node --harmony ./lib/static-builder",
+    "build:template": "NODE_ENV=production node --harmony ./lib/static-builder",
     "pretest": "npm run lint -s",
     "test": "NODE_ENV=test mocha $($npm_package_config_testfiles) $npm_package_config_mochaargs",
     "test:watch": "NODE_ENV=test mocha $($npm_package_config_testfiles) $npm_package_config_mochaargs --watch --watch-extensions jsx,json --reporter min",
-    "coverage": "NODE_ENV=test babel-node --harmony $(npm bin)/isparta cover _mocha -- $npm_package_config_mochaargs $($npm_package_config_testfiles)",
+    "coverage": "NODE_ENV=test nyc --all --reporter=lcov --reporter=text mocha $npm_package_config_mochaargs $($npm_package_config_testfiles)",
     "lint": "eslint --ext .js,.jsx --ignore-path .gitignore .",
-    "clean": "rm -rf ./public/assets",
+    "clean": "rm -rf ./public/assets && rm -rf ./coverage && rm -rf ./.nyc_output",
     "prewatch": "npm run clean -s",
     "watch": "supervisor -q -w lib,api,webpack.config.js -i __tests__ --harmony ./server.js"
   },
@@ -74,7 +92,6 @@
     "whatwg-fetch": "^0.11.0"
   },
   "devDependencies": {
-    "babel-cli": "^6.4.0",
     "babel-eslint": "^5.0.0-beta6",
     "babel-plugin-react-transform": "^2.0.0",
     "chai": "^3.4.0",
@@ -83,8 +100,8 @@
     "eslint": "^1.10.3",
     "eslint-plugin-babel": "^3.0.0",
     "eslint-plugin-react": "^3.15.0",
-    "isparta": "^4.0.0",
     "mocha": "^2.3.4",
+    "nyc": "^5.5.0",
     "react-addons-test-utils": "~0.14.6",
     "react-transform-catch-errors": "^1.0.1",
     "react-transform-hmr": "^1.0.1",

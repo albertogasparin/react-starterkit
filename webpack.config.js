@@ -1,3 +1,5 @@
+/* eslint-disable object-shorthand */
+
 /**
  * Load .env file (if any)
  * Providing custom props in process.env

@@ -39,7 +39,7 @@ npm run test:watch # for TDD
 ```
 React components testing is done with [Enzyme](https://github.com/airbnb/enzyme/), a library that allows you to use a jQuery-like API to query the virtual dom.
 
-Code coverage (istanbul) reports are also available thanks to [Isparta](https://github.com/douglasduteil/isparta):
+Code coverage reports are also available thanks to [Nyc](https://github.com/bcoe/nyc):
 ``` sh
 npm run coverage
 ```
@@ -136,6 +136,20 @@ Example: `HOST=192.168.1.2 npm run watch`
 
 **Startup / build time incredibly slow**  
 Make sure you are using npm@3, as it [makes compilation 2x to 5x faster](https://phabricator.babeljs.io/T3067). If you are on npm@2, delete `node_modules` folder, update npm globally with `npm install -g npm` and then reinstall your deps.
+
+**Manually (and quickly) restart the server**  
+Just type `rs` in the console and press enter. [node-supervisor](https://github.com/petruisfan/node-supervisor) will do the rest.
+
+
+
+## Useful addons & packages
+
+- [scroll-behavior](https://github.com/rackt/scroll-behavior)  
+  Adds scroll behaviors (scroll to top / restore) on route change
+- [react-helmet](https://github.com/nfl/react-helmet)  
+  Change doc `head` (title, meta, ...) from within components (w/ server support)
+- [immutable-js](https://github.com/facebook/immutable-js) / [freezer](https://github.com/arqex/freezer) / [seamless-immutable](https://github.com/rtfeldman/seamless-immutable)  
+  Simplify reflux stores operations and makes components rendering faster
 
 
 
