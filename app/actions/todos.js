@@ -59,10 +59,12 @@ function addTodoAsync(text) {
   };
 }
 
-export default {
+const API = {
   loadTodos,
   addTodo,
   removeTodo,
   loadTodosAsync,
   addTodoAsync,
 };
+
+export default API;

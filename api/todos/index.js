@@ -27,10 +27,13 @@ function *get(next) {
   this.body = todo;
 }
 
-export default {
+
+
+const API = {
   'GET /todos': all,
   'POST /todos': create,
   'GET /todos/:id': get,
 };
 
-export { TODOS as TODOS };
+export default API;
+export { TODOS };
