@@ -1,17 +1,19 @@
-import { createStore, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
-import { syncHistory } from 'redux-simple-router';
+import { syncHistory } from 'react-router-redux';
 
 import reducers from './reducers';
 
 export default function (history, initialState) {
-  // Enhance createStore with middlewares
-  const createStoreWithMiddleware = applyMiddleware(
-    thunk, // async mw
-    syncHistory(history), // router mw
-  )(createStore);
+  // Enhance redux with middlewares and other enhancers
+  const enhancer = compose(
+    applyMiddleware(
+      thunk, // async mw
+      syncHistory(history), // router mw
+    ),
+    // support Chrome redux-devtools-extension
+    typeof window === 'object' && window.devToolsExtension ? window.devToolsExtension() : (f) => f
+  );
 
-  const store = createStoreWithMiddleware(reducers, initialState);
-
-  return store;
+  return createStore(reducers, initialState, enhancer);
 }

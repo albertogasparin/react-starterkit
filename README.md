@@ -112,11 +112,12 @@ To create a set of endpoints `/api/users` for instance, add `users/index.js` ins
   - values: the generator function that will be called by the router
 
 ``` js
-export default {
+const API = {
   'GET /todos': list,
   'POST /todos': create,
   'PUT /todos/:id': update,
 };
+export default API;
 ```
 
 

@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { routeReducer } from 'redux-simple-router';
+import { routeReducer } from 'react-router-redux';
 
 /**
  * Redux Reducers
@@ -7,7 +7,7 @@ import { routeReducer } from 'redux-simple-router';
 
 import todos from './todos';
 
-// Extend reducers with redux-simple-router reducer
+// Extend reducers with react-router-redux reducer
 // The key will be the final store object namespace
 export default combineReducers({
   todos,
