@@ -22,6 +22,8 @@ rules:
     - 2
   no-undef:
     - 2
+  no-eval:
+    - 2
   valid-typeof:
     - 2
   no-use-before-define:
@@ -32,6 +34,8 @@ rules:
     -
       vars: all
       args: none
+  no-loop-func:
+    - 1
   no-console:
     - 1
   no-alert:
@@ -40,7 +44,9 @@ rules:
     - 1
   no-undefined:
     - 1
-  no-loop-func:
+  no-process-env:
+    - 1
+  no-var:
     - 1
 
   # Punctation rules
@@ -173,6 +179,7 @@ env:
 ecmaFeatures:
   jsx: true
   modules: true
+  blockBindings: true
 
 #
 # Plugins for additional rules
@@ -186,3 +193,4 @@ plugins:
 #
 globals:
   __CLIENT__: true
+  CONFIG: true

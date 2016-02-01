@@ -69,7 +69,7 @@ Will compile and save the template (and your isomorphic app) to `public/index.ht
 
 ## ENV variables
 
-You can dynamically change some behaviors of the app by either prepending these props to the shell command or by adding them to a `.env` file.
+You can dynamically change some behaviors of the app by either prepending these props to the shell command or by adding them to a `.env` file. The defaults set in `lib/config.js` are:
 
 **NODE_ENV** `string`  
 Set node environment: `development`, `test`, `production` (default: `development`)
@@ -85,6 +85,9 @@ Set the string used to encrypt (default: `cookie-secret`)
 
 **GA_PROPERTY** `string`  
 Set the Google Analytics property and renders the dedicated script tag (default: `''`)
+
+**PUBLIC_PATH** `string`  
+The base path for assets and, eventually, Ajax requests (default: `/`). During development it will be forced to `http://HOST:PORT/` in order to fix [css-loader assets bug](https://github.com/webpack/css-loader/issues/29). Available also clientside as `CONFIG.publicPath`.
 
 
 
@@ -107,7 +110,7 @@ Defines which paths render the React template, plus where to find React routes a
 ## Adding API endpoints
 
 The current implementation loads automatically all modules inside `./api` folder. 
-To create a set of endpoints `/api/users` for instance, add `users/index.js` inside the `./api` folder. Then define your methos (like `list()`, `create()`, ...) and export an object with:  
+To create a set of endpoints `/api/users` for instance, add `users/index.js` inside the `./api` folder. Then define your methods (like `list()`, `create()`, ...) and export an object with:  
   - keys: `GET/POST/PUT/DELETE` *space* `name`
   - values: the generator function that will be called by the router
 
@@ -122,24 +125,34 @@ export default API;
 
 
 
-## Info & Troubleshooting
+## How to
 
-**No need of React-router**  
-You can easily get rid of it on the client side by removing `./routes`, `history` and `redux-simple-router` code from `app/client.js`, `app/store.js` and `app/reducers/index.js`. The minified bundle size will be reduced by ~100kB. The router can still be used serverside to provide 404s and redirects.
+**Passing config variables clientside**  
+Properties defined in `./lib/config` are not automatically available clientside. In order to expose them, you have to individually define `CONFIG.myKey` in webpack.DefinePlugin [configuration](https://github.com/albertogasparin/react-starterkit/blob/master/webpack.config.js#L159).
+
+**Building for deploying into subfolders**  
+By default the assets url prefix is `/`. By setting `PUBLIC_PATH` in `.env`, you can customize this prefix. For instance, to generate a static build that works regardless of the parent folder, just set `PUBLIC_PATH=./` (and switch react router history to [hash history](https://github.com/rackt/react-router/blob/master/docs/guides/basics/Histories.md)). 
+
+**Getting rid of React-router**  
+You can easily get rid of it on the client side by removing `routes`, `history` and `react-router-redux` code from `app/client.js`, `app/store.js` and `app/reducers/index.js`. The minified bundle size will be reduced by ~100kB. The router can still be used serverside to provide 404s and redirects.
+
+**Manually (and quickly) restart the server**  
+Just type `rs` in the console and press enter. [node-supervisor](https://github.com/petruisfan/node-supervisor) will do the rest.
+
+
+
+## Troubleshooting
 
 **Missing CSS while serving the built bundle**  
 The external CSS file is loaded by `index.jade` only if the node env is not `development`.  
 Try: `NODE_ENV=test npm run start`
 
 **Missing CSS-defined assets when testing on a VM or network-connected device**  
-This is a known limitation of [style-loader](https://github.com/webpack/style-loader/issues/55). The assets URL produced by that loader are absolute, so you need to explictly set your host LAN IP address.  
+This is a known limitation of [style-loader](https://github.com/webpack/style-loader/issues/55). The assets URL produced by that loader are absolute, so you need to explicitly set your host LAN IP address.  
 Example: `HOST=192.168.1.2 npm run watch`
 
 **Startup / build time incredibly slow**  
 Make sure you are using npm@3, as it [makes compilation 2x to 5x faster](https://phabricator.babeljs.io/T3067). If you are on npm@2, delete `node_modules` folder, update npm globally with `npm install -g npm` and then reinstall your deps.
-
-**Manually (and quickly) restart the server**  
-Just type `rs` in the console and press enter. [node-supervisor](https://github.com/petruisfan/node-supervisor) will do the rest.
 
 
 

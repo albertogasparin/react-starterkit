@@ -57,7 +57,7 @@
     "babel-preset-stage-2": "^6.3.10",
     "babel-register": "^6.3.10",
     "css-loader": "~0.23.0",
-    "dotenv": "^1.2.0",
+    "dotenv": "~2.0.0",
     "es6-promise": "^3.0.2",
     "exports-loader": "^0.6.2",
     "extract-text-webpack-plugin": "^1.0.1",

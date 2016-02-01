@@ -1,10 +1,4 @@
-/* eslint-disable object-shorthand */
-
-/**
- * Load .env file (if any)
- * Providing custom props in process.env
- */
-require('dotenv').load({ silent: true });
+/* eslint-disable no-var, object-shorthand */
 
 /**
  * Load dependencies
@@ -14,13 +8,13 @@ var path = require('path');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var autoprefixer = require('autoprefixer');
 
+var config = require('./lib/config');
+
 /**
  * Private vars and fn
  * to customise config based on env
  */
-var isProduction = process.env.NODE_ENV === 'production';
-var NODE_HOST = process.env.HOST || '127.0.0.1';
-var NODE_PORT = process.env.PORT || 3000;
+var isProduction = config.env === 'production';
 
 function extendEntrySources(sources) {
   if (!isProduction) {
@@ -35,7 +29,9 @@ function extendCSSLoaders (loaders) {
     return loaders.join('!');
   }
   // move css to separate file
-  return ExtractTextPlugin.extract('style-loader', loaders.join('!'));
+  return ExtractTextPlugin.extract('style-loader', loaders.join('!'), {
+    publicPath: './', // make css image urls relative
+  });
 }
 
 function extendPlugins(plugins) {
@@ -73,10 +69,10 @@ module.exports = {
     extensions: ['', '.js', '.jsx', '.scss'],
     alias: {
       // SASS paths aliases (use with ~alias/file)
-      assets: path.join(__dirname, 'app', 'assets'),
-      scss: path.join(__dirname, 'app', 'scss'),
+      assets: path.join(config.root, 'app', 'assets'),
+      scss: path.join(config.root, 'app', 'scss'),
       // JS paths aliases
-      actions: path.join(__dirname, 'app', 'actions'),
+      actions: path.join(config.root, 'app', 'actions'),
     },
   },
   stats: {
@@ -84,14 +80,14 @@ module.exports = {
     reasons: true,
   },
   output: {
-    path: path.join(__dirname, 'public', 'assets'),
-    publicPath: (isProduction ? '' : 'http://' + NODE_HOST + ':' + NODE_PORT) + '/assets/',
+    path: path.join(config.root, 'public', 'assets'),
+    publicPath: config.publicPath + 'assets/',
     filename: '[name].js',
     chunkFilename: '[id].[hash].js',
   },
   devMiddleware: {
-    publicPath: 'http://' + NODE_HOST + ':' + NODE_PORT + '/assets/', // same as output.publicPath
-    contentBase: path.join(__dirname, 'public', 'assets'), // same as output.path
+    publicPath: config.publicPath + 'assets/', // same as output.publicPath
+    contentBase: path.join(config.root, 'public', 'assets'), // same as output.path
     hot: true,
     inline: true,
     lazy: false,
@@ -157,9 +153,14 @@ module.exports = {
   plugins: extendPlugins([
     new webpack.optimize.OccurenceOrderPlugin(),
 
-    // Provide global variable to detect if clientside
+    // Variable replacement to bridge client/server side globals
     new webpack.DefinePlugin({
-      __CLIENT__: true,
+      'process.env': { NODE_ENV: JSON.stringify(config.env) },
+      __CLIENT__: true, // allow detection if clientside rendering
+      // provide server side config vars (ensure strings are quoted)
+      'CONFIG': {
+        publicPath: JSON.stringify(config.publicPath),
+      },
     }),
 
     // Fixes for commonly used libraries (triggered only if lib is actually used)
