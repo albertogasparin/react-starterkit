@@ -95,12 +95,8 @@ rules:
     -
       beforeColon: false
       afterColon: true
-  space-before-keywords:
+  keyword-spacing:
     - 1
-    - always
-  space-after-keywords:
-    - 1
-    - always
   arrow-spacing:
     - 1
     -
@@ -180,13 +176,13 @@ ecmaFeatures:
   jsx: true
   modules: true
   blockBindings: true
+  experimentalObjectRestSpread: true
 
 #
 # Plugins for additional rules
 #
 plugins:
   - react
-  - babel
 
 #
 # Project wise globals
