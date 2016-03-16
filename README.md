@@ -87,7 +87,7 @@ Set the string used to encrypt (default: `cookie-secret`)
 Set the Google Analytics property and renders the dedicated script tag (default: `''`)
 
 **PUBLIC_PATH** `string`  
-The base path for assets and, eventually, Ajax requests (default: `/`). During development it will be forced to `http://HOST:PORT/` in order to fix [css-loader assets bug](https://github.com/webpack/css-loader/issues/29). Available also clientside as `CONFIG.publicPath`.
+The base path for assets and, eventually, Ajax requests (default: `/`). During development it is forced to `http://HOST:PORT/` to fix a [css-loader assets bug](https://github.com/webpack/css-loader/issues/29). Available also client-side as `CONFIG.publicPath`.
 
 
 
@@ -96,8 +96,8 @@ The base path for assets and, eventually, Ajax requests (default: `/`). During d
 You can persistently change some behaviors of the app by tweaking `lib/config.js`. Most interesting options are:
 
 **isomorphic** `bool`  
-Toggle on/off React server side rendering (default: `true`)  
-NOTE: this will make node no longer return 404s. You'll have to handle them clientside or by tweaking `router.react.path` 
+Toggle on/off React server-side rendering (default: `true`)  
+NOTE: this will make node no longer return 404s. You'll have to handle them client-side or by tweaking `router.react.path` 
 
 **router.api** `{ prefix, folder }`  
 Defines API files location and the common URL prefix 
@@ -127,14 +127,14 @@ export default API;
 
 ## How to
 
-**Passing config variables clientside**  
-Properties defined in `./lib/config` are not automatically available clientside. In order to expose them, you have to individually define `CONFIG.myKey` in webpack.DefinePlugin [configuration](https://github.com/albertogasparin/react-starterkit/blob/master/webpack.config.js#L159).
+**Passing config variables client-side**  
+Properties defined in `./lib/config` are not automatically available client-side. In order to expose them, you have to individually define `CONFIG.myKey` in webpack.DefinePlugin [configuration](https://github.com/albertogasparin/react-starterkit/blob/master/webpack.config.js#L159).
 
 **Building for deploying into subfolders**  
 By default the assets url prefix is `/`. By setting `PUBLIC_PATH` in `.env`, you can customize this prefix. For instance, to generate a static build that works regardless of the parent folder, just set `PUBLIC_PATH=./` (and switch react router history to [hash history](https://github.com/rackt/react-router/blob/master/docs/guides/basics/Histories.md)). 
 
 **Getting rid of React-router**  
-You can easily get rid of it on the client side by removing `routes`, `history` and `react-router-redux` code from `app/client.js`, `app/store.js` and `app/reducers/index.js`. The minified bundle size will be reduced by ~100kB. The router can still be used serverside to provide 404s and redirects.
+You can easily get rid of it on the client side by removing `routes`, `history` and `react-router-redux` code from `app/client.js`, `app/store.js` and `app/reducers/index.js`. The minified bundle size will be reduced by ~100kB. The router can still be used server-side to provide 404s and redirects.
 
 **Manually (and quickly) restart the server**  
 Just type `rs` in the console and press enter. [node-supervisor](https://github.com/petruisfan/node-supervisor) will do the rest.
@@ -162,8 +162,12 @@ Make sure you are using npm@3, as it [makes compilation 2x to 5x faster](https:/
   Adds scroll behaviors (scroll to top / restore) on route change
 - [react-helmet](https://github.com/nfl/react-helmet)  
   Change doc `head` (title, meta, ...) from within components (w/ server support)
-- [immutable-js](https://github.com/facebook/immutable-js) / [freezer](https://github.com/arqex/freezer) / [seamless-immutable](https://github.com/rtfeldman/seamless-immutable)  
-  Simplify reflux stores operations and makes components rendering faster
+- [immutable-js](https://github.com/facebook/immutable-js) / [seamless-immutable](https://github.com/rtfeldman/seamless-immutable)  
+  Immutable data / helpers
+- [redux-batched-subscribe](https://github.com/tappleby/redux-batched-subscribe)  
+  Batch redux updates to avoid multiple re-renders
+- [react-autobind](https://github.com/cassiozen/React-autobind)  
+  Auto-binding React class methods  
 
 
 
