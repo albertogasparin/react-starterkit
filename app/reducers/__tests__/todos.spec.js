@@ -1,7 +1,6 @@
 /* eslint-env mocha */
 
 import { expect } from 'chai';
-import deepFreeze from 'deep-freeze';
 
 import todos from '../todos';
 
@@ -27,8 +26,6 @@ describe('Reducers: todos', () => {
       };
       let stateAfter = [{ id: 1 }];
 
-      deepFreeze(stateBefore);
-      deepFreeze(action);
       expect(todos(stateBefore, action)).to.deep.equal(stateAfter);
     });
 
@@ -45,8 +42,6 @@ describe('Reducers: todos', () => {
       };
       let stateAfter = [{ id: 1 }, { id: 2 }];
 
-      deepFreeze(stateBefore);
-      deepFreeze(action);
       expect(todos(stateBefore, action)).to.deep.equal(stateAfter);
     });
 
@@ -63,8 +58,6 @@ describe('Reducers: todos', () => {
       };
       let stateAfter = [{ id: 2 }];
 
-      deepFreeze(stateBefore);
-      deepFreeze(action);
       expect(todos(stateBefore, action)).to.deep.equal(stateAfter);
     });
 

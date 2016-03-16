@@ -7,10 +7,13 @@ export default function (initialState) {
   // Enhance redux with middlewares and other enhancers
   const enhancer = compose(
     applyMiddleware(
-      thunk, // async mw
+      // async mw
+      thunk,
+      // redux-immutable-state-invariant mw (DEV only)
+      __CLIENT__ && window.reduxImmutable ? window.reduxImmutable() : ((s) => (n) => (a) => n(a))
     ),
     // support Chrome redux-devtools-extension
-    typeof window === 'object' && window.devToolsExtension ? window.devToolsExtension() : (f) => f
+    __CLIENT__ && window.devToolsExtension ? window.devToolsExtension() : (f) => f
   );
 
   return createStore(reducers, initialState, enhancer);

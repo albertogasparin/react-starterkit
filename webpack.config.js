@@ -37,6 +37,9 @@ function extendCSSLoaders (loaders) {
 function extendPlugins(plugins) {
   if (!isProduction) {
     plugins.unshift(new webpack.HotModuleReplacementPlugin());
+    plugins.push(new webpack.ProvidePlugin({
+      'window.reduxImmutable': 'redux-immutable-state-invariant',
+    }));
   } else {
     plugins.push(new webpack.optimize.DedupePlugin());
     // plugins.push(new webpack.optimize.CommonsChunkPlugin({
