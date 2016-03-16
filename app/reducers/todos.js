@@ -1,4 +1,4 @@
-import _reject from 'lodash/reject';
+import _ from 'lodash';
 
 /**
  * Todos Reducers
@@ -11,7 +11,7 @@ const todos = (state = [], action) => {
     case 'ADD_TODO':
       return state.concat(action.todo);
     case 'REMOVE_TODO':
-      return _reject(state, { id: action.id });
+      return _.reject(state, { id: action.id });
     default:
       return state;
   }
