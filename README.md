@@ -80,9 +80,6 @@ Koa server host IP address (default: `127.0.0.1`)
 **PORT** `int`  
 Koa server listening port (default: `3000`)
 
-**COOKIE_SECRET** `string`  
-Set the string used to encrypt (default: `cookie-secret`)
-
 **GA_PROPERTY** `string`  
 Set the Google Analytics property and renders the dedicated script tag (default: `''`)
 
