@@ -6,5 +6,13 @@
   ],
   "plugins": ["lodash"],
   "retainLines": true,
-  "sourceMaps": "inline"
+  "sourceMaps": "inline",
+  "env": {
+    "production": {
+      "plugins": [
+        "transform-react-constant-elements",
+        "transform-react-inline-elements"
+      ]
+    }
+  }
 }

@@ -123,7 +123,7 @@ rules:
     - never
   complexity:
     - 1
-    - 4
+    - 5
   max-depth:
     - 1
     - 5
