@@ -3,12 +3,12 @@ import thunk from 'redux-thunk';
 
 import reducers from './reducers';
 
-export default function (initialState) {
+export default function (initialState, thunkMiddleware = thunk) {
   // Enhance redux with middlewares and other enhancers
   const enhancer = compose(
     applyMiddleware(
       // async mw
-      thunk,
+      thunkMiddleware,
       // redux-immutable-state-invariant mw (DEV only)
       __CLIENT__ && window.reduxImmutable ? window.reduxImmutable() : ((s) => (n) => (a) => n(a))
     ),
