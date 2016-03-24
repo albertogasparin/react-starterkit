@@ -13,25 +13,7 @@
   "private": true,
   "config": {
     "testfiles": "find . -name *.spec.js ! -path */node_modules/*",
-    "mochaargs": "--harmony --compilers js:babel-polyfill,js:babel-register --require ./lib/react-compat",
-    "nyc": {
-      "require": [
-        "babel-polyfill",
-        "babel-register",
-        "./lib/react-compat"
-      ],
-      "exclude": [
-        "app/client.js",
-        "lib/webpack.js",
-        "lib/static-builder.js",
-        "**/__tests__/**"
-      ],
-      "include": [
-        "api",
-        "app",
-        "lib"
-      ]
-    }
+    "mochaargs": "--harmony --compilers js:babel-polyfill,js:babel-register --require ./lib/react-compat"
   },
   "scripts": {
     "start": "node --harmony ./server.js",
@@ -41,11 +23,28 @@
     "pretest": "npm run lint -s",
     "test": "NODE_ENV=test mocha $($npm_package_config_testfiles) $npm_package_config_mochaargs",
     "test:watch": "NODE_ENV=test mocha $($npm_package_config_testfiles) $npm_package_config_mochaargs --watch --watch-extensions jsx,json --reporter min",
-    "coverage": "NODE_ENV=test nyc --all --reporter=lcov --reporter=text mocha $npm_package_config_mochaargs $($npm_package_config_testfiles)",
+    "coverage": "NODE_ENV=test nyc -i babel-polyfill -i babel-register -i ./lib/react-compat --all mocha $npm_package_config_mochaargs $($npm_package_config_testfiles)",
     "lint": "eslint --ext .js,.jsx --ignore-path .gitignore .",
     "clean": "rm -rf ./public/assets && rm -rf ./coverage && rm -rf ./.nyc_output",
     "prewatch": "npm run clean -s",
     "watch": "supervisor -q -w lib,api,webpack.config.js -i __tests__ --harmony ./server.js"
+  },
+  "nyc": {
+    "reporter": [
+      "lcov",
+      "text"
+    ],
+    "exclude": [
+      "app/client.js",
+      "lib/webpack.js",
+      "lib/static-builder.js",
+      "**/__tests__/**"
+    ],
+    "include": [
+      "api",
+      "app",
+      "lib"
+    ]
   },
   "dependencies": {
     "autoprefixer": "^6.3.0",
@@ -95,14 +94,14 @@
     "babel-eslint": "6.0.0-beta.6",
     "babel-plugin-react-transform": "^2.0.2",
     "chai": "^3.5.0",
-    "enzyme": "^2.1.0",
+    "enzyme": "^2.2.0",
     "eslint": "^2.4.0",
-    "eslint-plugin-react": "^4.2.2",
+    "eslint-plugin-react": "^4.2.0",
     "mocha": "^2.4.0",
-    "nyc": "^5.6.0",
+    "nyc": "^6.1.1",
     "react-addons-test-utils": "~0.14.7",
-    "react-transform-hmr": "^1.0.4",
-    "redux-immutable-state-invariant": "^1.2.0",
+    "react-transform-hmr": "~1.0.4",
+    "redux-immutable-state-invariant": "~1.2.0",
     "sinon": "^1.17.0",
     "supertest": "^1.1.0",
     "supervisor": "^0.9.0",
