@@ -1,81 +1,75 @@
+extends: eslint:recommended
+
 rules:
 
   # Code checks
   #
   eqeqeq:
-    - 2
-  no-dupe-args:
-    - 2
-  no-dupe-keys:
-    - 2
-  no-duplicate-case:
-    - 2
+    - error
   no-func-assign:
-    - 2
+    - error
   no-inner-declarations:
-    - 2
-  no-unreachable:
-    - 2
+    - error
   no-redeclare:
-    - 2
+    - error
   no-shadow:
-    - 2
-  no-undef:
-    - 2
+    - error
   no-eval:
-    - 2
+    - error
+  no-undef:
+    - error
+    -
+      typeof: false
   valid-typeof:
-    - 2
+    - error
   no-use-before-define:
-    - 1
+    - warn
     - nofunc
   no-unused-vars:
-    - 1
+    - warn
     -
       vars: all
       args: none
   no-loop-func:
-    - 1
+    - warn
   no-console:
-    - 1
+    - warn
   no-alert:
-    - 1
+    - warn
   no-debugger:
-    - 1
+    - warn
   no-undefined:
-    - 1
+    - warn
   no-process-env:
-    - 1
+    - warn
   no-var:
-    - 1
+    - warn
 
   # Punctation rules
   #
   semi:
-    - 2
+    - error
     - always
   linebreak-style:
-    - 2
+    - error
     - unix
-  no-extra-semi:
-    - 2
   curly:
-    - 2
+    - error
   comma-dangle:
-    - 1
+    - warn
     - always-multiline
   quotes:
-    - 1
+    - warn
     - single
 
   # Spacing rules
   #
   no-spaced-func:
-    - 2
+    - error
   no-irregular-whitespace:
-    - 2
+    - error
   indent:
-    - 1
+    - warn
     - 2
     -
       SwitchCase: 1
@@ -84,54 +78,51 @@ rules:
         let: 2
         const: 3
   brace-style:
-    - 1
+    - warn
     - 1tbs
     -
       allowSingleLine: true
   no-multi-spaces:
-    - 1
+    - warn
   key-spacing:
-    - 1
+    - warn
     -
       beforeColon: false
       afterColon: true
   keyword-spacing:
-    - 1
+    - warn
   arrow-spacing:
-    - 1
+    - warn
     -
       before: true
       after: true
   space-infix-ops:
-    - 1
+    - warn
   object-curly-spacing:
-    - 1
+    - warn
     - always
     -
       objectsInObjects: true
       arraysInObjects: true
   space-in-parens:
-    - 1
+    - warn
     - never
   eol-last:
-    - 1
+    - warn
 
   # Coding helpers rules
   #
-  strict:
-    - 2
-    - never
   complexity:
-    - 1
+    - warn
     - 5
   max-depth:
-    - 1
+    - warn
     - 5
   max-nested-callbacks:
-    - 1
+    - warn
     - 4
   max-len:
-    - 1
+    - warn
     - 100
     - 4
     -
@@ -140,26 +131,36 @@ rules:
   # ES6 rules
   #
   generator-star-spacing:
-    - 1
+    - warn
   object-shorthand:
-    - 1
+    - warn
     - always
-  prefer-template:
-    - 0
+  no-duplicate-imports:
+    - warn
+    -
+      includeExports: true
 
   # React custom rules
   #
+  react/jsx-closing-bracket-location:
+    - warn
+    - tag-aligned
+  react/jsx-key:
+    - error
+  react/jsx-no-duplicate-props:
+    - error
+  react/jsx-no-undef:
+    - error
+  react/jsx-pascal-case:
+    - error
+  react/jsx-space-before-closing:
+    - warn
   react/jsx-uses-react:
-    - 2
+    - error
   react/jsx-uses-vars:
-    - 2
+    - error
   react/react-in-jsx-scope:
-    - 2
-
-#
-# Custom parser to handle ES7
-#
-parser: babel-eslint
+    - error
 
 #
 # Environments
@@ -170,13 +171,15 @@ env:
   browser: true
 
 #
-# ECMA features
+# Options
 #
-ecmaFeatures:
-  jsx: true
-  modules: true
-  blockBindings: true
-  experimentalObjectRestSpread: true
+parserOptions:
+  ecmaVersion: 6
+  sourceType: module
+  ecmaFeatures:
+    jsx: true
+    blockBindings: true
+    experimentalObjectRestSpread: true
 
 #
 # Plugins for additional rules

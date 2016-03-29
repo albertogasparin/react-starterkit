@@ -91,11 +91,10 @@
     "whatwg-fetch": "~0.11.0"
   },
   "devDependencies": {
-    "babel-eslint": "6.0.0-beta.6",
     "babel-plugin-react-transform": "^2.0.2",
     "chai": "^3.5.0",
     "enzyme": "^2.2.0",
-    "eslint": "^2.4.0",
+    "eslint": "^2.5.0",
     "eslint-plugin-react": "^4.2.0",
     "mocha": "^2.4.0",
     "nyc": "^6.1.1",
