@@ -25,13 +25,13 @@ To start the node server (watching) run:
 npm run watch
 ```
 The default browser entry point while developing is `127.0.0.1:3000`. 
-Webpack middleware will handle all `/assets` requests, while all other requests will be handled by Koa
+Webpack middleware handles all `/assets` requests, while Koa handles all others
 
 
 
 ## Testing
 
-Tests are run with Mocha + Expect for both client and server:
+Tests run with Mocha + Expect for both client and server:
 ``` sh
 npm run test 
 # or
@@ -150,6 +150,9 @@ Example: `HOST=192.168.1.2 npm run watch`
 
 **Startup / build time incredibly slow**  
 Make sure you are using npm@3, as it [makes compilation 2x to 5x faster](https://phabricator.babeljs.io/T3067). If you are on npm@2, delete `node_modules` folder, update npm globally with `npm install -g npm` and then reinstall your deps.
+
+**Node 0.12 support**  
+The minimum Node version is now v4, which delivers better performance. However, Node 0.12 support could be achieved by replacing `es2015-node4` with `es2015` in `.babelrc` and by adding `--harmony` flag to node/mocha commands.
 
 
 
