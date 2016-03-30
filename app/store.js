@@ -1,7 +1,7 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 
-import reducers from './reducers';
+import reducers from 'providers';
 
 export default function (initialState, thunkMiddleware = thunk) {
   // Enhance redux with middlewares and other enhancers

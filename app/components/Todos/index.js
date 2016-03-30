@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import TodosActions from 'actions/todos';
+import { TodoActions } from 'providers';
 import TodoList from './list';
 // import './style.scss';
 
@@ -19,12 +19,12 @@ class Todos extends Component {
 
   componentWillMount() {
     if (!this.props.todos.length) {
-      this.props.actions.loadTodosAsync();
+      this.props.todoActions.loadAsync();
     }
   }
 
   hadleTodoAdd() {
-    this.props.actions.addTodoAsync('New todo');
+    this.props.todoActions.addAsync('New todo');
   }
 
   render () {
@@ -39,5 +39,5 @@ class Todos extends Component {
 
 export default connect(
   (state) => ({ todos: state.todos }),
-  (dispatch) => ({ actions: bindActionCreators(TodosActions, dispatch) })
+  (dispatch) => ({ todoActions: bindActionCreators(TodoActions, dispatch) })
 )(Todos);

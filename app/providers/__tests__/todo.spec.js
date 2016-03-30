@@ -2,63 +2,63 @@
 
 import { expect } from 'chai';
 
-import todos from '../todos';
+import { types, reducer } from '../todo';
 
-describe('Reducers: todos', () => {
+describe('Reducers: todo', () => {
 
   describe('default', () => {
     it('should return the state', () => {
       let stateBefore;
       let action = { type: 'DUMMY' };
       let stateAfter = [];
-      expect(todos(stateBefore, action)).to.deep.equal(stateAfter);
+      expect(reducer(stateBefore, action)).to.deep.equal(stateAfter);
     });
   });
 
 
-  describe('LOAD_TODOS', () => {
+  describe(types.LOAD, () => {
 
     it('should return a whole new collection', () => {
       let stateBefore = [];
       let action = {
-        type: 'LOAD_TODOS',
-        todos: [{ id: 1 }],
+        type: types.LOAD,
+        payload: [{ id: 1 }],
       };
       let stateAfter = [{ id: 1 }];
 
-      expect(todos(stateBefore, action)).to.deep.equal(stateAfter);
+      expect(reducer(stateBefore, action)).to.deep.equal(stateAfter);
     });
 
   });
 
 
-  describe('ADD_TODO', () => {
+  describe(types.ADD, () => {
 
     it('should add a todo into the store', () => {
       let stateBefore = [{ id: 1 }];
       let action = {
-        type: 'ADD_TODO',
-        todo: { id: 2 },
+        type: types.ADD,
+        payload: { id: 2 },
       };
       let stateAfter = [{ id: 1 }, { id: 2 }];
 
-      expect(todos(stateBefore, action)).to.deep.equal(stateAfter);
+      expect(reducer(stateBefore, action)).to.deep.equal(stateAfter);
     });
 
   });
 
 
-  describe('REMOVE_TODO', () => {
+  describe(types.REMOVE, () => {
 
     it('should remove the todo from the store', () => {
       let stateBefore = [{ id: 1 }, { id: 2 }];
       let action = {
-        type: 'REMOVE_TODO',
-        id: 1,
+        type: types.REMOVE,
+        payload: 1,
       };
       let stateAfter = [{ id: 2 }];
 
-      expect(todos(stateBefore, action)).to.deep.equal(stateAfter);
+      expect(reducer(stateBefore, action)).to.deep.equal(stateAfter);
     });
 
   });

@@ -68,16 +68,7 @@ module.exports = {
     // vendor: ['react'],
     app: extendEntrySources(['./app/client']),
   },
-  resolve: {
-    extensions: ['', '.js', '.jsx', '.scss'],
-    alias: {
-      // SASS paths aliases (use with ~alias/file)
-      assets: path.join(config.root, 'app', 'assets'),
-      scss: path.join(config.root, 'app', 'scss'),
-      // JS paths aliases
-      actions: path.join(config.root, 'app', 'actions'),
-    },
-  },
+  resolve: config.client.resolve,
   stats: {
     colors: true,
     reasons: true,
