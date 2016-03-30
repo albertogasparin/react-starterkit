@@ -24,7 +24,7 @@
     "test": "NODE_ENV=test mocha $($npm_package_config_testfiles) $npm_package_config_mochaargs",
     "test:watch": "NODE_ENV=test mocha $($npm_package_config_testfiles) $npm_package_config_mochaargs --watch --watch-extensions jsx,json --reporter min",
     "coverage": "NODE_ENV=test nyc -i babel-polyfill -i babel-register -i ./lib/react-compat --all mocha $npm_package_config_mochaargs $($npm_package_config_testfiles)",
-    "lint": "eslint --ext .js,.jsx --ignore-path .gitignore .",
+    "lint": "eslint --ext .js,.jsx --ignore-path .gitignore . && stylelint --syntax scss \"app/**/*.scss\"",
     "clean": "rm -rf ./public/assets && rm -rf ./coverage && rm -rf ./.nyc_output",
     "prewatch": "npm run clean -s",
     "watch": "supervisor --debug -q -w lib,api,webpack.config.js -i __tests__ ./server.js"
@@ -103,6 +103,7 @@
     "react-transform-hmr": "~1.0.4",
     "redux-immutable-state-invariant": "~1.2.0",
     "sinon": "^1.17.0",
+    "stylelint": "^5.2.1",
     "supertest": "^1.1.0",
     "supervisor": "^0.9.0",
     "webpack-dev-middleware": "~1.6.1",

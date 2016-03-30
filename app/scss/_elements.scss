@@ -6,4 +6,5 @@ html {
   font-size: $base-font-size;
   line-height: $base-line-height;
   color: $color-text;
+  touch-action: manipulation; // iOS fast tap
 }
