@@ -4,9 +4,9 @@ import ReactDom from 'react-dom';
 import { Provider } from 'react-redux';
 import { Router, browserHistory } from 'react-router';
 
+import './client.scss';
 import createMainStore from './store';
 import routes from './routes';
-import './client.scss';
 
 /**
  * Setup history and store
