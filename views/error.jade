@@ -1,0 +1,32 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="utf-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no")
+    meta(name="apple-mobile-web-app-capable" content="yes")
+    title Error #{status}
+
+    style.
+      body { padding: 50px 80px; font: 14px "Helvetica Neue", Helvetica, sans-serif; }
+      h1, h2 { margin: 0; padding: 10px 0; }
+      h1 { font-size: 2em; }
+      h2 { font-size: 1.2em; font-weight: 200; color: #aaa; }
+      pre { font-size: .8em; }
+
+  body
+    #error
+      if status == 404
+        h1 404: something missing
+        p It looks like the resource you were looking for no longer exists or you mispelled the URL
+
+      else
+        h1 Ops! Something went wrong
+        p It looks like we were not able to handle your request
+
+        if env == 'development'
+          h2 Message:
+          pre: code #{error}
+
+          h2 Stack:
+          pre: code #{stack}
+
