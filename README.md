@@ -33,7 +33,7 @@ Webpack middleware handles all `/assets` requests, while Koa handles all others
 
 Tests run with Mocha + Expect for both client and server:
 ``` sh
-npm run test 
+npm run test -s
 # or
 npm run test:watch # for TDD
 ```

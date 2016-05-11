@@ -63,7 +63,7 @@ function extendPlugins(plugins) {
  */
 module.exports = {
   debug: !isProduction,
-  devtool: !isProduction ? 'eval-source-map' : '',
+  devtool: !isProduction ? 'cheap-module-eval-source-map' : 'cheap-source-map',
   entry: {
     // vendor: ['react'],
     app: extendEntrySources(['./app/client']),
@@ -106,7 +106,7 @@ module.exports = {
         loader: 'babel-loader',
         query: {
           'presets': ['es2015'],
-          'plugins': isProduction ? [] : [
+          'plugins': isProduction ? ['lodash'] : [
             ['react-transform', {
               'transforms': [{
                 'transform': 'react-transform-hmr',

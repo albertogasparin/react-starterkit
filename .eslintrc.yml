@@ -6,6 +6,7 @@ rules:
   #
   eqeqeq:
     - error
+    - smart
   no-func-assign:
     - error
   no-inner-declarations:
