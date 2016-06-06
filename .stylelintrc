@@ -28,7 +28,7 @@
     "function-comma-space-before": ["never", { "severity": "warning" }],
     "function-linear-gradient-no-nonstandard-direction": true,
     "function-parentheses-space-inside": ["never-single-line", { "severity": "warning" }],
-    "function-url-quotes": "single",
+    "function-url-quotes": "always",
     "indentation": 2,
     "max-nesting-depth": [4, { "severity": "warning" }],
     "media-query-parentheses-space-inside": ["never", { "severity": "warning" }],
