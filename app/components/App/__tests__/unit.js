@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { expect } from 'chai';
-import { spy, stub } from 'sinon';
 import { shallow } from 'enzyme';
 
 import App from '..';

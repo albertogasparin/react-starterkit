@@ -8,21 +8,25 @@ const TODOS = [
   { id: 2, text: 'Add Redux', completed: true },
 ];
 
-function *all(next) {
-  this.body = TODOS;
+function *all() {
+  let getTodosAsync = (cb) => {
+    setTimeout(() => cb(null, TODOS), 100);
+  };
+  this.body = yield getTodosAsync;
 }
 
-function *create(next) {
+function *create() {
+  let { text } = this.request.body;
   let todo = {
     id: TODOS.length + 1,
-    text: this.request.body.text || '',
+    text: text || '',
     completed: false,
   };
   TODOS.push(todo);
   this.body = todo;
 }
 
-function *get(next) {
+function *find() {
   let todo = TODOS.find((t) => t.id === Number(this.params.id));
   this.body = todo;
 }
@@ -32,7 +36,7 @@ function *get(next) {
 const API = {
   'GET /todos': all,
   'POST /todos': create,
-  'GET /todos/:id': get,
+  'GET /todos/:id': find,
 };
 
 export default API;

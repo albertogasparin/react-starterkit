@@ -152,6 +152,7 @@ module.exports = {
       // provide server side config vars (ensure strings are quoted)
       'CONFIG': {
         publicPath: JSON.stringify(config.publicPath),
+        fetch: JSON.stringify(config.client.fetch),
       },
     }),
 

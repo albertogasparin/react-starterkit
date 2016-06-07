@@ -35,7 +35,7 @@ Tests run with Mocha + Expect for both client and server:
 ``` sh
 npm run test -s
 # or
-npm run test:watch # for TDD
+npm run test:unit:watch # for TDD
 ```
 React components testing is done with [Enzyme](https://github.com/airbnb/enzyme/), a library that allows you to use a jQuery-like API to query the virtual dom.
 
@@ -49,7 +49,7 @@ npm run coverage
 
 First, build the JS file and the CSS file (extracted):
 ``` sh
-npm run build
+npm run build:assets
 ```
 
 To run node with production env:
@@ -124,7 +124,7 @@ export default API;
 
 ## Server-side data fetching with Redux 
 
-There is no consolidated way of fetching resources server-side from a Redux action. However, using client-side fetching techniques to fetch resources already owned by your node server is counter-intuitive and less performing, so we are suggesting a different approach.
+There is no consolidated way of retrieving resources server-side from a Redux action. However, using client-side fetching techniques to fetch resources already owned by your node server is counter-intuitive and less performant, so we are suggesting a different approach.
 
 By enhancing node `require` with Webpack-like aliases we can execute different actions on the server, replacing Ajax requests with internal calls. Providers overrides (that's how we call reducers and actions bundles) are optional and explicit. So, by adding `lib/providers/todo.js` our app will require the provider inside `lib` instead of the `app/providers` one. This is an example like [lib/providers/todo.js](https://github.com/albertogasparin/react-starterkit/blob/master/lib/providers/todo.js):
 
@@ -184,7 +184,7 @@ This is a known limitation of [style-loader](https://github.com/webpack/style-lo
 Example: `HOST=192.168.1.2 npm run watch`
 
 **Startup / build time incredibly slow**  
-Make sure you are using npm@3, as it [makes compilation 2x to 5x faster](https://phabricator.babeljs.io/T3067). If you are on npm@2, delete `node_modules` folder, update npm globally with `npm install -g npm` and then reinstall your deps.
+Make sure you are using npm@3, as it [makes compilation 2x to 5x faster](https://phabricator.babeljs.io/T3067). If you are on npm@2, delete `node_modules` folder, update npm globally with `npm install -g npm` and then reinstall the deps.
 
 **Node 0.12 support**  
 The minimum Node version is now v4, which delivers better performance. However, Node 0.12 support could be achieved by replacing `es2015-node4` with `es2015` in `.babelrc` and by adding `--harmony` flag to node/mocha commands.
@@ -209,7 +209,5 @@ The minimum Node version is now v4, which delivers better performance. However, 
 **Similar projects**  
 [react-redux-starter-kit](https://github.com/davezuko/react-redux-starter-kit), 
 [isomorphic-redux](https://github.com/bananaoomarang/isomorphic-redux), 
-[react-redux-isomorphic-hot-boilerplate](https://github.com/inxilpro/react-redux-isomorphic-hot-boilerplate), 
 [react-redux-isomorphic-example](https://github.com/coodoo/react-redux-isomorphic-example), 
-[redux-universal-app](https://github.com/eriknyk/redux-universal-app)
 
