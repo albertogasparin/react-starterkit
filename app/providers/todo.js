@@ -1,6 +1,6 @@
 /* eslint-disable complexity */
 import _ from 'lodash';
-import { createAction } from '.';
+import { createAction, handleActions } from 'redux-actions';
 
 /**
  * Action types
@@ -18,22 +18,21 @@ const types = {
 
 const defaultState = [];
 
-const reducer = (state = defaultState, action) => {
-  switch (action.type) {
-    case types.LOAD: {
-      return action.payload;
-    }
-    case types.ADD: {
-      return state.concat(action.payload);
-    }
-    case types.REMOVE: {
-      return _.reject(state, { id: action.payload });
-    }
-    default: {
-      return state;
-    }
-  }
-};
+const reducer = handleActions({
+
+  [types.LOAD](state, { payload }) {
+    return payload;
+  },
+
+  [types.ADD](state, { payload }) {
+    return state.concat(payload);
+  },
+
+  [types.REMOVE](state, { payload }) {
+    return _.reject(state, { id: payload });
+  },
+
+}, defaultState);
 
 
 /**
