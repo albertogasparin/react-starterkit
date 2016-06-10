@@ -3,12 +3,13 @@
 .App {
   padding: 2rem;
 
-  &:after {
+  &:before {
     content: '';
     display: block;
-    width: 5rem;
-    height: 5rem;
-    background: #EEE url('~assets/images/img.png') 0 0 no-repeat;
+    width: 3rem;
+    height: 3rem;
+    margin-bottom: 1rem;
+    background: url('~assets/images/view-list.svg') 0 0 no-repeat;
     background-size: contain;
   }
 }

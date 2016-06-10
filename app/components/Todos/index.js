@@ -6,6 +6,8 @@ import * as providers from 'providers';
 import TodoList from './list';
 // import './style.scss';
 
+import 'assets/icons/add.svg';
+
 /**
  * Todos wrapper component
  */
@@ -33,7 +35,12 @@ class Todos extends Component {
     return (
       <div className="Todos">
         <TodoList {...this.props} />
-        <button onClick={this.hadleTodoAdd.bind(this)}>Add</button>
+        <button onClick={this.hadleTodoAdd.bind(this)}>
+          <svg width="24" height="24">
+            <use xlinkHref="#i-add" />
+          </svg>
+          Add
+        </button>
       </div>
     );
   }

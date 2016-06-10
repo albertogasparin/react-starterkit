@@ -23,7 +23,7 @@ function extendEntrySources(sources) {
   return sources;
 }
 
-function extendCSSLoaders (loaders) {
+function extendCSSLoaders(loaders) {
   if (!isProduction) {
     loaders.unshift('style-loader');
     return loaders.join('!');
@@ -34,6 +34,11 @@ function extendCSSLoaders (loaders) {
   });
 }
 
+function extendSVGLoader(loaders) {
+  loaders = loaders.join('!');
+  return loaders;
+}
+
 function extendPlugins(plugins) {
   if (!isProduction) {
     plugins.unshift(new webpack.HotModuleReplacementPlugin());
@@ -41,7 +46,6 @@ function extendPlugins(plugins) {
       'window.reduxImmutable': 'redux-immutable-state-invariant',
     }));
   } else {
-    plugins.push(new webpack.optimize.DedupePlugin());
     // plugins.push(new webpack.optimize.CommonsChunkPlugin({
     //   name: 'vendor',
     //   minChunks: Infinity,
@@ -118,20 +122,22 @@ module.exports = {
         },
       }, { // Image/SVG loader + base64 encode + optimisation
         test: /\.(jpe?g|png|gif|svg)$/i,
+        exclude: /assets\/icons/,
         loaders: [
           'url-loader?'
             + ['limit=8192', 'name=[name].[hash:6].[ext]'].join('&'),
           'image-webpack-loader?'
             + ['bypassOnDebug', 'progressive=true'].join('&'),
         ],
-      }, { // WOFF loader + base64 encode
-        test: /\.(woff)$/i,
-        loaders: [
-          'url-loader?'
-            + ['limit=8192', 'name=[name].[hash:6].[ext]'].join('&'),
-        ],
+      }, { // SVG Icons sprite loader
+        test: /\.svg$/,
+        include: [path.join(config.root, 'app', 'assets', 'icons')],
+        loader: extendSVGLoader([
+          'svg-sprite-loader?' + JSON.stringify({ name: 'i-[name]' }),
+          'image-webpack-loader',
+        ]),
       }, { // Generic file loader
-        test: /\.(eot|ttf|woff2|swf|mp[34]|wav)$/i,
+        test: /\.(eot|ttf|woff2?|swf|mp[34]|wav)$/i,
         loaders: [
           'file-loader?'
             + ['name=[name].[hash:6].[ext]'].join('&'),
@@ -163,6 +169,7 @@ module.exports = {
     }),
     new webpack.IgnorePlugin(/^\.\/locale$/, [/moment$/]), // Disable Moment langs auto-required
 
+    new webpack.optimize.DedupePlugin(),
     // Add any additional provide/define plugin here
   ]),
 };
