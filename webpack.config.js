@@ -6,6 +6,7 @@
 var webpack = require('webpack');
 var path = require('path');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var ExtractSVGPlugin = require('svg-sprite-loader/lib/extract-svg-plugin');
 var autoprefixer = require('autoprefixer');
 
 var config = require('./lib/config');
@@ -15,6 +16,8 @@ var config = require('./lib/config');
  * to customise config based on env
  */
 var isProduction = config.env === 'production';
+var extractCSS = new ExtractTextPlugin('[name].css', { allChunks: true });
+var extractSVG = new ExtractSVGPlugin('icons.svg');
 
 function extendEntrySources(sources) {
   if (!isProduction) {
@@ -29,14 +32,18 @@ function extendCSSLoaders(loaders) {
     return loaders.join('!');
   }
   // move css to separate file
-  return ExtractTextPlugin.extract('style-loader', loaders.join('!'), {
+  return extractCSS.extract('style-loader', loaders.join('!'), {
     publicPath: './', // make css image urls relative
   });
 }
 
 function extendSVGLoader(loaders) {
   loaders = loaders.join('!');
-  return loaders;
+  if (!isProduction) {
+    return loaders;
+  }
+  loaders = loaders.replace('sprite-loader?', 'sprite-loader?extract=true&');
+  return extractSVG.extract(loaders);
 }
 
 function extendPlugins(plugins) {
@@ -54,10 +61,8 @@ function extendPlugins(plugins) {
       compress: { warnings: false, screw_ie8: true },
       comments: false,
     }));
-    plugins.push(new ExtractTextPlugin('[name].css', {
-      allChunks: true,
-    }));
-    plugins.push(new webpack.NoErrorsPlugin());
+    plugins.push(extractCSS);
+    plugins.push(extractSVG);
   }
   return plugins;
 }
@@ -133,7 +138,7 @@ module.exports = {
         test: /\.svg$/,
         include: [path.join(config.root, 'app', 'assets', 'icons')],
         loader: extendSVGLoader([
-          'svg-sprite-loader?' + JSON.stringify({ name: 'i-[name]' }),
+          'svg-sprite-loader?' + ['name=i-[name]'].join('&'),
           'image-webpack-loader',
         ]),
       }, { // Generic file loader

@@ -3,10 +3,10 @@ html(lang="en")
   head
     meta(charset="utf-8")
     meta(name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no")
-    meta(name="apple-mobile-web-app-capable" content="yes")
+    //- meta(name="apple-mobile-web-app-capable" content="yes")
     //- meta(name="theme-color" content="#9d1c22")
     title App
-    link(rel="shortcut icon" href="#{config.publicPath}favicon.ico")
+    //- link(rel="shortcut icon" href="#{config.publicPath}favicon.ico")
 
     if config.env !== 'development'
       link(rel="stylesheet" href="#{config.publicPath}assets/app.css")
@@ -20,6 +20,15 @@ html(lang="en")
 
     script.
       var __INITIAL_STATE__ = !{JSON.stringify(storeState || {})};
+
+    if config.env !== 'development'
+      script.
+        (function (url, el, b, ax) {
+          ax.open('GET', url, true); ax.send();
+          ax.onload = function() {
+            el.style.display = 'none'; el.innerHTML = ax.responseText; b.insertBefore(el, b.firstChild);
+          };
+        }('/assets/icons.svg', document.createElement('div'), document.body, new XMLHttpRequest()));
 
     script(async defer src="#{config.publicPath}assets/app.js")
 
