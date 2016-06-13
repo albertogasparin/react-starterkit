@@ -171,6 +171,8 @@ You can easily get rid of it on the client side by removing `routes`, `history` 
 **Manually (and quickly) restart the server**  
 Just type `rs` in the console and press enter. [node-supervisor](https://github.com/petruisfan/node-supervisor) will do the rest.
 
+**Reduce Lodash bundle size**  
+Thanks to [Lodash Webpack Plugin](https://github.com/lodash/lodash-webpack-plugin) you can remove some features by commenting them out in `webpack.config.js`.
 
 
 ## Troubleshooting
@@ -182,6 +184,9 @@ Try: `NODE_ENV=test npm run start`
 **Missing CSS-defined assets when testing on a VM or network-connected device**  
 This is a known limitation of [style-loader](https://github.com/webpack/style-loader/issues/55). The assets URL produced by that loader are absolute, so you need to explicitly set your host LAN IP address.  
 Example: `HOST=192.168.1.2 npm run watch`
+
+**Lodash method returns an error even if used correctly**  
+This is probably due to a feature being turned off by [Lodash Webpack Plugin](https://github.com/lodash/lodash-webpack-plugin). See `webpack.config.js`.
 
 **Startup / build time incredibly slow**  
 Make sure you are using npm@3, as it [makes compilation 2x to 5x faster](https://phabricator.babeljs.io/T3067). If you are on npm@2, delete `node_modules` folder, update npm globally with `npm install -g npm` and then reinstall the deps.

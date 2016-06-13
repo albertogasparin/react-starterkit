@@ -8,6 +8,7 @@ var path = require('path');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var ExtractSVGPlugin = require('svg-sprite-loader/lib/extract-svg-plugin');
 var autoprefixer = require('autoprefixer');
+var LodashPlugin = require('lodash-webpack-plugin');
 
 var config = require('./lib/config');
 
@@ -172,9 +173,25 @@ module.exports = {
       'Promise': 'exports-loader?global.Promise!es6-promise', // Promise polyfill
       'window.fetch': 'exports-loader?self.fetch!whatwg-fetch', // Fetch polyfill
     }),
-    new webpack.IgnorePlugin(/^\.\/locale$/, [/moment$/]), // Disable Moment langs auto-required
+
+    // Disable Moment langs from being auto-required
+    new webpack.IgnorePlugin(/^\.\/locale$/, [/moment$/]),
 
     new webpack.optimize.DedupePlugin(),
+
+    // Remove lodash features (comment to save more)
+    new LodashPlugin({
+      shorthands: true, // Iteratee shorthands for _.property, _.matches, & _.matchesProperty
+      cloning: true, // Support “clone” methods & cloning source objects
+      currying: true, // Support “curry” methods
+      caching: true, // Caches for methods like _.cloneDeep, _.isEqual, & _.uniq
+      collections: true, // Support objects in “Collection” methods
+      flattening: true, // Support “flatten” methods & flattening rest arguments
+      paths: true, // Deep property path support for methods like _.get, _.has, & _.set
+      memoizing: true, // Support _.memoize & memoization
+      placeholders: true, // Argument placeholder support for “bind”, “curry”, & “partial” methods
+    }),
+
     // Add any additional provide/define plugin here
   ]),
 };

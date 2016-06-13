@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import _ from 'lodash';
 
 import TodoItem from './item';
 
@@ -14,7 +15,7 @@ const TodoList = ({ todos = [] }) => (
   <div className="TodoList">
     <h2>Todo list</h2>
     <ul>
-      {todos.map((todo, i) => (
+      {_.map(todos, (todo, i) => (
         <TodoItem key={i} {...todo} />
       ))}
     </ul>
