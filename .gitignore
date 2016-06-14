@@ -17,3 +17,6 @@ public/index.html
 
 # ignore node error log
 npm-debug.log
+
+# ignore marko compiled templates
+templates/**/*.marko.js

@@ -10,7 +10,7 @@ const TODOS = [
 
 function *all() {
   let getTodosAsync = (cb) => {
-    setTimeout(() => cb(null, TODOS), 100);
+    setTimeout(() => cb(null, TODOS), 200);
   };
   this.body = yield getTodosAsync;
 }

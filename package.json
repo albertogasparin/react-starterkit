@@ -1,6 +1,6 @@
 {
   "name": "react-starterkit",
-  "version": "2.1.0",
+  "version": "3.0.0",
   "description": "React starterkit with Koa",
   "author": "Alberto Gasparin",
   "keywords": [
@@ -29,7 +29,7 @@
     "lint": "eslint --ext .js,.jsx --ignore-path .gitignore . && stylelint --syntax scss \"app/**/*.scss\"",
     "clean": "rm -rf ./public/assets && rm -rf ./coverage && rm -rf ./.nyc_output",
     "prewatch": "npm run clean -s",
-    "watch": "supervisor --debug -q -w lib,api,webpack.config.js -i __tests__ ./server.js"
+    "watch": "supervisor --debug -q -w lib,api,templates,webpack.config.js -e js,marko -i __tests__ ./server.js"
   },
   "nyc": {
     "reporter": [
@@ -70,17 +70,16 @@
     "file-loader": "^0.8.0",
     "image-webpack-loader": "^1.8.0",
     "imports-loader": "~0.6.5",
-    "jade": "^1.11.0",
     "koa": "^1.2.0",
     "koa-better-body": "^2.0.0",
     "koa-compress": "^1.0.0",
-    "koa-error": "^2.1.0",
-    "koa-jade": "^2.1.0",
     "koa-logger": "~1.3.0",
+    "koa-onerror": "^1.3.1",
     "koa-router": "^5.4.0",
     "koa-static-cache": "^3.1.0",
     "lodash": "^4.1.0",
     "lodash-webpack-plugin": "^0.9.1",
+    "marko": "~3.4.0",
     "node-sass": "^3.6.0",
     "postcss-loader": "^0.9.0",
     "react": "^15.1.0",

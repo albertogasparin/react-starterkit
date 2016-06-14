@@ -5,8 +5,8 @@
 [![devDependency Status](https://david-dm.org/albertogasparin/react-starterkit/dev-status.svg?style=flat-square)](https://david-dm.org/albertogasparin/react-starterkit#info=devDependencies)
 [![License](http://img.shields.io/:license-mit-blue.svg)](http://albertogasparin.mit-license.org)
 
-Server: Koa, React + router + Redux isomorphic rendering, Jade  
-Client: React + router + Redux, Sass
+Server: Koa, React + router + Redux isomorphic rendering, Marko template streaming  
+Client: React + router + Redux, Sass, SVG icons setup
 
 
 
@@ -124,7 +124,7 @@ export default API;
 
 ## Server-side data fetching with Redux 
 
-There is no consolidated way of retrieving resources server-side from a Redux action. However, using client-side fetching techniques to fetch resources already owned by your node server is counter-intuitive and less performant, so we are suggesting a different approach.
+There is no consolidated way of retrieving resources server-side from a Redux action. However, using client-side fetching techniques to fetch resources already owned by your node server is counter-intuitive and less performing, so we are suggesting a different approach.
 
 By enhancing node `require` with Webpack-like aliases we can execute different actions on the server, replacing Ajax requests with internal calls. Providers overrides (that's how we call reducers and actions bundles) are optional and explicit. So, by adding `lib/providers/todo.js` our app will require the provider inside `lib` instead of the `app/providers` one. This is an example like [lib/providers/todo.js](https://github.com/albertogasparin/react-starterkit/blob/master/lib/providers/todo.js):
 
@@ -136,11 +136,10 @@ const actions = {
   ..._actions,
   // Override loadAsync action
   loadAsync() {
-    return (dispatch) => (done) => { // thunk + yield fn
+    return (dispatch) => { // thunk + yield promise
       // Your async stuff here. Once completed dispatch and resume generator 
-      fetchTodosFromDB().then((results) => {
+      return fetchTodosFromDB().then((results) => {
         dispatch(actions.load(results));
-        done(null);
       });
     };
   },
@@ -149,9 +148,7 @@ const actions = {
 export { types, reducer, actions };
 ```
 
-Server-side async actions **must** return a thunk that returns a function, to make async actions behave like synchronous ones (our custom Redux middleware will take care of that). 
-
-If you are wondering how providers get resolved server-side, have a look at [lib/router/routes-react.js](https://github.com/albertogasparin/react-starterkit/blob/master/lib/router/routes-react.js#L42)
+Server-side async actions **must** return a thunk that returns valid yield-able object (function, promise, ...) to let Koa and the custom Redux middleware taking care of the resolution. To understand better, have a look at [lib/router/routes-react.js](https://github.com/albertogasparin/react-starterkit/blob/master/lib/router/routes-react.js#L43)
 
 Further simplification might become possible once [Babel allows overriding exports](https://phabricator.babeljs.io/T2438).
  
