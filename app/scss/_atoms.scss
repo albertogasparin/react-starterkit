@@ -24,6 +24,7 @@
 
 .left { float: left; }
 .right { float: right; }
+.center { @include center(); }
 
 .clear { clear: both; }
 .clearfix {
@@ -39,8 +40,13 @@
 /* TYPOGRAPHY
    =============================================== */
 
+.t-left { text-align: left; }
 .t-center { text-align: center; }
 .t-right { text-align: right; }
 
+.t-upper { text-transform: uppercase; }
 
-
+.t-clip { @include text-clip(); }
+.t-primary { color: $color-primary; }
+.t-secondary { color: $color-secondary; }
+.t-error { color: $color-error; }

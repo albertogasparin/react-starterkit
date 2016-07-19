@@ -3,8 +3,13 @@
 
 html {
   font-family: $base-font-family;
-  font-size: $base-font-size;
-  line-height: $base-line-height;
   color: $color-text;
   touch-action: manipulation; // iOS fast tap
+
+  @each $key, $value in $font-size {
+    @include mq(map-get($breakpoints, $key)) {
+      font-size: $value;
+      line-height: map-get($line-height, $key);
+    }
+  }
 }

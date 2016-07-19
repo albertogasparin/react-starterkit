@@ -1,30 +1,56 @@
+/* MEDIA QUERIES
+   =============================================== */
+
+$breakpoints: (
+  sm: max-width 649px,
+  md: 650px,
+  lg: 1000px,
+  xl: 1250px,
+  hd: 1750px,
+);
+
+$sm: map-get($breakpoints, sm);
+$md: map-get($breakpoints, md);
+$lg: map-get($breakpoints, lg);
+$xl: map-get($breakpoints, xl);
+$hd: map-get($breakpoints, hd);
+
 
 /* TYPOGRAPHY
    =============================================== */
 
-$base-font-size: 16px;
-$base-line-height: 20px;
+$font-size: (
+  sm: 16px,
+  md: 16px,
+  hd: 18px,
+);
+
+$line-height: (
+  sm: 22px,
+  md: 22px,
+  hd: 24px,
+);
+
 $base-font-family: sans-serif;
+$base-font-size: map-get($font-size, sm);
 
 
 /* COLORS
    =============================================== */
 
 $color-text: #333;
-$color-links: #0070A5;
-$color-error: #D21717;
-
-
-/* MEDIA QUERIES
-   =============================================== */
-
-$sm: max-width 649px;
-$md: 650px;
-$lg: 1000px;
-$xl: 1250px;
-$hd: 1900px;
+$color-error: #F12A33;
+$color-warn: #F91;
+$color-primary: #1EA0F5;
+$color-secondary: #E84C09;
 
 
 /* CROSS APP / COMPONENTS VARIABLES
    =============================================== */
 
+
+
+/* OTHER
+   =============================================== */
+
+$nice-ease: cubic-bezier(0.62, 0.28, 0.23, 0.99);

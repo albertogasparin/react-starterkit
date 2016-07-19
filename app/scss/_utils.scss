@@ -1,23 +1,18 @@
+/* stylelint-disable length-zero-no-unit */
+
 /* UTILS
    =============================================== */
 
 // rem conversion
 @function rem($size) {
   $remSize: $size / $base-font-size;
-  @return #{$remSize}rem;
+  @return $remSize + 0rem;
 }
 
 // em conversion
 @function em($size, $context-size: $base-font-size) {
   $emSize: $size / $context-size;
-  @return #{$emSize}em;
-}
-
-// text ellipsis
-@mixin text-ellip() {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  @return $emSize + 0em;
 }
 
 // breakpoint

@@ -1,0 +1,22 @@
+
+// text ellipsis
+@mixin text-clip() {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// absolute center
+@mixin center() {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+// children center
+@mixin center-child() {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
