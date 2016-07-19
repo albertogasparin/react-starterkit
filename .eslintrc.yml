@@ -45,6 +45,8 @@ rules:
     - warn
   no-var:
     - warn
+  require-yield:
+    - off
 
   # Punctation rules
   #

@@ -100,19 +100,9 @@ module.exports = {
   },
   module: {
     loaders: [
-      { // CSS/SASS loader + autoprefixer
-        test: /\.s?css$/,
-        exclude: /(node_modules|bower_components)/,
-        loader: extendCSSLoaders([
-          'css-loader?'
-            + ['sourceMap', (isProduction ? '' : '-') + 'minimize', '-autoprefixer'].join('&'),
-          'postcss-loader',
-          'sass-loader?'
-            + ['sourceMap', 'outputStyle=expanded'].join('&'),
-        ]),
-      }, { // JS/JSX loader + hot reload
+      { // JS/JSX loader + hot reload
         test: /\.jsx?$/,
-        exclude: /(node_modules|bower_components)/,
+        include: path.join(config.root, 'app'),
         loader: 'babel-loader',
         query: {
           'presets': ['es2015'],
@@ -126,6 +116,15 @@ module.exports = {
             }],
           ],
         },
+      }, { // CSS/SASS loader + autoprefixer
+        test: /\.s?css$/,
+        loader: extendCSSLoaders([
+          'css-loader?'
+            + ['sourceMap', (isProduction ? '' : '-') + 'minimize', '-autoprefixer'].join('&'),
+          'postcss-loader',
+          'sass-loader?'
+            + ['sourceMap', 'outputStyle=expanded'].join('&'),
+        ]),
       }, { // Image/SVG loader + base64 encode + optimisation
         test: /\.(jpe?g|png|gif|svg)$/i,
         exclude: /assets\/icons/,
@@ -155,7 +154,7 @@ module.exports = {
     return [autoprefixer({ browsers: ['last 3 versions', 'IE >= 9', 'Android >= 4'] })];
   },
   plugins: extendPlugins([
-    new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.optimize.OccurrenceOrderPlugin(),
 
     // Variable replacement to bridge client/server side globals
     new webpack.DefinePlugin({

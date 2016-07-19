@@ -33,14 +33,14 @@ html [lang="en"]
         }('${config.publicPath}assets/icons.svg', document.createElement('div'), document.body));
         ---
 
-    async-fragment [data-provider=data.getRenderedApp var="app"]
+    await [(app from data.getRenderedApp)]
       #app
         - $!{app && app.html}
 
       script
         - var __INITIAL_STATE__ = ${JSON.stringify(app && app.state || {})};
 
-      async-fragment-error
+      await-error
         #error
           h1 - Ops, something went wrong
           p - It looks like we were not able to handle your request
