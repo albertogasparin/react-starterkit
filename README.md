@@ -84,7 +84,7 @@ Koa server listening port (default: `3000`)
 Set the Google Analytics property and renders the dedicated script tag (default: `''`)
 
 **PUBLIC_PATH** `string`  
-The base path for assets and, eventually, Ajax requests (default: `/`). During development it is forced to `http://HOST:PORT/` to fix a [css-loader assets bug](https://github.com/webpack/css-loader/issues/29). Available also client-side as `CONFIG.publicPath`.
+The base path for assets and, eventually, Ajax requests (default: `/`). During development it is forced to `http://HOST:PORT/` to fix a [css-loader assets bug](https://github.com/webpack/css-loader/issues/29). Available also client-side as `CONFIG_CLIENT.publicPath`.
 
 
 
@@ -151,13 +151,13 @@ export { types, reducer, actions };
 Server-side async actions **must** return a thunk that returns valid yield-able object (function, promise, ...) to let Koa and the custom Redux middleware taking care of the resolution. To understand better, have a look at [lib/router/routes-react.js](https://github.com/albertogasparin/react-starterkit/blob/master/lib/router/routes-react.js#L43)
 
 Further simplification might become possible once [Babel allows overriding exports](https://phabricator.babeljs.io/T2438).
- 
+
 
 
 ## How to
 
 **Passing config variables client-side**  
-Properties defined in `./lib/config` are not automatically available client-side. In order to expose them, you have to individually define `CONFIG.myKey` in webpack.DefinePlugin [configuration](https://github.com/albertogasparin/react-starterkit/blob/master/webpack.config.js#L159).
+Properties defined under `client` in `./lib/config` are automatically exposed client-side in `CLIENT_CONFIG`.
 
 **Building for deploying into subfolders**  
 By default the assets url prefix is `/`. By setting `PUBLIC_PATH` in `.env`, you can customize this prefix. For instance, to generate a static build that works regardless of the parent folder, just set `PUBLIC_PATH=./` (and switch react router history to [hash history](https://github.com/rackt/react-router/blob/master/docs/guides/basics/Histories.md)). 
@@ -169,7 +169,7 @@ You can easily get rid of it on the client side by removing `routes`, `history` 
 Just type `rs` in the console and press enter. [node-supervisor](https://github.com/petruisfan/node-supervisor) will do the rest.
 
 **Reduce Lodash bundle size**  
-Thanks to [Lodash Webpack Plugin](https://github.com/lodash/lodash-webpack-plugin) you can remove some features by commenting them out in `webpack.config.js`.
+Thanks to [Lodash Webpack Plugin](https://github.com/lodash/lodash-webpack-plugin) you can remove some of it's features by comment them out in `webpack.config.js`.
 
 
 ## Troubleshooting
@@ -185,12 +185,6 @@ Example: `HOST=192.168.1.2 npm run watch`
 **Lodash method returns an error even if used correctly**  
 This is probably due to a feature being turned off by [Lodash Webpack Plugin](https://github.com/lodash/lodash-webpack-plugin). See `webpack.config.js`.
 
-**Startup / build time incredibly slow**  
-Make sure you are using npm@3, as it [makes compilation 2x to 5x faster](https://phabricator.babeljs.io/T3067). If you are on npm@2, delete `node_modules` folder, update npm globally with `npm install -g npm` and then reinstall the deps.
-
-**Node 0.12 support**  
-The minimum Node version is now v4, which delivers better performance. However, Node 0.12 support could be achieved by replacing `es2015-node4` with `es2015` in `.babelrc` and by adding `--harmony` flag to node/mocha commands.
-
 
 
 ## Useful addons & packages
@@ -198,7 +192,7 @@ The minimum Node version is now v4, which delivers better performance. However, 
 - [scroll-behavior](https://github.com/rackt/scroll-behavior)  
   Adds scroll behaviors (scroll to top / restore) on route change
 - [react-helmet](https://github.com/nfl/react-helmet)  
-  Change doc `head` (title, meta, ...) from within components (w/ server support)
+  Change doc `head` (title, meta, ...) from within components (w/ server-side support)
 - [immutable-js](https://github.com/facebook/immutable-js) / [seamless-immutable](https://github.com/rtfeldman/seamless-immutable)  
   Immutable data / helpers
 - [redux-batched-subscribe](https://github.com/tappleby/redux-batched-subscribe)  

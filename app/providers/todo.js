@@ -51,7 +51,7 @@ const actions = {
     // redux-thunk magic: it allow actions to return functions
     // w/ dispatch as argument, so we can call it as many times as needed
     return (dispatch) => {
-      window.fetch(CONFIG.publicPath + 'api/todos', CONFIG.fetch)
+      window.fetch(CONFIG_CLIENT.publicPath + 'api/todos', CONFIG_CLIENT.fetch)
       .then((response) => response.json())
       .then((json) => {
         // add todos fetched from the server
@@ -67,7 +67,7 @@ const actions = {
       dispatch(actions.add(tmpTodo));
 
       window.fetch('/api/todos', {
-        ...CONFIG.fetch,
+        ...CONFIG_CLIENT.fetch,
         method: 'post',
         body: JSON.stringify({ text }),
       })

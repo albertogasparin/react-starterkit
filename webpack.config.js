@@ -78,19 +78,19 @@ module.exports = {
     // vendor: ['react'],
     app: extendEntrySources(['./app/client']),
   },
-  resolve: config.client.resolve,
+  resolve: config.webpack.resolve,
   stats: {
     colors: true,
     reasons: true,
   },
   output: {
     path: path.join(config.root, 'public', 'assets'),
-    publicPath: config.publicPath + 'assets/',
+    publicPath: config.client.publicPath + 'assets/',
     filename: '[name].js',
     chunkFilename: '[id].[hash].js',
   },
   devMiddleware: {
-    publicPath: config.publicPath + 'assets/', // same as output.publicPath
+    publicPath: config.client.publicPath + 'assets/', // same as output.publicPath
     contentBase: path.join(config.root, 'public', 'assets'), // same as output.path
     hot: true,
     inline: true,
@@ -158,13 +158,9 @@ module.exports = {
 
     // Variable replacement to bridge client/server side globals
     new webpack.DefinePlugin({
-      'process.env': { NODE_ENV: JSON.stringify(config.env) },
+      'process.env': JSON.stringify({ NODE_ENV: config.env }),
       __CLIENT__: true, // allow detection if clientside rendering
-      // provide server side config vars (ensure strings are quoted)
-      'CONFIG': {
-        publicPath: JSON.stringify(config.publicPath),
-        fetch: JSON.stringify(config.client.fetch),
-      },
+      CONFIG_CLIENT: JSON.stringify(config.client), // provide server side config vars
     }),
 
     // Fixes for commonly used libraries (triggered only if lib is actually used)

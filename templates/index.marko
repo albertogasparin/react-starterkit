@@ -11,14 +11,14 @@ html [lang="en"]
     title - App
 
     if(config.env !== 'development')
-      link [rel="stylesheet" href="${config.publicPath}assets/app.css"]
-      link [rel="preload" as="image" href="${config.publicPath}assets/icons.svg"]
+      link [rel="stylesheet" href="${config.client.publicPath}assets/app.css"]
+      link [rel="preload" as="image" href="${config.client.publicPath}assets/icons.svg"]
 
-    // link [rel="shortcut icon" href="#{config.publicPath}favicon.ico"]
-    // link [rel="icon" sizes="256x256" href="#{config.publicPath}app-icon.png"]
-    // link [rel="apple-touch-icon" sizes="256x256" href="#{config.publicPath}app-icon.png"]
+    // link [rel="shortcut icon" href="#{config.client.publicPath}favicon.ico"]
+    // link [rel="icon" sizes="256x256" href="#{config.client.publicPath}app-icon.png"]
+    // link [rel="apple-touch-icon" sizes="256x256" href="#{config.client.publicPath}app-icon.png"]
 
-    script [defer src="${config.publicPath}assets/app.js"]
+    script [defer src="${config.client.publicPath}assets/app.js"]
 
   body
 
@@ -30,7 +30,7 @@ html [lang="en"]
           ax.onload = function() {
             el.style.display = 'none'; el.innerHTML = ax.responseText; b.insertBefore(el, b.firstChild);
           };
-        }('${config.publicPath}assets/icons.svg', document.createElement('div'), document.body));
+        }('${config.client.publicPath}assets/icons.svg', document.createElement('div'), document.body));
         ---
 
     await [(app from data.getRenderedApp)]

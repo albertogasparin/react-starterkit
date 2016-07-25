@@ -10,7 +10,7 @@ html [lang="en"]
     title - Error ${data.status}
 
     if(config.env !== 'development')
-      link [rel="stylesheet" href="${config.publicPath}assets/app.css"]
+      link [rel="stylesheet" href="${config.client.publicPath}assets/app.css"]
 
   body
 
