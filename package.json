@@ -12,7 +12,7 @@
   ],
   "private": true,
   "config": {
-    "testfiles": "find . -name unit*.js ! -path */node_modules/* ! -path ./tests/helpers/*",
+    "testfiles": "find . -name unit*.js -not -path */node_modules/*",
     "mochaargs": "--compilers js:babel-polyfill,js:babel-register --require ./lib/react-compat --require ./tests/helpers/unit.boot"
   },
   "scripts": {
@@ -38,6 +38,7 @@
       "./lib/react-compat"
     ],
     "exclude": [
+      "webpack.config.js",
       "tests",
       "**/__tests__/**"
     ],
