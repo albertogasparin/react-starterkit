@@ -1,6 +1,6 @@
 {
   "name": "react-starterkit",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "description": "React starterkit with Koa",
   "author": "Alberto Gasparin",
   "keywords": [
@@ -12,7 +12,7 @@
   ],
   "private": true,
   "config": {
-    "testfiles": "find . -name unit*.js ! -path */node_modules/*",
+    "testfiles": "find . -name unit*.js ! -path */node_modules/* ! -path ./tests/helpers/*",
     "mochaargs": "--compilers js:babel-polyfill,js:babel-register --require ./lib/react-compat --require ./tests/helpers/unit.boot"
   },
   "scripts": {
@@ -25,32 +25,32 @@
     "test": "npm run test:unit -s",
     "test:unit": "NODE_ENV=test mocha $($npm_package_config_testfiles) $npm_package_config_mochaargs",
     "test:unit:watch": "npm run test:unit -- --watch --watch-extensions jsx,json --reporter min",
-    "coverage": "NODE_ENV=test nyc -i babel-polyfill -i babel-register -i ./lib/react-compat --all mocha $npm_package_config_mochaargs $($npm_package_config_testfiles)",
+    "coverage": "NODE_ENV=test nyc mocha $npm_package_config_mochaargs --reporter dot $($npm_package_config_testfiles)",
     "lint": "eslint --ext .js,.jsx --ignore-path .gitignore . && stylelint --syntax scss \"app/**/*.scss\"",
     "clean": "rm -rf ./public/assets && rm -rf ./coverage && rm -rf ./.nyc_output",
     "prewatch": "npm run clean -s",
     "watch": "supervisor --debug -q -w lib,api,templates,webpack.config.js -e js,marko -i __tests__ ./server.js"
   },
   "nyc": {
+    "require": [
+      "babel-polyfill",
+      "babel-register",
+      "./lib/react-compat"
+    ],
+    "exclude": [
+      "tests",
+      "**/__tests__/**"
+    ],
     "reporter": [
       "lcov",
       "text"
     ],
-    "exclude": [
-      "app/client.js",
-      "lib/webpack.js",
-      "lib/static-builder.js",
-      "**/__tests__/**"
-    ],
-    "include": [
-      "api",
-      "app",
-      "lib"
-    ]
+    "sourceMap": false,
+    "instrument": false
   },
   "dependencies": {
     "autoprefixer": "^6.3.0",
-    "babel-core": "^6.10.0",
+    "babel-core": "^6.11.0",
     "babel-loader": "^6.2.0",
     "babel-plugin-lodash": "^3.2.0",
     "babel-plugin-transform-react-constant-elements": "^6.9.0",
@@ -60,7 +60,7 @@
     "babel-preset-es2015-node4": "^2.1.0",
     "babel-preset-react": "^6.11.0",
     "babel-preset-stage-2": "^6.11.0",
-    "babel-register": "^6.9.0",
+    "babel-register": "^6.11.0",
     "co": "^4.4.0",
     "css-loader": "~0.23.0",
     "dotenv": "~2.0.0",
@@ -79,7 +79,7 @@
     "koa-static-cache": "^3.1.0",
     "lodash": "^4.1.0",
     "lodash-webpack-plugin": "^0.9.0",
-    "marko": "^3.7.0",
+    "marko": "^3.8.0",
     "node-sass": "^3.8.0",
     "postcss-loader": "^0.9.0",
     "react": "^15.2.0",
@@ -89,7 +89,7 @@
     "redux": "~3.5.0",
     "redux-actions": "^0.10.0",
     "redux-thunk": "~2.1.0",
-    "require-hacker": "~2.1.3",
+    "require-hacker": "~2.1.4",
     "sass-loader": "^3.2.0",
     "style-loader": "~0.13.1",
     "svg-sprite-loader": "0.0.26",
@@ -98,13 +98,14 @@
     "whatwg-fetch": "^1.0.0"
   },
   "devDependencies": {
+    "babel-plugin-istanbul": "~1.0.3",
     "babel-plugin-react-transform": "^2.0.2",
     "chai": "^3.5.0",
     "enzyme": "^2.4.0",
     "eslint": "^3.0.0",
     "eslint-plugin-react": "^5.2.0",
     "mocha": "^2.5.0",
-    "nyc": "^6.4.0",
+    "nyc": "~7.1.0",
     "react-addons-test-utils": "^15.2.0",
     "react-transform-hmr": "~1.0.4",
     "redux-immutable-state-invariant": "~1.2.0",
