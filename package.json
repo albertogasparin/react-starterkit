@@ -19,7 +19,7 @@
     "start": "node ./server.js",
     "prebuild": "npm run clean -s",
     "build": "npm run build:assets -s && npm run build:template",
-    "build:assets": "NODE_ENV=production webpack -p --progress --colors --display-error-details --display-modules --sort-modules-by name",
+    "build:assets": "NODE_ENV=production webpack --progress --colors --display-error-details --display-modules --sort-modules-by name",
     "build:template": "NODE_ENV=production node ./lib/static-builder",
     "pretest": "npm run lint -s",
     "test": "npm run test:unit -s",

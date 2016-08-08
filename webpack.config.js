@@ -61,6 +61,7 @@ function extendPlugins(plugins) {
     plugins.push(new webpack.optimize.UglifyJsPlugin({
       compress: { warnings: false, screw_ie8: true },
       comments: false,
+      sourceMap: false,
     }));
     plugins.push(extractCSS);
     plugins.push(extractSVG);
@@ -73,7 +74,7 @@ function extendPlugins(plugins) {
  */
 module.exports = {
   debug: !isProduction,
-  devtool: !isProduction ? 'cheap-module-eval-source-map' : 'cheap-source-map',
+  devtool: !isProduction ? 'cheap-module-eval-source-map' : false,
   entry: {
     // vendor: ['react'],
     app: extendEntrySources(['./app/client']),
