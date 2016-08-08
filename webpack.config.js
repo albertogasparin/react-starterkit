@@ -9,6 +9,7 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var ExtractSVGPlugin = require('svg-sprite-loader/lib/extract-svg-plugin');
 var autoprefixer = require('autoprefixer');
 var LodashPlugin = require('lodash-webpack-plugin');
+var HappyPack = require('happypack');
 
 var config = require('./lib/config');
 
@@ -117,6 +118,7 @@ module.exports = {
             }],
           ],
         },
+        happy: { id: 'js' },
       }, { // CSS/SASS loader + autoprefixer
         test: /\.s?css$/,
         loader: extendCSSLoaders([
@@ -156,6 +158,8 @@ module.exports = {
   },
   plugins: extendPlugins([
     new webpack.optimize.OccurrenceOrderPlugin(),
+
+    new HappyPack({ id: 'js', verbose: false }),
 
     // Variable replacement to bridge client/server side globals
     new webpack.DefinePlugin({

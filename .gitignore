@@ -20,3 +20,6 @@ npm-debug.log
 
 # ignore marko compiled templates
 templates/**/*.marko.js
+
+# ignore happypack cache
+.happypack
