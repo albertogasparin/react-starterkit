@@ -10,6 +10,7 @@ var ExtractSVGPlugin = require('svg-sprite-loader/lib/extract-svg-plugin');
 var autoprefixer = require('autoprefixer');
 var LodashPlugin = require('lodash-webpack-plugin');
 var HappyPack = require('happypack');
+var OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 var config = require('./lib/config');
 
@@ -66,6 +67,9 @@ function extendPlugins(plugins) {
     }));
     plugins.push(extractCSS);
     plugins.push(extractSVG);
+    plugins.push(new OptimizeCssAssetsPlugin({
+      cssProcessorOptions: { discardComments: { removeAll: true } },
+    }));
   }
   return plugins;
 }
@@ -123,7 +127,7 @@ module.exports = {
         test: /\.s?css$/,
         loader: extendCSSLoaders([
           'css-loader?'
-            + ['sourceMap', (isProduction ? '' : '-') + 'minimize', '-autoprefixer'].join('&'),
+            + ['sourceMap', '-minimize', '-autoprefixer'].join('&'),
           'postcss-loader',
           'sass-loader?'
             + ['sourceMap', 'outputStyle=expanded'].join('&'),
