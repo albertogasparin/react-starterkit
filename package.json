@@ -13,7 +13,7 @@
   "private": true,
   "config": {
     "testfiles": "find . -name unit*.js -not -path */node_modules/*",
-    "mochaargs": "--compilers js:babel-polyfill,js:babel-register --require ./lib/react-compat --require ./tests/unit/setup"
+    "mochaargs": "--compilers js:babel-register --require ./lib/react-compat --require ./tests/unit/setup"
   },
   "scripts": {
     "start": "node ./server.js",
@@ -56,12 +56,11 @@
     "babel-plugin-lodash": "^3.2.0",
     "babel-plugin-transform-react-constant-elements": "^6.9.0",
     "babel-plugin-transform-react-inline-elements": "^6.8.0",
-    "babel-polyfill": "^6.13.0",
     "babel-preset-es2015": "^6.13.0",
     "babel-preset-es2015-node4": "^2.1.0",
     "babel-preset-react": "^6.11.0",
     "babel-preset-stage-2": "^6.13.0",
-    "babel-register": "^6.11.0",
+    "babel-register": "^6.13.0",
     "co": "^4.4.0",
     "css-loader": "0.14.5",
     "dotenv": "~2.0.0",
