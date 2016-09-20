@@ -3,6 +3,8 @@ import thunk from 'redux-thunk';
 
 import reducers from 'providers';
 
+export let store;
+
 export default function (initialState, thunkMiddleware = thunk) {
   // Enhance redux with middlewares and other enhancers
   const enhancer = compose(
@@ -16,5 +18,6 @@ export default function (initialState, thunkMiddleware = thunk) {
     __CLIENT__ && window.devToolsExtension ? window.devToolsExtension() : (f) => f
   );
 
-  return createStore(reducers, initialState, enhancer);
+  store = createStore(reducers, initialState, enhancer);
+  return store;
 }
