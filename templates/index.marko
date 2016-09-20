@@ -23,15 +23,9 @@ html [lang="en"]
   body
 
     if(config.env !== 'development')
-      script
-        ---
-        (function (url, el, b) {
-          var ax = new XMLHttpRequest(); ax.open('GET', url); ax.send();
-          ax.onload = function() {
-            el.style.display = 'none'; el.innerHTML = ax.responseText; b.insertBefore(el, b.firstChild);
-          };
-        }('${config.client.publicPath}assets/icons.svg', document.createElement('div'), document.body));
-        ---
+      div [style="position:absolute; visibility: hidden; height: 0;"]
+        object [type="image/svg+xml" data="${config.client.publicPath}assets/icons.svg"
+          onload="this.parentNode.replaceChild(this.getSVGDocument().childNodes[0], this);"]
 
     await [(app from data.getRenderedApp)]
       #app
@@ -55,9 +49,7 @@ html [lang="en"]
         })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
         ga('create', '${config.client.gaProperty}', 'auto');
-        window.addEventListener('load', function () {
-          ga('send', 'pageview');
-        });
+        ga('send', 'pageview');
         ---
     else
       script

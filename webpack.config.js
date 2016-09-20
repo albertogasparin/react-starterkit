@@ -1,26 +1,28 @@
-/* eslint-disable no-var, object-shorthand */
+/* eslint-disable object-shorthand */
+'use strict';
 
 /**
  * Load dependencies
  */
-var webpack = require('webpack');
-var path = require('path');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var ExtractSVGPlugin = require('svg-sprite-loader/lib/extract-svg-plugin');
-var autoprefixer = require('autoprefixer');
-var LodashPlugin = require('lodash-webpack-plugin');
-var HappyPack = require('happypack');
-var OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const webpack = require('webpack');
+const path = require('path');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const ExtractSVGPlugin = require('svg-sprite-loader/lib/extract-svg-plugin');
+const autoprefixer = require('autoprefixer');
+const LodashPlugin = require('lodash-webpack-plugin');
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const HappyPack = require('happypack');
+const happyTPool = HappyPack.ThreadPool({ size: 4 });
 
-var config = require('./lib/config');
+const config = require('./lib/config');
 
 /**
  * Private vars and fn
  * to customise config based on env
  */
-var isProduction = config.env === 'production';
-var extractCSS = new ExtractTextPlugin('[name].css', { allChunks: true });
-var extractSVG = new ExtractSVGPlugin('icons.svg');
+const isProduction = config.env === 'production';
+const extractCSS = new ExtractTextPlugin('[name].css', { allChunks: true });
+const extractSVG = new ExtractSVGPlugin('icons.svg');
 
 function extendEntrySources(sources) {
   if (!isProduction) {
@@ -125,6 +127,7 @@ module.exports = {
         happy: { id: 'js' },
       }, { // CSS/SASS loader + autoprefixer
         test: /\.s?css$/,
+        include: path.join(config.root, 'app'),
         loader: extendCSSLoaders([
           'css-loader?'
             + ['sourceMap', '-minimize', '-autoprefixer'].join('&'),
@@ -132,6 +135,7 @@ module.exports = {
           'sass-loader?'
             + ['sourceMap', 'outputStyle=expanded'].join('&'),
         ]),
+        happy: { id: 'css' },
       }, { // Image/SVG loader + base64 encode + optimisation
         test: /\.(jpe?g|png|gif|svg)$/i,
         exclude: /assets\/icons/,
@@ -163,13 +167,15 @@ module.exports = {
   plugins: extendPlugins([
     new webpack.optimize.OccurrenceOrderPlugin(),
 
-    new HappyPack({ id: 'js', verbose: false }),
+    new HappyPack({ id: 'js', threadPool: happyTPool, verbose: false }),
+    new HappyPack({ id: 'css', threadPool: happyTPool, verbose: false, enabled: !isProduction }),
 
     // Variable replacement to bridge client/server side globals
     new webpack.DefinePlugin({
-      'process.env': JSON.stringify({ NODE_ENV: config.env }),
+      'process.env': { NODE_ENV: JSON.stringify(config.env) },
       __CLIENT__: true, // allow detection if clientside rendering
-      CONFIG_CLIENT: JSON.stringify(config.client), // provide server side config vars
+      // provide server side config vars (ensure strings are quoted)
+      CONFIG_CLIENT: JSON.stringify(config.client),
     }),
 
     // Fixes for commonly used libraries (triggered only if lib is actually used)
@@ -190,9 +196,11 @@ module.exports = {
       currying: true, // Support “curry” methods
       caching: true, // Caches for methods like _.cloneDeep, _.isEqual, & _.uniq
       collections: true, // Support objects in “Collection” methods
+      deburring: true, // Support deburring letters
+      coercions: true, // Coercion methods like _.toInteger, _.toNumber, & _.toString
+      memoizing: true, // Support _.memoize & memoization
       flattening: true, // Support “flatten” methods & flattening rest arguments
       paths: true, // Deep property path support for methods like _.get, _.has, & _.set
-      memoizing: true, // Support _.memoize & memoization
       placeholders: true, // Argument placeholder support for “bind”, “curry”, & “partial” methods
     }),
 
