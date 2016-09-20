@@ -6,7 +6,7 @@ module.exports = {
   "env": {
     "es6": true,
     "node": true,
-    "browser": true
+    "browser": true,
   },
 
   /*
@@ -20,21 +20,24 @@ module.exports = {
     "ecmaFeatures": {
       "jsx": true,
       "blockBindings": true,
-      "experimentalObjectRestSpread": true
+      "experimentalObjectRestSpread": true,
     },
   },
 
   /*
    * Plugins for additional rules
    */
-  "plugins": ["react"],
+  "plugins": [
+    "react",
+    "mocha",
+  ],
 
   /*
    * Project wise globals
    */
   "globals": {
     "__CLIENT__": true,
-    "CONFIG_CLIENT": true
+    "CONFIG_CLIENT": true,
   },
 
   /*
@@ -53,7 +56,7 @@ module.exports = {
     "no-undef": ["error", { "typeof": false }],
     "valid-typeof": ["error"],
     "no-use-before-define": ["warn", "nofunc"],
-    "no-unused-vars": ["warn", { "vars": "all", "args": "none" }],
+    "no-unused-vars": ["warn", { "vars": "local", "args": "none" }],
     "no-loop-func": ["warn"],
     "no-console": ["warn"],
     "no-alert": ["warn"],
@@ -99,7 +102,7 @@ module.exports = {
     "object-shorthand": ["warn", "always"],
     "no-duplicate-imports": ["warn", { "includeExports": true }],
 
-    /* React custom rules
+    /* React plugin rules
     */
     "react/jsx-closing-bracket-location": ["warn", "tag-aligned"],
     "react/jsx-key": ["error"],
@@ -110,6 +113,16 @@ module.exports = {
     "react/jsx-uses-react": ["error"],
     "react/jsx-uses-vars": ["error"],
     "react/react-in-jsx-scope": ["error"],
+
+    /* Mocha plugin rules
+    */
+    "mocha/no-exclusive-tests": ["error"],
+    "mocha/no-skipped-tests": ["warn"],
+    "mocha/handle-done-callback": ["error"],
+    "mocha/no-return-and-callback": ["error"],
+    "mocha/valid-test-description": ["warn"],
+    "mocha/no-sibling-hooks": ["error"],
+    "mocha/no-top-level-hooks": ["error"],
   },
 
 };
