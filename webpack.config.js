@@ -196,9 +196,14 @@ module.exports = {
       currying: true, // Support “curry” methods
       caching: true, // Caches for methods like _.cloneDeep, _.isEqual, & _.uniq
       collections: true, // Support objects in “Collection” methods
+      exotics: true, // Support objects like buffers, maps, sets, symbols, typed arrays, etc
+      guards: true, // Guards for host objects, sparse arrays, & other edge cases
+      metadata: true, // Metadata to reduce wrapping of bound, curried, & partially applied functions(requires currying)
       deburring: true, // Support deburring letters
-      coercions: true, // Coercion methods like _.toInteger, _.toNumber, & _.toString
+      unicode: true, // Support Unicode symbols
+      chaining: true, // Components to support chain sequences
       memoizing: true, // Support _.memoize & memoization
+      coercions: true, // Support for coercing values to integers, numbers, & strings
       flattening: true, // Support “flatten” methods & flattening rest arguments
       paths: true, // Deep property path support for methods like _.get, _.has, & _.set
       placeholders: true, // Argument placeholder support for “bind”, “curry”, & “partial” methods
