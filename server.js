@@ -9,6 +9,10 @@ console.log('\x1b[33mNode server starting...\x1b[0m');
  */
 require('babel-register');
 
+/**
+ * Increase stackTrace limit
+ */
+Error.stackTraceLimit = 50;
 
 /**
  * Start the app

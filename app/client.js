@@ -7,12 +7,13 @@ import { Router, browserHistory } from 'react-router';
 import './client.scss';
 import createMainStore from './store';
 import routes from './routes';
+import * as api from './api';
 
 /**
  * Setup history and store
  */
 
-const store = createMainStore(window.__INITIAL_STATE__);
+const store = createMainStore(window.__INITIAL_STATE__, api);
 
 /**
  * Fire-up React Redux + Router.

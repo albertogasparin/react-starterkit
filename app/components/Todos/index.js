@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import * as providers from 'providers';
-import TodoList from './list';
+import * as providers from '../../providers';
+import TodoList from './atoms/list';
 // import './style.scss';
 
 import 'assets/icons/add.svg';
@@ -14,19 +14,19 @@ import 'assets/icons/add.svg';
 
 class Todos extends Component {
 
-  constructor(props) {
+  constructor (props) {
     super(props);
     this.state = {};
   }
 
-  componentWillMount() {
+  componentWillMount () { // fired on server + client
     let { todos, actions } = this.props;
     if (!todos.length) {
       actions.todo.loadAsync();
     }
   }
 
-  hadleTodoAdd() {
+  hadleTodoAdd () {
     let { actions } = this.props;
     actions.todo.addAsync('New todo');
   }
@@ -47,7 +47,9 @@ class Todos extends Component {
 }
 
 export default connect(
-  (state) => ({ todos: state.todos }),
+  (state) => ({
+    todos: providers.todo.selectors.getAll(state),
+  }),
   (dispatch) => ({
     actions: {
       todo: bindActionCreators(providers.todo.actions, dispatch),

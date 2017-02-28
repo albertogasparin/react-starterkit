@@ -28,12 +28,12 @@
 
 .clear { clear: both; }
 .clearfix {
-  &:before, &:after {
+  &::before, &::after {
     content: " ";
     display: table;
   }
 
-  &:after { clear: both; }
+  &::after { clear: both; }
 }
 
 

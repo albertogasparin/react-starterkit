@@ -1,16 +1,16 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 
-import reducers from 'providers';
+import reducers from './providers';
 
 export let store;
 
-export default function (initialState, thunkMiddleware = thunk) {
+export default function (initialState, api, thunkMiddleware = thunk) {
   // Enhance redux with middlewares and other enhancers
   const enhancer = compose(
     applyMiddleware(
       // async mw
-      thunkMiddleware,
+      thunkMiddleware.withExtraArgument(api),
       // redux-immutable-state-invariant mw (DEV only)
       __CLIENT__ && window.reduxImmutable ? window.reduxImmutable() : ((s) => (n) => (a) => n(a))
     ),

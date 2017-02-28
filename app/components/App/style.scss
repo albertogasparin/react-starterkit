@@ -3,7 +3,7 @@
 .App {
   padding: 2rem;
 
-  &:before {
+  &::before {
     content: '';
     display: block;
     width: 3rem;

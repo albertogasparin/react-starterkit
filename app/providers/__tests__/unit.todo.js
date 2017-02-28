@@ -1,8 +1,8 @@
 /* eslint-env mocha */
 
 import { expect } from 'chai';
-
-import { types, reducer } from '../todo';
+import { normalize } from 'normalizr';
+import { types, schemas, reducer } from '../todo';
 
 describe('Reducers: todo', () => {
 
@@ -10,7 +10,7 @@ describe('Reducers: todo', () => {
     it('should return the state', () => {
       let stateBefore;
       let action = { type: 'DUMMY' };
-      let stateAfter = [];
+      let stateAfter = { byId: {}, ids: [] };
       expect(reducer(stateBefore, action)).to.deep.equal(stateAfter);
     });
   });
@@ -22,9 +22,12 @@ describe('Reducers: todo', () => {
       let stateBefore = [];
       let action = {
         type: types.LOAD,
-        payload: [{ id: 1 }],
+        payload: normalize([{ id: 1 }, { id: 2 }], [schemas.todo]),
       };
-      let stateAfter = [{ id: 1 }];
+      let stateAfter = {
+        byId: { 1: { id: 1 }, 2: { id: 2 } },
+        ids: [1, 2],
+      };
 
       expect(reducer(stateBefore, action)).to.deep.equal(stateAfter);
     });
@@ -35,12 +38,18 @@ describe('Reducers: todo', () => {
   describe(types.ADD, () => {
 
     it('should add a todo into the store', () => {
-      let stateBefore = [{ id: 1 }];
+      let stateBefore = {
+        byId: { 1: { id: 1 } },
+        ids: [1],
+      };
       let action = {
         type: types.ADD,
-        payload: { id: 2 },
+        payload: normalize({ id: 2 }, schemas.todo),
       };
-      let stateAfter = [{ id: 1 }, { id: 2 }];
+      let stateAfter = {
+        byId: { 1: { id: 1 }, 2: { id: 2 } },
+        ids: [1, 2],
+      };
 
       expect(reducer(stateBefore, action)).to.deep.equal(stateAfter);
     });
@@ -51,12 +60,18 @@ describe('Reducers: todo', () => {
   describe(types.REMOVE, () => {
 
     it('should remove the todo from the store', () => {
-      let stateBefore = [{ id: 1 }, { id: 2 }];
+      let stateBefore = {
+        byId: { 1: { id: 1 }, 2: { id: 2 } },
+        ids: [1, 2],
+      };
       let action = {
         type: types.REMOVE,
         payload: 1,
       };
-      let stateAfter = [{ id: 2 }];
+      let stateAfter = {
+        byId: { 2: { id: 2 } },
+        ids: [2],
+      };
 
       expect(reducer(stateBefore, action)).to.deep.equal(stateAfter);
     });

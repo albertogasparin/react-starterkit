@@ -3,41 +3,33 @@
  * single routes using an exported object
  */
 
-const TODOS = [
-  { id: 1, text: 'Write tests', completed: false },
-  { id: 2, text: 'Add Redux', completed: true },
-];
+import db from '../../lib/db';
 
-function *all() {
-  let getTodosAsync = (cb) => {
-    setTimeout(() => cb(null, TODOS), 200);
-  };
-  this.body = yield getTodosAsync;
+function wait (ms) { return (cb) => setTimeout(cb, ms); }
+
+function *all () {
+  const { response } = this;
+  yield wait(200); // fake delay
+  response.body = db.todos;
 }
 
-function *create() {
-  let { text } = this.request.body;
+function *create () {
+  const { request, response } = this;
+  let { text } = request.body;
   let todo = {
-    id: TODOS.length + 1,
+    id: db.todos.length + 1,
     text: text || '',
     completed: false,
   };
-  TODOS.push(todo);
-  this.body = todo;
+  db.todos.push(todo);
+  yield wait(200); // fake delay
+  response.body = todo;
 }
-
-function *find() {
-  let todo = TODOS.find((t) => t.id === Number(this.params.id));
-  this.body = todo;
-}
-
 
 
 const API = {
   'GET /todos': all,
   'POST /todos': create,
-  'GET /todos/:id': find,
 };
 
 export default API;
-export { TODOS };

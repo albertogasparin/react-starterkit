@@ -1,8 +1,8 @@
 {
   "presets": [
-    "es2015-node4",
+    ["env", { "targets": { "node": "current" } }],
     "react",
-    "stage-2"
+    "stage-3"
   ],
   "plugins": [],
   "retainLines": true,
@@ -13,6 +13,7 @@
     },
     "production": {
       "plugins": [
+        "transform-react-remove-prop-types",
         "transform-react-constant-elements",
         "transform-react-inline-elements"
       ]
