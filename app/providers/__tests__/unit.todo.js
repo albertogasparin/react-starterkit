@@ -1,8 +1,7 @@
 /* eslint-env mocha */
 
 import { expect } from 'chai';
-import { normalize } from 'normalizr';
-import { types, schemas, reducer } from '../todo';
+import { types, reducer } from '../todo';
 
 describe('Reducers: todo', () => {
 
@@ -22,14 +21,14 @@ describe('Reducers: todo', () => {
       let stateBefore = [];
       let action = {
         type: types.LOAD,
-        payload: normalize([{ id: 1 }, { id: 2 }], [schemas.todo]),
+        payload: [{ id: 1 }, { id: 2 }],
       };
       let stateAfter = {
         byId: { 1: { id: 1 }, 2: { id: 2 } },
         ids: [1, 2],
       };
 
-      expect(reducer(stateBefore, action)).to.deep.equal(stateAfter);
+      expect(reducer(stateBefore, action)).to.eql(stateAfter);
     });
 
   });
@@ -44,14 +43,14 @@ describe('Reducers: todo', () => {
       };
       let action = {
         type: types.ADD,
-        payload: normalize({ id: 2 }, schemas.todo),
+        payload: { id: 2 },
       };
       let stateAfter = {
         byId: { 1: { id: 1 }, 2: { id: 2 } },
         ids: [1, 2],
       };
 
-      expect(reducer(stateBefore, action)).to.deep.equal(stateAfter);
+      expect(reducer(stateBefore, action)).to.eql(stateAfter);
     });
 
   });
@@ -66,14 +65,14 @@ describe('Reducers: todo', () => {
       };
       let action = {
         type: types.REMOVE,
-        payload: 1,
+        payload: { id: 1 },
       };
       let stateAfter = {
         byId: { 2: { id: 2 } },
         ids: [2],
       };
 
-      expect(reducer(stateBefore, action)).to.deep.equal(stateAfter);
+      expect(reducer(stateBefore, action)).to.eql(stateAfter);
     });
 
   });

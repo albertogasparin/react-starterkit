@@ -114,6 +114,16 @@ module.exports = {
 
     /* React plugin rules
     */
+    'react/no-children-prop': ['error'],
+    'react/no-deprecated': ['error'],
+    'react/no-direct-mutation-state': ['error'],
+    'react/no-is-mounted': ['error'],
+    'react/no-unknown-property': ['warn'],
+    'react/no-unused-prop-types': ['warn'],
+    'react/prop-types': ['warn', { skipUndeclared: true }],
+    'react/react-in-jsx-scope': ['error'],
+    'react/require-render-return': ['error'],
+    'react/style-prop-object': ['warn'],
     'react/jsx-closing-bracket-location': ['warn', 'tag-aligned'],
     'react/jsx-key': ['error'],
     'react/jsx-no-duplicate-props': ['error'],
@@ -122,7 +132,6 @@ module.exports = {
     'react/jsx-space-before-closing': ['warn'],
     'react/jsx-uses-react': ['error'],
     'react/jsx-uses-vars': ['error'],
-    'react/react-in-jsx-scope': ['error'],
 
     /* Import plugin rules
     */
