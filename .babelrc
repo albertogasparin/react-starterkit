@@ -8,9 +8,6 @@
   "retainLines": true,
   "sourceMaps": "inline",
   "env": {
-    "test": {
-      "plugins": ["istanbul"]
-    },
     "production": {
       "plugins": [
         "transform-react-remove-prop-types",

@@ -1,7 +1,12 @@
-// add generators support to mocha
-import 'co-mocha';
+/* eslint-env jest */
 
-// import chai from 'chai';
+// This is where you might want to extend jest
 
-// This is where you might want to extend chai
-// Remember: mocha env is NOT available here
+import config from '../../lib/config';
+
+// expose React required globals
+global.__CLIENT__ = false;
+global.CONFIG_CLIENT = config.client;
+
+// This is where you might want to set up globals hooks
+require('jasmine-co').install();

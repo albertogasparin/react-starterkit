@@ -1,7 +1,4 @@
-/* eslint-env mocha *//* eslint-disable max-nested-callbacks */
-
-// import { expect } from 'chai';
-import td from 'testdouble';
+/* eslint-env jest *//* eslint-disable max-nested-callbacks */
 
 import routes from '..';
 
@@ -11,17 +8,19 @@ describe('GET *', () => {
 
   describe('if existing path', () => {
     it('should call render', function *() {
-      ctx = { url: '/', ...td.object(['render']) };
+      ctx = { url: '/', render: jest.fn() };
       yield route.call(ctx, null);
-      td.verify(ctx.render(td.matchers.isA(String), 'index', td.matchers.isA(Object)));
+      expect(ctx.render).toHaveBeenCalledWith(
+        expect.any(String), 'index', expect.any(Object)
+      );
     });
   });
 
   describe('if not found path', () => {
     it('should return 404', function *() {
-      ctx = { url: '/asd', ...td.object(['throw']) };
+      ctx = { url: '/asd', throw: jest.fn() };
       yield route.call(ctx, null);
-      td.verify(ctx.throw(404));
+      expect(ctx.throw).toHaveBeenCalledWith(404);
     });
   });
 

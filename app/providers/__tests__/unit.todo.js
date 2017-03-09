@@ -1,6 +1,5 @@
-/* eslint-env mocha */
+/* eslint-env jest */
 
-import { expect } from 'chai';
 import { types, reducer } from '../todo';
 
 describe('Reducers: todo', () => {
@@ -10,7 +9,7 @@ describe('Reducers: todo', () => {
       let stateBefore;
       let action = { type: 'DUMMY' };
       let stateAfter = { byId: {}, ids: [] };
-      expect(reducer(stateBefore, action)).to.deep.equal(stateAfter);
+      expect(reducer(stateBefore, action)).toEqual(stateAfter);
     });
   });
 
@@ -28,7 +27,7 @@ describe('Reducers: todo', () => {
         ids: [1, 2],
       };
 
-      expect(reducer(stateBefore, action)).to.eql(stateAfter);
+      expect(reducer(stateBefore, action)).toEqual(stateAfter);
     });
 
   });
@@ -50,7 +49,7 @@ describe('Reducers: todo', () => {
         ids: [1, 2],
       };
 
-      expect(reducer(stateBefore, action)).to.eql(stateAfter);
+      expect(reducer(stateBefore, action)).toEqual(stateAfter);
     });
 
   });
@@ -72,7 +71,7 @@ describe('Reducers: todo', () => {
         ids: [2],
       };
 
-      expect(reducer(stateBefore, action)).to.eql(stateAfter);
+      expect(reducer(stateBefore, action)).toEqual(stateAfter);
     });
 
   });

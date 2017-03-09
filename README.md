@@ -31,7 +31,7 @@ Webpack middleware handles all `/assets` requests, while Koa handles all others
 
 ## Testing
 
-Tests run with Mocha + Expect for both client and server:
+Tests run with Jest for both client and server:
 ``` sh
 npm run test -s
 # or
@@ -39,10 +39,7 @@ npm run test:unit:watch # for TDD
 ```
 React components testing is done with [Enzyme](https://github.com/airbnb/enzyme/), a library that allows you to use a jQuery-like API to query the virtual dom.
 
-Code coverage reports are also available thanks to [Nyc](https://github.com/bcoe/nyc):
-``` sh
-npm run coverage
-```
+Code coverage reports are also generated out of the box
 
 
 ## Production

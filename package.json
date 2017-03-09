@@ -11,10 +11,7 @@
     "router"
   ],
   "private": true,
-  "config": {
-    "testfiles": "find ./tests . -name unit*.js -not -path */node_modules/*",
-    "mochaargs": "--compilers js:babel-register --require ./lib/react-compat --require ./tests/unit/setup"
-  },
+  "config": {},
   "scripts": {
     "start": "node ./server.js",
     "prebuild": "npm run clean -s",
@@ -23,32 +20,25 @@
     "build:template": "NODE_ENV=production node ./tools/static-builder",
     "pretest": "npm run lint -s",
     "test": "npm run test:unit -s",
-    "test:unit": "NODE_ENV=test mocha $($npm_package_config_testfiles | awk '!x[$0]++') $npm_package_config_mochaargs",
-    "test:unit:watch": "npm run test:unit -s -- --watch --watch-extensions jsx,json --reporter min",
-    "coverage": "nyc npm run test:unit -s -- --reporter dot",
+    "test:unit": "NODE_ENV=test jest --no-cache --coverage",
+    "test:unit:watch": "NODE_ENV=test jest --watch",
     "lint": "eslint --ext .js,.jsx --ignore-path .gitignore --ignore-pattern \"public/**\" . && stylelint --syntax scss \"app/**/*.scss\"",
     "clean": "rm -rf ./public/assets && rm -rf ./coverage && rm -rf ./.nyc_output",
     "prewatch": "npm run clean -s",
     "watch": "supervisor -q -w lib,api,www,webpack.config.js -e js,marko -i __tests__ -- --inspect ./server.js"
   },
-  "nyc": {
-    "require": [
-      "babel-register",
-      "./lib/react-compat"
-    ],
-    "exclude": [
-      "node_modules",
-      "webpack.config.js",
-      "tests",
-      "**/__tests__/**"
-    ],
-    "reporter": [
-      "lcov",
-      "text"
-    ],
-    "cache": true,
-    "sourceMap": false,
-    "instrument": false
+  "jest": {
+    "testMatch": ["**/__tests__/unit*.js"],
+    "moduleNameMapper": {
+      "\\.(jpe?g|png|gif|webp|svg|woff2?|mp{2,4}|webm|m4a|aac)$": "<rootDir>/tests/unit/fileMock.js",
+      "\\.s?css$": "<rootDir>/tests/unit/fileMock.js"
+    },
+    "clearMocks": true,
+    "resetMocks": true,
+    "resetModules": true,
+    "setupTestFrameworkScriptFile": "<rootDir>/tests/unit/setup.js",
+    "coverageDirectory": "<rootDir>/coverage",
+    "coveragePathIgnorePatterns": ["/node_modules/", "/__tests__/", "/tests/"]
   },
   "dependencies": {
     "autoprefixer": "^6.7.0",
@@ -96,31 +86,27 @@
     "reselect": "^2.5.0",
     "sass-loader": "^6.0.0",
     "style-loader": "^0.13.0",
+    "supertest": "^3.0.0",
     "svg-sprite-loader": "^0.3.0",
     "url-loader": "^0.5.0",
     "webpack": "^2.2.0",
     "whatwg-fetch": "^2.0.0"
   },
   "devDependencies": {
-    "babel-plugin-istanbul": "^4.0.0",
     "babel-plugin-react-transform": "^2.0.0",
-    "chai": "^3.5.0",
-    "co-mocha": "^1.2.0",
     "enzyme": "^2.7.0",
     "eslint": "^3.16.0",
     "eslint-import-resolver-webpack": "^0.8.0",
     "eslint-plugin-import": "^2.2.0",
-    "eslint-plugin-mocha": "^4.8.0",
+    "eslint-plugin-jest": "^19.0.1",
     "eslint-plugin-react": "^6.10.0",
-    "mocha": "^3.2.0",
-    "nyc": "^10.1.0",
+    "jasmine-co": "^1.2.0",
+    "jest": "^19.0.2",
     "react-addons-test-utils": "^15.4.0",
     "react-transform-hmr": "^1.0.0",
     "redux-immutable-state-invariant": "^1.2.0",
     "stylelint": "^7.9.0",
-    "supertest": "^3.0.0",
     "supervisor": "^0.12.0",
-    "testdouble": "^1.11.0",
     "webpack-dev-middleware": "^1.10.0",
     "webpack-hot-middleware": "^2.17.0"
   },

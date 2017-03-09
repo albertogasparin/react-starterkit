@@ -30,7 +30,7 @@ module.exports = {
   plugins: [
     'react',
     'import',
-    'mocha',
+    'jest',
   ],
 
   settings: {
@@ -145,15 +145,11 @@ module.exports = {
     'import/first': ['warn'],
 
 
-    /* Mocha plugin rules
+    /* Jest plugin rules
     */
-    'mocha/no-exclusive-tests': ['error'],
-    'mocha/no-skipped-tests': ['warn'],
-    'mocha/handle-done-callback': ['error'],
-    'mocha/no-return-and-callback': ['error'],
-    'mocha/valid-test-description': ['warn'],
-    'mocha/no-sibling-hooks': ['error'],
-    'mocha/no-top-level-hooks': ['error'],
+    'jest/no-disabled-tests': ['warn'],
+    'jest/no-focused-tests': ['error'],
+    'jest/no-identical-title': ['warn'],
   },
 
 };
