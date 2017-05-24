@@ -3,11 +3,12 @@
 // import { expect } from 'chai';
 import td from 'testdouble';
 
-import koa from 'koa';
+import Koa from 'koa';
 import routesApi, { router, routes } from '..';
 
 describe('routesApi()', () => {
-  let app = koa();
+  let app = new Koa();
+  let routesMw = (ctx, next) => routes;
 
   beforeEach(() => {
     td.replace(app, 'use');
@@ -15,7 +16,7 @@ describe('routesApi()', () => {
     td.replace(router, 'post');
     td.replace(router, 'put');
     td.replace(router, 'delete');
-    td.replace(router, 'routes', () => routes);
+    td.replace(router, 'routes', () => routesMw);
     routesApi(app);
   });
 
@@ -25,7 +26,7 @@ describe('routesApi()', () => {
   });
 
   it('should add routes to app', () => {
-    td.verify(app.use(routes));
+    td.verify(app.use(routesMw));
   });
 
 });

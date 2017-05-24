@@ -1,14 +1,8 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 
 /**
  * TodoItem component
  */
-
-const propTypes = {
-  id: PropTypes.number,
-  text: PropTypes.string,
-  completed: PropTypes.bool,
-};
 
 const TodoItem = ({ id, text = '', completed = false }) => (
   <div className="TodoItem">
@@ -16,7 +10,5 @@ const TodoItem = ({ id, text = '', completed = false }) => (
     id: {id}, completed: {completed ? 'true' : 'false'}
   </div>
 );
-
-TodoItem.propTypes = propTypes;
 
 export default TodoItem;

@@ -1,3 +1,6 @@
+// Blacklist confusing globals set by ESLint browser: true setting (use them by prepending `window.`)
+var restrictedGlobals = ['addEventListener', 'blur', 'close', 'closed', 'confirm', 'defaultStatus', 'defaultstatus', 'event', 'external', 'find', 'focus', 'frameElement', 'frames', 'history', 'innerHeight', 'innerWidth', 'length', 'location', 'locationbar', 'menubar', 'moveBy', 'moveTo', 'name', 'onblur', 'onerror', 'onfocus', 'onload', 'onresize', 'onunload', 'open', 'opener', 'opera', 'outerHeight', 'outerWidth', 'pageXOffset', 'pageYOffset', 'parent', 'print', 'removeEventListener', 'resizeBy', 'resizeTo', 'screen', 'screenLeft', 'screenTop', 'screenX', 'screenY', 'scroll', 'scrollbars', 'scrollBy', 'scrollTo', 'scrollX', 'scrollY', 'self', 'status', 'statusbar', 'stop', 'toolbar', 'top'];
+
 module.exports = {
 
   /*
@@ -60,6 +63,7 @@ module.exports = {
     'no-shadow': ['error'],
     'no-eval': ['error'],
     'no-undef': ['error', { typeof: false }],
+    'no-restricted-globals': ['error'].concat(restrictedGlobals),
     'valid-typeof': ['error'],
     'no-use-before-define': ['warn', 'nofunc'],
     'no-unused-vars': ['warn', { vars: 'local', args: 'none' }],
@@ -105,11 +109,13 @@ module.exports = {
     'max-depth': ['warn', 5],
     'max-nested-callbacks': ['warn', 4],
     'max-len': ['warn', 100, 4, { ignoreComments: true }],
+    'valid-jsdoc': ['warn', { requireReturn: false, requireParamDescription: false, requireReturnDescription: false }],
 
     /* ES2015+ rules
     */
     'generator-star-spacing': ['warn'],
     'object-shorthand': ['warn', 'always'],
+    'no-this-before-super': ['warn'],
     'no-duplicate-imports': ['warn', { includeExports: true }],
 
     /* React plugin rules
@@ -118,18 +124,21 @@ module.exports = {
     'react/no-deprecated': ['error'],
     'react/no-direct-mutation-state': ['error'],
     'react/no-is-mounted': ['error'],
+    'react/no-string-refs': ['error'],
     'react/no-unknown-property': ['warn'],
     'react/no-unused-prop-types': ['warn'],
+    'react/prefer-es6-class': ['warn'],
     'react/prop-types': ['warn', { skipUndeclared: true }],
     'react/react-in-jsx-scope': ['error'],
     'react/require-render-return': ['error'],
     'react/style-prop-object': ['warn'],
+    'react/void-dom-elements-no-children': ['error'],
     'react/jsx-closing-bracket-location': ['warn', 'tag-aligned'],
     'react/jsx-key': ['error'],
     'react/jsx-no-duplicate-props': ['error'],
     'react/jsx-no-undef': ['error'],
-    'react/jsx-pascal-case': ['error'],
-    'react/jsx-space-before-closing': ['warn'],
+    'react/jsx-pascal-case': ['warn'],
+    'react/jsx-tag-spacing': ['warn'],
     'react/jsx-uses-react': ['error'],
     'react/jsx-uses-vars': ['error'],
 

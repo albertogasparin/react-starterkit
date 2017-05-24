@@ -6,10 +6,10 @@
 const webpack = require('webpack');
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const ExtractSVGPlugin = require('svg-sprite-loader/lib/extract-svg-plugin');
+const SvgSpriteLoaderPlugin = require('svg-sprite-loader/plugin');
 const autoprefixer = require('autoprefixer');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const HappyPack = require('happypack');
+const LodashPlugin = require('lodash-webpack-plugin');
 
 const config = require('./lib/config');
 
@@ -17,10 +17,9 @@ const config = require('./lib/config');
  * Private vars and fn
  * to customise config based on env
  */
-const supportedBrowsers = ['last 3 versions', 'IE >= 11', 'Android >= 4.1'];
+const supportedBrowsers = ['last 3 versions', 'IE >= 11', 'Android >= 4.4'];
 const isProduction = config.env === 'production';
 const extractCSS = new ExtractTextPlugin({ filename: '[name].css', allChunks: true });
-const extractSVG = new ExtractSVGPlugin('icons.svg');
 
 /**
  * Main webpack config
@@ -47,6 +46,9 @@ let webpackCfg = {
   },
   performance: {
     hints: false,
+  },
+  node: {
+    Buffer: false, // prevent axios 0.16.1 from bundling buffer
   },
 };
 
@@ -77,6 +79,7 @@ webpackCfg.module = {
           cacheDirectory: true,
           presets: [['env', {
             targets: { browsers: supportedBrowsers },
+            loose: true,
             modules: false,
           }]],
           plugins: isProduction ? [
@@ -108,6 +111,7 @@ webpackCfg.module = {
           plugins: () => [
             autoprefixer({ browsers: supportedBrowsers }),
           ],
+          sourceMap: true,
         },
       }, {
         loader: 'sass-loader',
@@ -135,14 +139,16 @@ webpackCfg.module = {
     }, { // SVG Icons sprite loader
       test: /\.svg$/,
       include: [path.join(config.root, 'app', 'assets', 'icons')],
-      use: extendSVGLoader([{
+      use: [{
         loader: 'svg-sprite-loader',
         options: {
-          name: 'i-[name]',
+          symbolId: 'i-[name]',
+          extract: isProduction,
+          spriteFilename: 'icons.svg',
         },
       }, {
         loader: 'image-webpack-loader',
-      }]),
+      }],
     }, { // Generic file loader
       test: /\.(eot|ttf|woff2?|swf|mp[34]|wav)$/i,
       use: [{
@@ -175,8 +181,29 @@ webpackCfg.plugins = extendPlugins([
     // 'window.fetch': 'exports-loader?self.fetch!whatwg-fetch', // Fetch polyfill
   }),
 
+  // Convert lodash-es to lodash, avoiding duplication
+  new webpack.NormalModuleReplacementPlugin(
+    /^lodash-es(\/|$)/, (res) => {
+      res.request = res.request.replace(/^lodash-es(\/|$)/, 'lodash$1');
+    }
+  ),
+
   // Disable Moment langs from being auto-required
   new webpack.IgnorePlugin(/^\.\/locale$/, [/moment$/]),
+
+  new LodashPlugin({
+    shorthands: true, // Iteratee shorthands for _.property, _.matches, & _.matchesProperty
+    cloning: true, // Support “clone” methods & cloning source objects
+    currying: true, // Support “curry” methods
+    caching: true, // Caches for methods like _.cloneDeep, _.isEqual, & _.uniq
+    collections: true, // Support objects in “Collection” methods
+    // deburring: true, // Support deburring letters
+    memoizing: true, // Support _.memoize & memoization
+    coercions: true, // Coercion methods like _.toInteger, _.toNumber, & _.toString
+    flattening: true, // Support “flatten” methods & flattening rest arguments
+    paths: true, // Deep property path support for methods like _.get, _.has, & _.set
+    placeholders: true, // Argument placeholder support for “bind”, “curry”, & “partial” methods
+  }),
 
   // Add any additional provide/define plugin here
 ]);
@@ -191,7 +218,10 @@ function extendEntrySources (sources) {
 
 function extendCSSLoaders (loaders) {
   if (!isProduction) {
-    loaders.unshift({ loader: 'style-loader' });
+    loaders.unshift({
+      loader: 'style-loader',
+      options: { convertToAbsoluteUrls: true },
+    });
     return loaders;
   }
   // move css to separate file
@@ -202,29 +232,15 @@ function extendCSSLoaders (loaders) {
   });
 }
 
-function extendSVGLoader (loaders) {
-  if (!isProduction) {
-    return loaders;
-  }
-  return extractSVG.extract({ use: loaders });
-}
-
 function extendPlugins (plugins) {
   if (!isProduction) {
     plugins.unshift(
-      new webpack.HotModuleReplacementPlugin(),
-      new HappyPack({
-        id: 'js', verbose: false, loaders: webpackCfg.module.rules[0].use,
-      }),
-      new webpack.ProvidePlugin({
-        'window.reduxImmutable': 'redux-immutable-state-invariant',
-      })
+      new webpack.HotModuleReplacementPlugin()
     );
-    webpackCfg.module.rules[0].use = ['happypack/loader?id=js'];
   } else {
     plugins.push(
       extractCSS,
-      extractSVG,
+      new SvgSpriteLoaderPlugin(),
       new OptimizeCssAssetsPlugin({
         cssProcessorOptions: { discardComments: { removeAll: true } },
         canPrint: false,

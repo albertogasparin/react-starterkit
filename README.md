@@ -94,7 +94,7 @@ const API = {
 export default API;
 ```
 
-Then, import that `API` object in `./api/index.js` and combine those routes with the one already set. 
+Then, import that `API` object in `./api/index.js` and combine those routes with the ones already in. 
 
 
 
@@ -123,12 +123,8 @@ Just type `rs` in the console and press enter. [node-supervisor](https://github.
 ## Troubleshooting
 
 **Missing CSS while serving the built bundle**  
-The external CSS file is loaded by `index.jade` only if the node env is not `development`.  
+The external CSS file is loaded by `www/all/templates/index.marko` only if the node env is not `development`.  
 Try: `NODE_ENV=test npm run start`
-
-**Missing CSS-defined assets when testing on a VM or network-connected device**  
-This is a known limitation of [style-loader](https://github.com/webpack/style-loader/issues/55). The assets URL produced by that loader are absolute, so you need to explicitly set your host LAN IP address.  
-Example: `HOST=192.168.1.2 npm run watch`
 
 
 

@@ -14,7 +14,7 @@ export const routes = {
   ...allRoutes,
 };
 
-export const router = koaRouter({
+export const router = new koaRouter({
   prefix: '/',
 });
 

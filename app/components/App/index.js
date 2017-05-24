@@ -7,7 +7,7 @@ import './style.scss';
  * App component
  */
 
-const App = ({ children }) => (
+const App = ({ children = null }) => (
   <div className="App">
     <header>
       <Link to="/todos">Show Todos</Link>

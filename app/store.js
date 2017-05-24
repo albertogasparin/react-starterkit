@@ -10,9 +10,7 @@ export default function (initialState, api, thunkMiddleware = thunk) {
   const enhancer = compose(
     applyMiddleware(
       // async mw
-      thunkMiddleware.withExtraArgument(api),
-      // redux-immutable-state-invariant mw (DEV only)
-      __CLIENT__ && window.reduxImmutable ? window.reduxImmutable() : ((s) => (n) => (a) => n(a))
+      thunkMiddleware.withExtraArgument(api)
     ),
     // support Chrome redux-devtools-extension
     __CLIENT__ && window.devToolsExtension ? window.devToolsExtension() : (f) => f

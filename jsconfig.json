@@ -1,0 +1,27 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=759670
+  // for the documentation about the jsconfig.json format
+  "compilerOptions": {
+    "target": "ES2016",
+    "module": "es2015",
+    "allowJs": true,
+    "checkJs": true,
+     "jsx": "preserve",
+    // "strict": false,
+    // "noImplicitAny": false,
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "node",
+    "baseUrl": ".",
+    "paths": {
+      "assets/*": ["./app/assets/*"],
+      "tests/*": ["./tests/*"]
+    }
+  },
+  "exclude": [
+    "node_modules",
+    "public",
+    "coverage",
+    "tmp",
+    "temp"
+  ]
+}
