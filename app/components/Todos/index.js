@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
@@ -6,7 +7,7 @@ import * as providers from '../../providers';
 import TodoList from './atoms/list';
 // import './style.scss';
 
-import iconAdd from 'assets/icons/add.svg';
+import 'assets/icons/add.svg';
 
 /**
  * Todos wrapper component
@@ -14,10 +15,12 @@ import iconAdd from 'assets/icons/add.svg';
 
 class Todos extends Component {
 
-  constructor (props) {
-    super(props);
-    this.state = {};
-  }
+  static propTypes = {
+    todos: PropTypes.array.isRequired,
+    actions: PropTypes.object.isRequired,
+  };
+
+  state = {}
 
   componentWillMount () { // fired on server + client
     let { todos, actions } = this.props;
@@ -26,7 +29,7 @@ class Todos extends Component {
     }
   }
 
-  hadleTodoAdd () {
+  hadleTodoAdd = () => {
     let { actions } = this.props;
     actions.todo.addAsync('New todo');
   }
@@ -35,9 +38,9 @@ class Todos extends Component {
     return (
       <div className="Todos">
         <TodoList {...this.props} />
-        <button onClick={this.hadleTodoAdd.bind(this)}>
-          <svg width="24" height="24" viewBox={iconAdd.viewBox}>
-            <use xlinkHref={`#${iconAdd.id}`} />
+        <button onClick={this.hadleTodoAdd}>
+          <svg width="24" height="24">
+            <use xlinkHref="#i-add" />
           </svg>
           Add
         </button>

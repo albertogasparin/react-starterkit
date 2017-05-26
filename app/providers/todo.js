@@ -97,7 +97,7 @@ export const actions = {
       })
         .then((resp) => {
           // remove optimistic todo and add server saved one
-          dispatch(actions.remove(tmpTodo.id));
+          dispatch(actions.remove(tmpTodo));
           dispatch(actions.add(resp));
         })
         .catch((err) => {

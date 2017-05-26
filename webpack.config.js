@@ -81,7 +81,7 @@ webpackCfg.module = {
             targets: { browsers: supportedBrowsers },
             loose: true,
             modules: false,
-          }]],
+          }], 'react', 'stage-2'],
           plugins: isProduction ? [
             'lodash',
             'transform-react-remove-prop-types',

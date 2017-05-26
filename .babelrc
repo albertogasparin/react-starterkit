@@ -2,7 +2,7 @@
   "presets": [
     ["env", { "targets": { "node": "current" } }],
     "react",
-    "stage-3"
+    "stage-2"
   ],
   "plugins": [],
   "retainLines": true,

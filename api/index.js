@@ -16,6 +16,7 @@ export const router = new koaRouter({
 
 
 export default function setup (app) {
+
   // add all routes to router
   _.forEach(routes, (fn, key) => {
     let [ method, routePath ] = key.split(' '); // eg: GET /foo/:id

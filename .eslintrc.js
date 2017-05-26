@@ -7,7 +7,6 @@ module.exports = {
    * Environments
    */
   env: {
-    es6: true,
     node: true,
     browser: true,
   },
@@ -17,14 +16,11 @@ module.exports = {
    */
   extends: 'eslint:recommended',
 
+  parser: 'babel-eslint',
+
   parserOptions: {
-    ecmaVersion: 2015,
     sourceType: 'module',
-    ecmaFeatures: {
-      jsx: true,
-      blockBindings: true,
-      experimentalObjectRestSpread: true,
-    },
+    codeFrame: true,
   },
 
   /*

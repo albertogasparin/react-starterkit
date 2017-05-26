@@ -66,8 +66,8 @@ function *all (next) {
     getRenderedApp: co(function *() {
       let reduxStore = createMainStore({}, api, thunkMiddleware);
       let html = renderApp(reduxStore, renderProps);
-      if (asyncActions.length) {
-        yield asyncActions;
+      while (asyncActions.length > 0) {
+        yield asyncActions.shift();
         html = renderApp(reduxStore, renderProps);
       }
       return { html, state: reduxStore.getState() };
