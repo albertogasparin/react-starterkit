@@ -20,14 +20,17 @@ export const types = {
 const defaultState = {
   byId: {},
   ids: [],
+  fetched: false,
 };
 
 export const reducer = handleActions({
 
   [types.LOAD] (state, { payload }) {
     return {
+      ...state,
       byId: _.keyBy(payload, (m) => m.id),
       ids: _.map(payload, (m) => m.id),
+      fetched: true,
     };
   },
 
@@ -36,6 +39,7 @@ export const reducer = handleActions({
     let byId = _.keyBy(entities, (m) => m.id);
     let orderedIds = _.map(entities, (m) => m.id); // better than Object.keys to preserve order
     return {
+      ...state,
       byId: { ...state.byId, ...byId },
       ids: _.union(state.ids, orderedIds),
     };
@@ -45,6 +49,7 @@ export const reducer = handleActions({
     let entities = [].concat(payload);
     let ids = entities.map((m) => m.id);
     return {
+      ...state,
       byId: _.pickBy(state.byId, (ent) => ids.indexOf(ent.id) === -1),
       ids: state.ids.filter((id) => ids.indexOf(id) === -1),
     };

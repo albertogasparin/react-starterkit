@@ -28,22 +28,22 @@ export default function setup (app) {
   };
 
   // Enhance context with .render() template method
-  app.use(function *(next) {
+  app.use(async (ctx, next) => {
     function getTpl (p, n) {
       return marko.load(path.join(p, 'templates', n + '.marko'), { writeToDisk: false });
     }
 
-    Object.assign(this, {
+    Object.assign(ctx, {
       render (routePath, tplName, locals = {}) {
-        this.type = 'text/html';
-        this.body = getTpl(routePath, tplName).stream({ $global, ...locals });
+        ctx.response.type = 'text/html';
+        ctx.response.body = getTpl(routePath, tplName).stream({ $global, ...locals });
       },
       renderSync (routePath, tplName, locals = {}) {
-        this.type = 'text/html';
-        this.body = getTpl(routePath, tplName).renderToString({ $global, ...locals });
+        ctx.response.type = 'text/html';
+        ctx.response.body = getTpl(routePath, tplName).renderToString({ $global, ...locals });
       },
     });
-    yield next;
+    await next();
   });
 
   // add all routes to router

@@ -1,13 +1,14 @@
 import onError from 'koa-onerror';
+import createError from 'http-errors';
 
 export default function setup (app) {
 
   // 404 handling (as onError ignores it by default)
-  app.use(function *(next) {
-    yield next;
+  app.use(async ({ response }, next) => {
+    await next();
     /* istanbul ignore else */
-    if (this.status >= 400) {
-      this.throw(this.status, this.response.message);
+    if (response.status >= 400) {
+      throw createError(response.status, response.message);
     }
   });
 

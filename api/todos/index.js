@@ -5,16 +5,14 @@
 
 import db from '../../lib/db';
 
-function wait (ms) { return (cb) => setTimeout(cb, ms); }
+function wait (ms) { return new Promise((res) => setTimeout(res, ms)); }
 
-function *all () {
-  const { response } = this;
-  yield wait(200); // fake delay
+async function all ({ response }) {
+  await wait(200); // fake delay
   response.body = db.todos;
 }
 
-function *create () {
-  const { request, response } = this;
+async function create ({ request, response }) {
   let { text } = request.body;
   let todo = {
     id: db.todos.length + 1,
@@ -22,7 +20,7 @@ function *create () {
     completed: false,
   };
   db.todos.push(todo);
-  yield wait(200); // fake delay
+  await wait(200); // fake delay
   response.body = todo;
 }
 

@@ -1,18 +1,25 @@
 
-import co from 'co';
-
 import { router } from '../../api';
 
-const baseUrl = '/api';
+async function runRouterHandler (originalRequest, path, params, body) {
+  path = router.opts.prefix + path;
+  // we create a fake context (instead of using app.createContext)
+  // so we avoid stingify and parsing objects
+  // however cookies and many ctx methods are currently not implemented
+  let ctx = {
+    set () {},
+    path,
+    params,
+    method: 'GET',
+    request: { url: path, params, body },
+    response: {},
+  };
 
-export function get (path, options = {}) {
-  return co(function *() {
-    let ctx = {
-      request: { params: options.params, body: options.data },
-      response: {},
-    };
-    let [ route ] = router.match(baseUrl + path, 'GET').pathAndMethod;
-    yield route.stack[0].call(ctx);
-    return ctx.response.body;
-  });
+  await router.routes()(ctx, () => {});
+  return ctx.response.body;
+}
+
+export async function get (path, options = {}) {
+  let body = await runRouterHandler(this.req, path, options.params, options.data);
+  return body;
 }

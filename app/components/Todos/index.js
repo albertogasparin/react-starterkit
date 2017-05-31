@@ -16,6 +16,7 @@ import 'assets/icons/add.svg';
 class Todos extends Component {
 
   static propTypes = {
+    todosFetched: PropTypes.bool.isRequired,
     todos: PropTypes.array.isRequired,
     actions: PropTypes.object.isRequired,
   };
@@ -23,8 +24,8 @@ class Todos extends Component {
   state = {}
 
   componentWillMount () { // fired on server + client
-    let { todos, actions } = this.props;
-    if (!todos.length) {
+    let { todosFetched, actions } = this.props;
+    if (!todosFetched) {
       actions.todo.loadAsync();
     }
   }
@@ -35,9 +36,10 @@ class Todos extends Component {
   }
 
   render () {
+    let { todos } = this.props;
     return (
       <div className="Todos">
-        <TodoList {...this.props} />
+        <TodoList todos={todos} />
         <button onClick={this.hadleTodoAdd}>
           <svg width="24" height="24">
             <use xlinkHref="#i-add" />
@@ -51,6 +53,7 @@ class Todos extends Component {
 
 export default connect(
   (state) => ({
+    todosFetched: state.entities.todos.fetched,
     todos: providers.todo.selectors.getAll(state),
   }),
   (dispatch) => ({

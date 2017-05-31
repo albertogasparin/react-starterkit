@@ -17,6 +17,11 @@ export const router = new koaRouter({
 
 export default function setup (app) {
 
+  router.use(async (ctx, next) => {
+    ctx.set('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+    await next();
+  });
+
   // add all routes to router
   _.forEach(routes, (fn, key) => {
     let [ method, routePath ] = key.split(' '); // eg: GET /foo/:id

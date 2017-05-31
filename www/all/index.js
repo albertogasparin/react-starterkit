@@ -1,9 +1,11 @@
 
+import createError from 'http-errors';
 import React from 'react';
 import ReactDOM from 'react-dom/server';
-import co from 'co';
+import pify from 'pify';
 import { match, RouterContext } from 'react-router';
 import { Provider } from 'react-redux';
+import _ from 'lodash';
 
 import createMainStore from '../../app/store';
 import * as api from './api';
@@ -20,31 +22,31 @@ function renderApp (store, props) {
  * Setup React router server side rendering
  */
 
-function *all (next) {
+async function all ({ request, response, redirect, render, app }, next) {
   const routes = require('../../app/routes').default; // enable hot reload server-side
-  let location = this.url;
   let redirectLocation, renderProps;
 
   // Use react-router match() to check if valid route
   try {
-    [ redirectLocation, renderProps ] = yield match.bind(this, { routes, location });
+    let matchAsync = pify(match, { multiArgs: true });
+    [ redirectLocation, renderProps ] = await matchAsync({ routes, location: request.url });
   } catch (err) {
-    this.throw(500, err.message);
+    throw createError(500, err);
   }
 
   if (redirectLocation) {
-    return this.redirect(redirectLocation.pathname + redirectLocation.search, '/');
+    return redirect(redirectLocation.pathname + redirectLocation.search, '/');
   }
 
   if (!renderProps) {
-    return this.throw(404);
+    throw createError(404);
   }
 
   /**
    * If you are NOT intersted in server-side rendering
    * then replace following code with just:
    *
-   * this.render(__dirname, 'index', {});
+   * render(__dirname, 'index', {});
    */
 
   // Provide a customised thunk middleware
@@ -61,17 +63,23 @@ function *all (next) {
     },
   };
 
-  this.render(__dirname, 'index', {
+  let boundApi = _.mapValues(api, (v) => v.bind({ req: request.req }));
+
+  render(__dirname, 'index', {
     // Async template data, returns a promise handled by marko
-    getRenderedApp: co(function *() {
-      let reduxStore = createMainStore({}, api, thunkMiddleware);
-      let html = renderApp(reduxStore, renderProps);
-      while (asyncActions.length > 0) {
-        yield asyncActions.shift();
-        html = renderApp(reduxStore, renderProps);
+    async getRenderedApp () {
+      try {
+        let reduxStore = createMainStore({}, boundApi, thunkMiddleware);
+        let html = renderApp(reduxStore, renderProps);
+        while (asyncActions.length > 0) {
+          await asyncActions.shift();
+          html = renderApp(reduxStore, renderProps);
+        }
+        return { html, state: reduxStore.getState() };
+      } catch (err) {
+        app.emit('error', err);
       }
-      return { html, state: reduxStore.getState() };
-    }).catch((err) => this.app.emit('error', err)),
+    },
   });
 }
 
