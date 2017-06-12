@@ -1,5 +1,3 @@
-// add generators support to mocha
-import 'co-mocha';
 
 // import chai from 'chai';
 

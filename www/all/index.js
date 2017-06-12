@@ -7,6 +7,7 @@ import { match, RouterContext } from 'react-router';
 import { Provider } from 'react-redux';
 import _ from 'lodash';
 
+import indexTpl from './templates/index.marko';
 import createMainStore from '../../app/store';
 import * as api from './api';
 
@@ -22,7 +23,7 @@ function renderApp (store, props) {
  * Setup React router server side rendering
  */
 
-async function all ({ request, response, redirect, render, app }, next) {
+async function all ({ request, redirect, render, app }, next) {
   const routes = require('../../app/routes').default; // enable hot reload server-side
   let redirectLocation, renderProps;
 
@@ -46,7 +47,7 @@ async function all ({ request, response, redirect, render, app }, next) {
    * If you are NOT intersted in server-side rendering
    * then replace following code with just:
    *
-   * render(__dirname, 'index', {});
+   * render(indexTpl);
    */
 
   // Provide a customised thunk middleware
@@ -65,7 +66,7 @@ async function all ({ request, response, redirect, render, app }, next) {
 
   let boundApi = _.mapValues(api, (v) => v.bind({ req: request.req }));
 
-  render(__dirname, 'index', {
+  render(indexTpl, {
     // Async template data, returns a promise handled by marko
     async getRenderedApp () {
       try {

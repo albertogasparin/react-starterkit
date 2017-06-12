@@ -1,8 +1,7 @@
 
-import path from 'path';
 import koaRouter from 'koa-router';
 import _ from 'lodash';
-import marko from 'marko';
+import 'marko/node-require'; // enhance require to handle `.marko` files
 
 import config from '../lib/config';
 import errorHandler from './errors';
@@ -29,18 +28,14 @@ export default function setup (app) {
 
   // Enhance context with .render() template method
   app.use(async (ctx, next) => {
-    function getTpl (p, n) {
-      return marko.load(path.join(p, 'templates', n + '.marko'), { writeToDisk: false });
-    }
-
     Object.assign(ctx, {
-      render (routePath, tplName, locals = {}) {
+      render (compiledTpl, locals = {}) {
         ctx.response.type = 'text/html';
-        ctx.response.body = getTpl(routePath, tplName).stream({ $global, ...locals });
+        ctx.response.body = compiledTpl.stream({ $global, ...locals });
       },
-      renderSync (routePath, tplName, locals = {}) {
+      renderSync (compiledTpl, locals = {}) {
         ctx.response.type = 'text/html';
-        ctx.response.body = getTpl(routePath, tplName).renderToString({ $global, ...locals });
+        ctx.response.body = compiledTpl.renderToString({ $global, ...locals });
       },
     });
     await next();

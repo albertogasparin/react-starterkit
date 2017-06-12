@@ -25,6 +25,7 @@ const extractCSS = new ExtractTextPlugin({ filename: '[name].css', allChunks: tr
  * Main webpack config
  */
 let webpackCfg = {
+  context: config.root,
   devtool: isProduction ? 'source-map' : 'cheap-module-eval-source-map',
   entry: {
     // vendor: ['react'],

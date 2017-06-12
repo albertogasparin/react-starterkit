@@ -7,7 +7,7 @@ import * as providers from '../../providers';
 import TodoList from './atoms/list';
 // import './style.scss';
 
-import 'assets/icons/add.svg';
+import iconAdd from 'assets/icons/add.svg';
 
 /**
  * Todos wrapper component
@@ -42,7 +42,7 @@ class Todos extends Component {
         <TodoList todos={todos} />
         <button onClick={this.hadleTodoAdd}>
           <svg width="24" height="24">
-            <use xlinkHref="#i-add" />
+            <use xlinkHref={`#${iconAdd.id}`} />
           </svg>
           Add
         </button>

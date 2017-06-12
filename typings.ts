@@ -16,6 +16,11 @@ declare module '*.svg' {
   export default value;
 }
 
+declare module '*.marko' {
+  const value: any;
+  export default value;
+}
+
 interface Window {
   __INITIAL_STATE__: any;
   devToolsExtension: any;
