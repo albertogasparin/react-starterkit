@@ -1,4 +1,3 @@
-
 import createError from 'http-errors';
 import React from 'react';
 import ReactDOM from 'react-dom/server';
@@ -11,7 +10,7 @@ import indexTpl from './templates/index.marko';
 import createMainStore from '../../app/store';
 import * as api from './api';
 
-function renderApp (store, props) {
+function renderApp(store, props) {
   return ReactDOM.renderToString(
     <Provider store={store}>
       <RouterContext {...props} />
@@ -23,14 +22,17 @@ function renderApp (store, props) {
  * Setup React router server side rendering
  */
 
-async function all ({ request, redirect, render, app }, next) {
+async function all({ request, redirect, render, app }, next) {
   const routes = require('../../app/routes').default; // enable hot reload server-side
   let redirectLocation, renderProps;
 
   // Use react-router match() to check if valid route
   try {
     let matchAsync = pify(match, { multiArgs: true });
-    [ redirectLocation, renderProps ] = await matchAsync({ routes, location: request.url });
+    [redirectLocation, renderProps] = await matchAsync({
+      routes,
+      location: request.url,
+    });
   } catch (err) {
     throw createError(500, err);
   }
@@ -54,21 +56,25 @@ async function all ({ request, redirect, render, app }, next) {
   // that queues async actions to resolve them later
   let asyncActions = [];
   let thunkMiddleware = {
-    withExtraArgument (arg) {
-      return function thunk ({ dispatch, getState }) {
-        return (nxt) => (action) =>
-          (typeof action === 'function')
-            ? asyncActions[asyncActions.length] = action(dispatch, getState, arg)
+    withExtraArgument(arg) {
+      return function thunk({ dispatch, getState }) {
+        return nxt => action =>
+          typeof action === 'function'
+            ? (asyncActions[asyncActions.length] = action(
+                dispatch,
+                getState,
+                arg
+              ))
             : nxt(action);
       };
     },
   };
 
-  let boundApi = _.mapValues(api, (v) => v.bind({ req: request.req }));
+  let boundApi = _.mapValues(api, v => v.bind({ req: request.req }));
 
   render(indexTpl, {
     // Async template data, returns a promise handled by marko
-    async getRenderedApp () {
+    async getRenderedApp() {
       try {
         let reduxStore = createMainStore({}, boundApi, thunkMiddleware);
         let html = renderApp(reduxStore, renderProps);
@@ -83,7 +89,6 @@ async function all ({ request, redirect, render, app }, next) {
     },
   });
 }
-
 
 const ROUTES = {
   'GET *': all,

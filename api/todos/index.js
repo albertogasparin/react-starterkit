@@ -5,14 +5,16 @@
 
 import db from '../../lib/db';
 
-function wait (ms) { return new Promise((res) => setTimeout(res, ms)); }
+function wait(ms) {
+  return new Promise(res => setTimeout(res, ms));
+}
 
-async function all ({ response }) {
+async function all({ response }) {
   await wait(200); // fake delay
   response.body = db.todos;
 }
 
-async function create ({ request, response }) {
+async function create({ request, response }) {
   let { text } = request.body;
   let todo = {
     id: db.todos.length + 1,
@@ -23,7 +25,6 @@ async function create ({ request, response }) {
   await wait(200); // fake delay
   response.body = todo;
 }
-
 
 const API = {
   'GET /todos': all,

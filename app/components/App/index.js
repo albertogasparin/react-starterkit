@@ -7,7 +7,7 @@ import './style.scss';
  * App component
  */
 
-const App = ({ children = null }) => (
+const App = ({ children = null }) =>
   <div className="App">
     <header>
       <Link to="/todos">Show Todos</Link>
@@ -15,7 +15,6 @@ const App = ({ children = null }) => (
     <section>
       {children}
     </section>
-  </div>
-);
+  </div>;
 
 export default App;

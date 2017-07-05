@@ -6,9 +6,7 @@ import { combineReducers } from 'redux';
 
 import * as todo from './todo';
 
-export {
-  todo,
-};
+export { todo };
 
 export default combineReducers({
   entities: combineReducers({

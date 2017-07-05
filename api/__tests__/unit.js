@@ -1,4 +1,4 @@
-/* eslint-env mocha *//* eslint-disable max-nested-callbacks */
+/* eslint-env mocha */ /* eslint-disable max-nested-callbacks */
 
 // import { expect } from 'chai';
 import td from 'testdouble';
@@ -28,5 +28,4 @@ describe('routesApi()', () => {
   it('should add routes to app', () => {
     td.verify(app.use(routesMw));
   });
-
 });

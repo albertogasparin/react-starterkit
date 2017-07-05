@@ -4,7 +4,6 @@ import { expect } from 'chai';
 import { types, reducer } from '../todo';
 
 describe('Reducers: todo', () => {
-
   describe('default', () => {
     it('should return the state', () => {
       let stateBefore;
@@ -14,9 +13,7 @@ describe('Reducers: todo', () => {
     });
   });
 
-
   describe(types.LOAD, () => {
-
     it('should return a whole new collection', () => {
       let stateBefore = {
         byId: {},
@@ -35,12 +32,9 @@ describe('Reducers: todo', () => {
 
       expect(reducer(stateBefore, action)).to.eql(stateAfter);
     });
-
   });
 
-
   describe(types.ADD, () => {
-
     it('should add a todo into the store', () => {
       let stateBefore = {
         byId: { 1: { id: 1 } },
@@ -59,12 +53,9 @@ describe('Reducers: todo', () => {
 
       expect(reducer(stateBefore, action)).to.eql(stateAfter);
     });
-
   });
 
-
   describe(types.REMOVE, () => {
-
     it('should remove the todo from the store', () => {
       let stateBefore = {
         byId: { 1: { id: 1 }, 2: { id: 2 } },
@@ -83,7 +74,5 @@ describe('Reducers: todo', () => {
 
       expect(reducer(stateBefore, action)).to.eql(stateAfter);
     });
-
   });
-
 });

@@ -1,52 +1,97 @@
 /* GRID
    =============================================== */
 
-.sm-w50 { width: 50%; }
-.sm-w100 { width: 100%; }
+.sm-w50 {
+  width: 50%;
+}
+.sm-w100 {
+  width: 100%;
+}
 
 @include mq($md) {
-  .md-w25 { width: 25%; }
-  .md-w50 { width: 50%; }
-  .md-w75 { width: 75%; }
-  .md-w100 { width: 100%; }
+  .md-w25 {
+    width: 25%;
+  }
+  .md-w50 {
+    width: 50%;
+  }
+  .md-w75 {
+    width: 75%;
+  }
+  .md-w100 {
+    width: 100%;
+  }
 }
 
 @include mq($lg) {
-  .lg-w25 { width: 25%; }
-  .lg-w50 { width: 50%; }
-  .lg-w75 { width: 75%; }
-  .lg-w100 { width: 100%; }
+  .lg-w25 {
+    width: 25%;
+  }
+  .lg-w50 {
+    width: 50%;
+  }
+  .lg-w75 {
+    width: 75%;
+  }
+  .lg-w100 {
+    width: 100%;
+  }
 }
-
 
 /* POSITION
    =============================================== */
 
-.left { float: left; }
-.right { float: right; }
-.center { @include center(); }
+.left {
+  float: left;
+}
+.right {
+  float: right;
+}
+.center {
+  @include center();
+}
 
-.clear { clear: both; }
+.clear {
+  clear: both;
+}
 .clearfix {
-  &::before, &::after {
+  &::before,
+  &::after {
     content: " ";
     display: table;
   }
 
-  &::after { clear: both; }
+  &::after {
+    clear: both;
+  }
 }
-
 
 /* TYPOGRAPHY
    =============================================== */
 
-.t-left { text-align: left; }
-.t-center { text-align: center; }
-.t-right { text-align: right; }
+.t-left {
+  text-align: left;
+}
+.t-center {
+  text-align: center;
+}
+.t-right {
+  text-align: right;
+}
 
-.t-upper { text-transform: uppercase; }
+.t-upper {
+  text-transform: uppercase;
+}
 
-.t-clip { @include text-clip(); }
-.t-primary { color: $color-primary; }
-.t-secondary { color: $color-secondary; }
-.t-error { color: $color-error; }
+.t-clip {
+  @include text-clip();
+}
+.t-primary {
+  color: $color-primary;
+}
+.t-secondary {
+  color: $color-secondary;
+}
+.t-error {
+  color: $color-error;
+}

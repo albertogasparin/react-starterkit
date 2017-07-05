@@ -1,4 +1,3 @@
-
 import koaRouter from 'koa-router';
 import _ from 'lodash';
 import 'marko/node-require'; // enhance require to handle `.marko` files
@@ -17,7 +16,7 @@ export const router = new koaRouter({
   prefix: '/',
 });
 
-export default function setup (app) {
+export default function setup(app) {
   // add global error handling
   errorHandler(app);
 
@@ -29,11 +28,11 @@ export default function setup (app) {
   // Enhance context with .render() template method
   app.use(async (ctx, next) => {
     Object.assign(ctx, {
-      render (compiledTpl, locals = {}) {
+      render(compiledTpl, locals = {}) {
         ctx.response.type = 'text/html';
         ctx.response.body = compiledTpl.stream({ $global, ...locals });
       },
-      renderSync (compiledTpl, locals = {}) {
+      renderSync(compiledTpl, locals = {}) {
         ctx.response.type = 'text/html';
         ctx.response.body = compiledTpl.renderToString({ $global, ...locals });
       },
@@ -43,7 +42,7 @@ export default function setup (app) {
 
   // add all routes to router
   _.forEach(routes, (fn, key) => {
-    let [ method, routePath ] = key.split(' '); // eg: GET /foo/:id
+    let [method, routePath] = key.split(' '); // eg: GET /foo/:id
     router[method.toLowerCase()](routePath, fn);
   });
 

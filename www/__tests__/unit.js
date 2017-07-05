@@ -1,4 +1,4 @@
-/* eslint-env mocha *//* eslint-disable max-nested-callbacks */
+/* eslint-env mocha */ /* eslint-disable max-nested-callbacks */
 
 // import { expect } from 'chai';
 import td from 'testdouble';
@@ -7,15 +7,17 @@ import Koa from 'koa';
 import routesWww, { router, routes } from '..';
 
 describe('routesWww()', () => {
-  let app = new Koa(), ctx;
+  let app = new Koa(),
+    ctx;
 
   beforeEach(() => {
     ctx = { status: 404, response: {}, ...td.object(['throw']) };
     td.replace(app, 'use');
     td.replace(router, 'get');
     td.replace(router, 'routes', () => routes);
-    td.when(app.use(td.matchers.isA(Function)))
-      .thenDo(async (fn) => await fn(ctx, async () => {}));
+    td
+      .when(app.use(td.matchers.isA(Function)))
+      .thenDo(async fn => await fn(ctx, async () => {}));
     routesWww(app);
   });
 
@@ -42,5 +44,4 @@ describe('routesWww()', () => {
       td.verify(tpl.renderToString(td.matchers.isA(Object)));
     });
   });
-
 });

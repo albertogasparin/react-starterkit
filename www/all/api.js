@@ -1,13 +1,12 @@
-
 import { router } from '../../api';
 
-async function runRouterHandler (originalRequest, path, params, body) {
+async function runRouterHandler(originalRequest, path, params, body) {
   path = router.opts.prefix + path;
   // we create a fake context (instead of using app.createContext)
   // so we avoid stingify and parsing objects
   // however cookies and many ctx methods are currently not implemented
   let ctx = {
-    set () {},
+    set() {},
     path,
     params,
     method: 'GET',
@@ -19,7 +18,12 @@ async function runRouterHandler (originalRequest, path, params, body) {
   return ctx.response.body;
 }
 
-export async function get (path, options = {}) {
-  let body = await runRouterHandler(this.req, path, options.params, options.data);
+export async function get(path, options = {}) {
+  let body = await runRouterHandler(
+    this.req,
+    path,
+    options.params,
+    options.data
+  );
   return body;
 }

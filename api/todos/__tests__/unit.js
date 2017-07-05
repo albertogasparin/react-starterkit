@@ -1,4 +1,4 @@
-/* eslint-env mocha *//* eslint-disable no-unused-vars */
+/* eslint-env mocha */ /* eslint-disable no-unused-vars */
 
 import co from 'co';
 import { expect } from 'chai';
@@ -14,9 +14,7 @@ describe('GET /todos', () => {
     await route(ctx);
     expect(ctx.response.body).to.have.length.gt(0);
   });
-
 });
-
 
 describe('POST /todos', () => {
   let route = routes['POST /todos'];
@@ -27,5 +25,4 @@ describe('POST /todos', () => {
     await route(ctx);
     expect(ctx.response.body).to.deep.equal(expected);
   });
-
 });

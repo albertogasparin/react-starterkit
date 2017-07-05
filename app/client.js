@@ -1,4 +1,3 @@
-
 import React from 'react';
 import ReactDom from 'react-dom';
 import { Provider } from 'react-redux';
@@ -23,4 +22,6 @@ const reactRoot = window.document.getElementById('app');
 ReactDom.render(
   <Provider store={store}>
     <Router routes={routes} history={browserHistory} />
-  </Provider>, reactRoot);
+  </Provider>,
+  reactRoot
+);

@@ -1,15 +1,15 @@
 // Blacklist confusing globals set by ESLint browser: true setting (use them by prepending `window.`)
+// prettier-ignore
 var restrictedGlobals = ['addEventListener', 'blur', 'close', 'closed', 'confirm', 'defaultStatus', 'defaultstatus', 'event', 'external', 'find', 'focus', 'frameElement', 'frames', 'history', 'innerHeight', 'innerWidth', 'length', 'location', 'locationbar', 'menubar', 'moveBy', 'moveTo', 'name', 'onblur', 'onerror', 'onfocus', 'onload', 'onresize', 'onunload', 'open', 'opener', 'opera', 'outerHeight', 'outerWidth', 'pageXOffset', 'pageYOffset', 'parent', 'print', 'removeEventListener', 'resizeBy', 'resizeTo', 'screen', 'screenLeft', 'screenTop', 'screenX', 'screenY', 'scroll', 'scrollbars', 'scrollBy', 'scrollTo', 'scrollX', 'scrollY', 'self', 'status', 'statusbar', 'stop', 'toolbar', 'top'];
 
 module.exports = {
-
   /*
    * Environments
    */
   env: {
+    es6: true,
     node: true,
     browser: true,
-    es6: true,
   },
 
   /*
@@ -27,33 +27,28 @@ module.exports = {
   /*
    * Plugins for additional rules
    */
-  plugins: [
-    'react',
-    'import',
-    'mocha',
-  ],
+  plugins: ['react', 'import', 'mocha'],
 
   settings: {
     'import/resolver': 'webpack',
-    'import/ignore': ['\.(scss|less|css)$'],
+    'import/ignore': ['.(scss|less|css)$'],
   },
 
   /*
    * Project wise globals
    */
   globals: {
-    '__CLIENT__': true,
-    'CONFIG_CLIENT': true,
+    __CLIENT__: true,
+    CONFIG_CLIENT: true,
   },
 
   /*
    * Rules
    */
   rules: {
-
     /* Code checks
     */
-    'eqeqeq': ['error', 'smart'],
+    eqeqeq: ['error', 'smart'],
     'no-func-assign': ['error'],
     'no-inner-declarations': ['error'],
     'no-redeclare': ['error'],
@@ -74,43 +69,23 @@ module.exports = {
     'no-empty': ['warn'],
     'require-yield': ['off'],
 
-    /* Punctation rules
-    */
-    'semi': ['error', 'always'],
-    'linebreak-style': ['error', 'unix'],
-    'curly': ['error'],
-    'comma-dangle': ['warn', 'always-multiline'],
-    'quotes': ['warn', 'single'],
-
-    /* Spacing rules
-    */
-    'no-spaced-func': ['error'],
-    'no-irregular-whitespace': ['error'],
-    'indent': ['warn', 2, { SwitchCase: 1, VariableDeclarator: { 'var': 2, 'let': 2, 'const': 3 } }],
-    'brace-style': ['warn', '1tbs', { allowSingleLine: true }],
-    'no-multi-spaces': ['warn'],
-    'key-spacing': ['warn', { beforeColon: false, afterColon: true }],
-    'keyword-spacing': ['warn'],
-    'arrow-spacing': ['warn', { before: true, after: true }],
-    'space-infix-ops': ['warn'],
-    'object-curly-spacing': ['warn', 'always', { objectsInObjects: true, arraysInObjects: true }],
-    'computed-property-spacing': ['warn', 'never'],
-    'space-in-parens': ['warn', 'never'],
-    'space-before-function-paren': ['warn', 'always'],
-    'space-before-blocks': ['warn', 'always'],
-    'eol-last': ['warn'],
-
     /* Coding helpers rules
     */
-    'complexity': ['warn', 5],
+    complexity: ['warn', 5],
     'max-depth': ['warn', 5],
     'max-nested-callbacks': ['warn', 4],
     'max-len': ['warn', 100, 4, { ignoreComments: true }],
-    'valid-jsdoc': ['warn', { requireReturn: false, requireParamDescription: false, requireReturnDescription: false }],
+    'valid-jsdoc': [
+      'warn',
+      {
+        requireReturn: false,
+        requireParamDescription: false,
+        requireReturnDescription: false,
+      },
+    ],
 
     /* ES2015+ rules
     */
-    'generator-star-spacing': ['warn'],
     'object-shorthand': ['warn', 'always'],
     'no-this-before-super': ['warn'],
     'no-duplicate-imports': ['warn', { includeExports: true }],
@@ -130,12 +105,10 @@ module.exports = {
     'react/require-render-return': ['error'],
     'react/style-prop-object': ['warn'],
     'react/void-dom-elements-no-children': ['error'],
-    'react/jsx-closing-bracket-location': ['warn', 'tag-aligned'],
     'react/jsx-key': ['error'],
     'react/jsx-no-duplicate-props': ['error'],
     'react/jsx-no-undef': ['error'],
     'react/jsx-pascal-case': ['warn'],
-    'react/jsx-tag-spacing': ['warn'],
     'react/jsx-uses-react': ['error'],
     'react/jsx-uses-vars': ['error'],
 
@@ -146,10 +119,8 @@ module.exports = {
     'import/namespace': ['error'],
     'import/no-absolute-path': ['error'],
     'import/export': ['error'],
-    // 'import/no-named-as-default': ['error'],
     'import/no-extraneous-dependencies': ['error'],
     'import/first': ['warn'],
-
 
     /* Mocha plugin rules
     */
@@ -161,5 +132,4 @@ module.exports = {
     'mocha/no-sibling-hooks': ['error'],
     'mocha/no-top-level-hooks': ['error'],
   },
-
 };

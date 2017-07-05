@@ -13,4 +13,3 @@ export default (
     <Route path="todos" component={Todos} />
   </Route>
 );
-

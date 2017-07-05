@@ -11,15 +11,29 @@ describe('GET *', () => {
 
   describe('if existing path', () => {
     it('should call render', async () => {
-      ctx = { request: { url: '/' }, render: td.function(), redirect: td.function(), app: {} };
+      ctx = {
+        request: { url: '/' },
+        render: td.function(),
+        redirect: td.function(),
+        app: {},
+      };
       await route(ctx);
-      td.verify(ctx.render(td.matchers.isA(Object), { getRenderedApp: td.matchers.isA(Function) }));
+      td.verify(
+        ctx.render(td.matchers.isA(Object), {
+          getRenderedApp: td.matchers.isA(Function),
+        })
+      );
     });
   });
 
   describe('if not found path', () => {
     it('should return 404', async () => {
-      ctx = { request: { url: '/asd' }, render: td.function(), redirect: td.function(), app: {} };
+      ctx = {
+        request: { url: '/asd' },
+        render: td.function(),
+        redirect: td.function(),
+        app: {},
+      };
       try {
         await route(ctx);
       } catch (err) {
@@ -27,5 +41,4 @@ describe('GET *', () => {
       }
     });
   });
-
 });

@@ -5,7 +5,7 @@ import reducers from './providers';
 
 export let store;
 
-export default function (initialState, api, thunkMiddleware = thunk) {
+export default function(initialState, api, thunkMiddleware = thunk) {
   // Enhance redux with middlewares and other enhancers
   const enhancer = compose(
     applyMiddleware(
@@ -13,7 +13,7 @@ export default function (initialState, api, thunkMiddleware = thunk) {
       thunkMiddleware.withExtraArgument(api)
     ),
     // support Chrome redux-devtools-extension
-    __CLIENT__ && window.devToolsExtension ? window.devToolsExtension() : (f) => f
+    __CLIENT__ && window.devToolsExtension ? window.devToolsExtension() : f => f
   );
 
   store = createStore(reducers, initialState, enhancer);

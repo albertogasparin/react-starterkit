@@ -14,16 +14,16 @@ import iconAdd from 'assets/icons/add.svg';
  */
 
 class Todos extends Component {
-
   static propTypes = {
     todosFetched: PropTypes.bool.isRequired,
     todos: PropTypes.array.isRequired,
     actions: PropTypes.object.isRequired,
   };
 
-  state = {}
+  state = {};
 
-  componentWillMount () { // fired on server + client
+  componentWillMount() {
+    // fired on server + client
     let { todosFetched, actions } = this.props;
     if (!todosFetched) {
       actions.todo.loadAsync();
@@ -33,9 +33,9 @@ class Todos extends Component {
   hadleTodoAdd = () => {
     let { actions } = this.props;
     actions.todo.addAsync('New todo');
-  }
+  };
 
-  render () {
+  render() {
     let { todos } = this.props;
     return (
       <div className="Todos">
@@ -52,11 +52,11 @@ class Todos extends Component {
 }
 
 export default connect(
-  (state) => ({
+  state => ({
     todosFetched: state.entities.todos.fetched,
     todos: providers.todo.selectors.getAll(state),
   }),
-  (dispatch) => ({
+  dispatch => ({
     actions: {
       todo: bindActionCreators(providers.todo.actions, dispatch),
     },

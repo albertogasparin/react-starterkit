@@ -3,7 +3,8 @@
    =============================================== */
 
 *,
-*:before, *:after {
+*:before,
+*:after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -51,11 +52,17 @@ template {
   display: none;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font: inherit;
 }
 
-ul, ol {
+ul,
+ol {
   list-style: none;
 }
 
@@ -214,4 +221,3 @@ table {
   border-collapse: collapse;
   border-spacing: 0;
 }
-
