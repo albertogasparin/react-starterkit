@@ -222,7 +222,6 @@ webpackCfg.plugins = extendPlugins([
   // Fixes for commonly used libraries (triggered only if lib is actually used)
   new webpack.ProvidePlugin({
     Promise: 'exports-loader?global.Promise!promise-polyfill', // IE11 Promise polyfill
-    // 'window.fetch': 'exports-loader?self.fetch!whatwg-fetch', // Fetch polyfill
   }),
 
   // Convert lodash-es to lodash, avoiding duplication

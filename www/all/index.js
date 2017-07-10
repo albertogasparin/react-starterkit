@@ -1,7 +1,6 @@
 import createError from 'http-errors';
 import React from 'react';
 import ReactDOM from 'react-dom/server';
-import pify from 'pify';
 import { match, RouterContext } from 'react-router';
 import { Provider } from 'react-redux';
 import _ from 'lodash';
@@ -24,14 +23,13 @@ function renderApp(store, props) {
 
 async function all({ request, redirect, render, app }, next) {
   const routes = require('../../app/routes').default; // enable hot reload server-side
+  let location = request.url;
   let redirectLocation, renderProps;
 
   // Use react-router match() to check if valid route
   try {
-    let matchAsync = pify(match, { multiArgs: true });
-    [redirectLocation, renderProps] = await matchAsync({
-      routes,
-      location: request.url,
+    [redirectLocation, renderProps] = await new Promise((res, rej) => {
+      match({ routes, location }, (e, ...v) => (e ? rej(e) : res(v)));
     });
   } catch (err) {
     throw createError(500, err);
