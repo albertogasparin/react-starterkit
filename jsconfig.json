@@ -18,9 +18,10 @@
     }
   },
   "exclude": [
+    "coverage",
     "node_modules",
     "public",
-    "coverage",
+    "server_build",
     "tmp",
     "temp"
   ]

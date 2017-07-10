@@ -1,6 +1,5 @@
 import koaRouter from 'koa-router';
 import _ from 'lodash';
-import 'marko/node-require'; // enhance require to handle `.marko` files
 
 import config from '../lib/config';
 import errorHandler from './errors';

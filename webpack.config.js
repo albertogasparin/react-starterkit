@@ -214,9 +214,10 @@ webpackCfg.plugins = extendPlugins([
         'process.env.NODE_ENV': JSON.stringify(config.env),
         __CLIENT__: true, // allow detection if clientside rendering
       },
+      // provide server side config vars
       pathKeys(config.client, 'CONFIG_CLIENT')
     )
-  ), // provide server side config vars
+  ),
 
   // Fixes for commonly used libraries (triggered only if lib is actually used)
   new webpack.ProvidePlugin({
