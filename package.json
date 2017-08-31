@@ -7,10 +7,12 @@
   "private": true,
   "config": {
     "testfiles": "find ./tests . -name unit*.js -not -path */node_modules/*",
-    "mochaargs": "--compilers js:babel-register --require ./lib/react-compat --require ./tests/unit/setup"
+    "mochaargs": "--compilers js:babel-register --require ./lib/webpack-compat --require ./tests/unit/setup",
+    "startargs": "-r babel-register -r marko/node-require -r ./lib/webpack-compat"
   },
   "scripts": {
     "start": "node ./server_build/index.js",
+    "start:nobuild": "node $npm_package_config_startargs ./server.js",
     "prebuild": "npm run clean -s",
     "build": "npm run build:assets -s -- --progress --hide-modules && npm run build:server -s",
     "build:server": "NODE_ENV=production webpack --config webpack.server.config.js --progress --hide-modules",
@@ -23,10 +25,10 @@
     "lint": "eslint --ext .js,.jsx --ignore-path .gitignore --ignore-pattern \"public/**\" . && prettier --single-quote --trailing-comma es5 --list-different \"{api,api-socket,app,lib,tests,www}/**/*.{js,scss}\" && stylelint --syntax scss \"app/**/*.scss\"",
     "clean": "rm -rf ./public/assets && rm -rf ./coverage && rm -rf ./.nyc_output",
     "prewatch": "npm run clean -s",
-    "watch": "supervisor -q -w lib,api,www,webpack.config.js -e js,marko -i __tests__ -- --inspect -r babel-register ./server.js"
+    "watch": "supervisor -q -w lib,api,www,webpack.config.js -e js,marko -i __tests__ -- --inspect $npm_package_config_startargs ./server.js"
   },
   "nyc": {
-    "require": ["babel-register", "./lib/react-compat"],
+    "require": ["babel-register", "./lib/webpack-compat"],
     "exclude": [
       "node_modules",
       "webpack.config.js",

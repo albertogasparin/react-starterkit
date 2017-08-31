@@ -7,6 +7,11 @@ const webpack = require('webpack');
 const path = require('path');
 
 const config = require('./lib/config');
+const packageJSON = require('./package.json');
+const deps = [].concat(
+  Object.keys(packageJSON.dependencies),
+  Object.keys(packageJSON.devDependencies)
+);
 
 /*
  * Main webpack config
@@ -41,18 +46,19 @@ let webpackCfg = {
   },
   externals: [
     (context, request, callback) => {
-      // Absolute & Relative paths are not externals
+      // Check if dependency or attempt to resolve the module via Node
       if (request.match(/^(\.{0,2})\//)) {
+        // Absolute & Relative paths are not externals
         return callback();
       }
 
       try {
-        // Attempt to resolve the module via Node
-        require.resolve(request);
-        callback(null, 'commonjs ' + request);
+        if (deps.includes(request) || require.resolve(request)) {
+          return callback(null, 'commonjs ' + request);
+        }
       } catch (e) {
         // Node couldn't find it, so it must be user-aliased
-        callback();
+        return callback();
       }
     },
   ],

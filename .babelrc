@@ -6,7 +6,6 @@
   ],
   "plugins": [],
   "retainLines": true,
-  "sourceMaps": "inline",
   "env": {
     "test": {
       "plugins": ["istanbul"]

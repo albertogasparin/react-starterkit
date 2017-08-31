@@ -28,6 +28,7 @@ describe('GET *', () => {
 
   describe('if not found path', () => {
     it('should return 404', async () => {
+      let error;
       ctx = {
         request: { url: '/asd' },
         render: td.function(),
@@ -37,8 +38,9 @@ describe('GET *', () => {
       try {
         await route(ctx);
       } catch (err) {
-        expect(err.status).to.eql(404);
+        error = err;
       }
+      expect(error.status).to.eql(404);
     });
   });
 });

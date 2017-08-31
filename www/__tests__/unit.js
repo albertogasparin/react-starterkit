@@ -11,7 +11,7 @@ describe('routesWww()', () => {
     ctx;
 
   beforeEach(() => {
-    ctx = { status: 404, response: {}, ...td.object(['throw']) };
+    ctx = { status: 404, response: {} };
     td.replace(app, 'use');
     td.replace(router, 'get');
     td.replace(router, 'routes', () => routes);
