@@ -21,7 +21,7 @@ html [lang="en"]
     if(out.global.ENV !== 'development')
       div [style="position:absolute; visibility: hidden; height: 0;"]
         object [type="image/svg+xml" data="${out.global.CONFIG_CLIENT.publicPath}assets/icons.svg"
-          onload="this.parentNode.replaceChild(this.getSVGDocument().childNodes[0], this);"]
+          onload="this.getSVGDocument() && this.parentNode.replaceChild(this.getSVGDocument().childNodes[0], this);"]
 
     await [(app from data.getRenderedApp)]
       #app
