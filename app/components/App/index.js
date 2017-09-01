@@ -5,16 +5,15 @@ import './style.scss';
 
 /**
  * App component
+ * @returns {React.ReactElement}
  */
-
-const App = ({ children = null }) =>
+const App = ({ children = null }) => (
   <div className="App">
     <header>
       <Link to="/todos">Show Todos</Link>
     </header>
-    <section>
-      {children}
-    </section>
-  </div>;
+    <section>{children}</section>
+  </div>
+);
 
 export default App;

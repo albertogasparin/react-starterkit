@@ -11,8 +11,8 @@ import iconAdd from 'assets/icons/add.svg';
 
 /**
  * Todos wrapper component
+ * @augments {Component<{ todosFetched, todos, actions }, {}>}
  */
-
 class Todos extends Component {
   static propTypes = {
     todosFetched: PropTypes.bool.isRequired,

@@ -1,6 +1,5 @@
 /* eslint-env mocha */ /* eslint-disable no-unused-vars */
 
-import co from 'co';
 import { expect } from 'chai';
 
 import routes from '..';
