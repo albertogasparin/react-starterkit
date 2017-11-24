@@ -18,9 +18,17 @@ $hd: map-get($breakpoints, hd);
 /* TYPOGRAPHY
    =============================================== */
 
-$font-size: (sm: 16px, md: 16px, hd: 18px);
+$font-size: (
+  sm: 16px,
+  md: 16px,
+  hd: 18px
+);
 
-$line-height: (sm: 22px, md: 22px, hd: 24px);
+$line-height: (
+  sm: 22px,
+  md: 22px,
+  hd: 24px
+);
 
 $base-font-family: sans-serif;
 $base-font-size: map-get($font-size, sm);

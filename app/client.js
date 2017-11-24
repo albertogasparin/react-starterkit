@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDom from 'react-dom';
+import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { Router, browserHistory } from 'react-router';
 
@@ -19,7 +19,7 @@ const store = createMainStore(window.__INITIAL_STATE__, api);
  */
 
 const reactRoot = window.document.getElementById('app');
-ReactDom.render(
+ReactDOM.hydrate(
   <Provider store={store}>
     <Router routes={routes} history={browserHistory} />
   </Provider>,

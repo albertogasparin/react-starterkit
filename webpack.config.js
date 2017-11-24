@@ -17,7 +17,7 @@ const config = require('./lib/config');
  * Private vars and fn
  * to customise config based on env
  */
-const supportedBrowsers = ['last 3 versions', 'IE >= 11', 'Android >= 4.4'];
+const supportedBrowsers = ['last 3 versions', 'Android >= 4.4'];
 const isProduction = config.env === 'production';
 const extractCSS = new ExtractTextPlugin({
   filename: '[name].css',
@@ -219,11 +219,6 @@ webpackCfg.plugins = extendPlugins([
     )
   ),
 
-  // Fixes for commonly used libraries (triggered only if lib is actually used)
-  new webpack.ProvidePlugin({
-    Promise: 'exports-loader?global.Promise!promise-polyfill', // IE11 Promise polyfill
-  }),
-
   // Convert lodash-es to lodash, avoiding duplication
   new webpack.NormalModuleReplacementPlugin(/^lodash-es(\/|$)/, res => {
     res.request = res.request.replace(/^lodash-es(\/|$)/, 'lodash$1');
@@ -285,7 +280,6 @@ function extendPlugins(plugins) {
       }),
       new webpack.optimize.UglifyJsPlugin({
         compress: { warnings: false },
-        output: { comments: false },
         sourceMap: true,
       })
     );
