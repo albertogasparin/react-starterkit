@@ -13,7 +13,9 @@ export default function(initialState, api, thunkMiddleware = thunk) {
       thunkMiddleware.withExtraArgument(api)
     ),
     // support Chrome redux-devtools-extension
-    __CLIENT__ && window.devToolsExtension ? window.devToolsExtension() : f => f
+    __CLIENT__ && window.devToolsExtension
+      ? window.devToolsExtension()
+      : (f) => f
   );
 
   store = createStore(reducers, initialState, enhancer);

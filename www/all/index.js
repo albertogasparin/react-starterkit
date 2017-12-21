@@ -56,7 +56,7 @@ async function all({ request, redirect, render, app }, next) {
   let thunkMiddleware = {
     withExtraArgument(arg) {
       return function thunk({ dispatch, getState }) {
-        return nxt => action =>
+        return (nxt) => (action) =>
           typeof action === 'function'
             ? (asyncActions[asyncActions.length] = action(
                 dispatch,
@@ -68,7 +68,7 @@ async function all({ request, redirect, render, app }, next) {
     },
   };
 
-  let boundApi = _.mapValues(api, v => v.bind({ req: request.req }));
+  let boundApi = _.mapValues(api, (v) => v.bind({ req: request.req }));
 
   render(indexTpl, {
     // Async template data, returns a promise handled by marko

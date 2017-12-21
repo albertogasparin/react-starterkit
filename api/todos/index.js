@@ -6,7 +6,7 @@
 import db from '../../lib/db';
 
 function wait(ms) {
-  return new Promise(res => setTimeout(res, ms));
+  return new Promise((res) => setTimeout(res, ms));
 }
 
 async function all({ response }) {

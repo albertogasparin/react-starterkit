@@ -28,16 +28,16 @@ export const reducer = handleActions(
     [types.LOAD](state, { payload }) {
       return {
         ...state,
-        byId: _.keyBy(payload, m => m.id),
-        ids: _.map(payload, m => m.id),
+        byId: _.keyBy(payload, (m) => m.id),
+        ids: _.map(payload, (m) => m.id),
         fetched: true,
       };
     },
 
     [types.ADD](state, { payload }) {
       let entities = [].concat(payload);
-      let byId = _.keyBy(entities, m => m.id);
-      let orderedIds = _.map(entities, m => m.id); // better than Object.keys to preserve order
+      let byId = _.keyBy(entities, (m) => m.id);
+      let orderedIds = _.map(entities, (m) => m.id); // better than Object.keys to preserve order
       return {
         ...state,
         byId: { ...state.byId, ...byId },
@@ -47,11 +47,11 @@ export const reducer = handleActions(
 
     [types.REMOVE](state, { payload }) {
       let entities = [].concat(payload);
-      let ids = entities.map(m => m.id);
+      let ids = entities.map((m) => m.id);
       return {
         ...state,
-        byId: _.pickBy(state.byId, ent => ids.indexOf(ent.id) === -1),
-        ids: state.ids.filter(id => ids.indexOf(id) === -1),
+        byId: _.pickBy(state.byId, (ent) => ids.indexOf(ent.id) === -1),
+        ids: state.ids.filter((id) => ids.indexOf(id) === -1),
       };
     },
   },
@@ -64,9 +64,9 @@ export const reducer = handleActions(
 
 export const selectors = {
   getAll: createSelector(
-    state => state.entities.todos,
-    collection => {
-      return collection.ids.map(id => collection.byId[id]);
+    (state) => state.entities.todos,
+    (collection) => {
+      return collection.ids.map((id) => collection.byId[id]);
     }
   ),
 };
@@ -82,7 +82,7 @@ export const actions = {
     // redux-thunk magic: it allow actions to return functions
     // w/ dispatch as argument, so we can call it as many times as needed
     return (dispatch, getState, api) => {
-      return api.get('/todos').then(resp => {
+      return api.get('/todos').then((resp) => {
         dispatch(actions.load(resp));
       });
     };
@@ -100,12 +100,12 @@ export const actions = {
         .post('/todos', {
           data: { text },
         })
-        .then(resp => {
+        .then((resp) => {
           // remove optimistic todo and add server saved one
           dispatch(actions.remove(tmpTodo));
           dispatch(actions.add(resp));
         })
-        .catch(err => {
+        .catch((err) => {
           actions.remove(tmpTodo);
           alert(err.message); // eslint-disable-line no-alert
         });

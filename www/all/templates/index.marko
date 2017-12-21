@@ -29,6 +29,7 @@ html [lang="en"]
 
       script
         ---
+        var CONFIG_CLIENT = ${JSON.stringify(out.global.CONFIG_CLIENT)};
         var __INITIAL_STATE__ = ${JSON.stringify(app && app.state || {})};
         ---
 

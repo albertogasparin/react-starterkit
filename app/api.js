@@ -7,7 +7,7 @@ export function get(path, options = {}) {
     method: 'get',
     url: path,
     ...options,
-  }).then(resp => resp.data);
+  }).then((resp) => resp.data);
 }
 
 export function post(path, options = {}) {
@@ -15,5 +15,5 @@ export function post(path, options = {}) {
     method: 'post',
     url: path,
     ...options,
-  }).then(resp => resp.data);
+  }).then((resp) => resp.data);
 }

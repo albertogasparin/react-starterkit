@@ -29,7 +29,7 @@ const extractCSS = new ExtractTextPlugin({
  */
 let webpackCfg = {
   context: config.root,
-  devtool: isProduction ? 'source-map' : 'cheap-module-eval-source-map',
+  devtool: isProduction ? 'source-map' : 'cheap-module-source-map',
   entry: {
     // vendor: ['react'],
     app: extendEntrySources([path.join(config.root, 'app', 'client')]),
@@ -63,8 +63,7 @@ webpackCfg.devServer = {
   hot: true,
   inline: true,
   lazy: false,
-  quiet: true,
-  noInfo: false,
+  logLevel: 'silent',
 };
 
 /**
@@ -209,18 +208,14 @@ webpackCfg.plugins = extendPlugins([
   }),
   // Variable replacement to bridge client/server side globals
   new webpack.DefinePlugin(
-    Object.assign(
-      {
-        'process.env.NODE_ENV': JSON.stringify(config.env),
-        __CLIENT__: true, // allow detection if clientside rendering
-      },
-      // provide server side config vars
-      pathKeys(config.client, 'CONFIG_CLIENT')
-    )
+    Object.assign({
+      'process.env.NODE_ENV': JSON.stringify(config.env),
+      __CLIENT__: true, // allow detection if clientside rendering
+    })
   ),
 
   // Convert lodash-es to lodash, avoiding duplication
-  new webpack.NormalModuleReplacementPlugin(/^lodash-es(\/|$)/, res => {
+  new webpack.NormalModuleReplacementPlugin(/^lodash-es(\/|$)/, (res) => {
     res.request = res.request.replace(/^lodash-es(\/|$)/, 'lodash$1');
   }),
 
@@ -285,13 +280,6 @@ function extendPlugins(plugins) {
     );
   }
   return plugins;
-}
-
-function pathKeys(obj, root) {
-  return Object.keys(obj).reduce((r, k) => {
-    r[root + '.' + k] = JSON.stringify(obj[k]);
-    return r;
-  }, {});
 }
 
 module.exports = webpackCfg;

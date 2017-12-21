@@ -52,11 +52,11 @@ class Todos extends Component {
 }
 
 export default connect(
-  state => ({
+  (state) => ({
     todosFetched: state.entities.todos.fetched,
     todos: providers.todo.selectors.getAll(state),
   }),
-  dispatch => ({
+  (dispatch) => ({
     actions: {
       todo: bindActionCreators(providers.todo.actions, dispatch),
     },

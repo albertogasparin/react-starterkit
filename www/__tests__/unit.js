@@ -17,7 +17,7 @@ describe('routesWww()', () => {
     td.replace(router, 'routes', () => routes);
     td
       .when(app.use(td.matchers.isA(Function)))
-      .thenDo(async fn => await fn(ctx, async () => {}));
+      .thenDo(async (fn) => await fn(ctx, async () => {}));
     routesWww(app);
   });
 
